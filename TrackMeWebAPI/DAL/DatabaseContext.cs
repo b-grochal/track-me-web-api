@@ -10,9 +10,13 @@ namespace TrackMeWebAPI.DAL
 {
     public class DatabaseContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Admin> Admins { get; set; }
+        
+
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
-
+            
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

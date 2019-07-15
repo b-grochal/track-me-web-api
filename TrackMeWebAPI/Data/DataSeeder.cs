@@ -16,15 +16,45 @@ namespace TrackMeWebAPI.Data
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             if (!roleManager.Roles.Any())
             {
-                var context = serviceProvider.GetRequiredService<DatabaseContext>();
+                var dbContext = serviceProvider.GetRequiredService<DatabaseContext>();
                 roleManager.CreateAsync(new IdentityRole(ApplicationRoles.Admin.ToString())).Wait();
                 roleManager.CreateAsync(new IdentityRole(ApplicationRoles.Admin.ToString())).Wait();
-                context.SaveChanges();
+                dbContext.SaveChanges();
             }
         }
 
         public static void CreateAdmins(IServiceProvider serviceProvider)
         {
+            var dbContext = serviceProvider.GetRequiredService<DatabaseContext>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            
+            if(!dbContext.Admins.Any())
+            {
+                ApplicationUser applicationAdmin = new ApplicationUser
+                {
+                    Email = "adam@gmail.com",
+                    UserName = "adam@gmail.com"
+                };
+
+                string hashedPassword = userManager.PasswordHasher.HashPassword(applicationAdmin, "adam");
+                applicationAdmin.PasswordHash = hashedPassword;
+                userManager.CreateAsync(applicationAdmin).Wait();
+                userManager.AddToRoleAsync(applicationAdmin, ApplicationRoles.Admin.ToString()).Wait();
+
+                var admin = new Admin
+                {
+                    FirstName = "Adam",
+                    LastName = "Małysz",
+                    ApplicationUserID = applicationAdmin.Id
+
+                };
+
+                dbContext.Admins.Add(admin as Admin);
+                dbContext.SaveChanges();
+
+
+            }
+
 
         }
 
