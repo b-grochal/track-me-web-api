@@ -10,7 +10,7 @@ using TrackMeWebAPI.DAL;
 namespace TrackMeWebAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190715193636_TrackMeWebAPI.DAL.DatabaseContext")]
+    [Migration("20190715200543_TrackMeWebAPI.DAL.DatabaseContext")]
     partial class TrackMeWebAPIDALDatabaseContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
