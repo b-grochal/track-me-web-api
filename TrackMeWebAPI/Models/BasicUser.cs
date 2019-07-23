@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace TrackMeWebAPI.Models
 {
-    public class User
+    public class BasicUser
     {
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int ApplicationUserID { get; set; }
+        public string PhoneNumber { get; set; }
+        public string 
     }
 }
