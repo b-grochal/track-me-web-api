@@ -8,6 +8,6 @@ namespace TrackMeWebAPI.Models
     public enum ApplicationRoles
     {
         Admin,
-        User
+        BasicUser
     }
 }

@@ -65,6 +65,9 @@ namespace TrackMeWebAPI
                 {
                     DataSeeder.CreateRoles(scope.ServiceProvider);
                     DataSeeder.CreateAdmins(scope.ServiceProvider);
+                    DataSeeder.CreateBasicUsers(scope.ServiceProvider);
+                    DataSeeder.CreateTrips(scope.ServiceProvider);
+                    DataSeeder.CreateSensorsValues(scope.ServiceProvider);
                     
                 }
             }

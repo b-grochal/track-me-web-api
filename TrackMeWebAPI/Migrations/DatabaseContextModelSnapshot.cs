@@ -197,6 +197,63 @@ namespace TrackMeWebAPI.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("TrackMeWebAPI.Models.BasicUser", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserID");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("BasicUsers");
+                });
+
+            modelBuilder.Entity("TrackMeWebAPI.Models.SensorValues", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Latitude");
+
+                    b.Property<double>("Longitude");
+
+                    b.Property<int>("TripID");
+
+                    b.Property<DateTime>("UploadDate");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("TripID");
+
+                    b.ToTable("SensorValues");
+                });
+
+            modelBuilder.Entity("TrackMeWebAPI.Models.Trip", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BasicUserID");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BasicUserID");
+
+                    b.ToTable("Trips");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -239,6 +296,22 @@ namespace TrackMeWebAPI.Migrations
                     b.HasOne("TrackMeWebAPI.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TrackMeWebAPI.Models.SensorValues", b =>
+                {
+                    b.HasOne("TrackMeWebAPI.Models.Trip")
+                        .WithMany("SensorValues")
+                        .HasForeignKey("TripID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TrackMeWebAPI.Models.Trip", b =>
+                {
+                    b.HasOne("TrackMeWebAPI.Models.BasicUser")
+                        .WithMany("Trips")
+                        .HasForeignKey("BasicUserID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

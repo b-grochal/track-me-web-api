@@ -12,5 +12,6 @@ namespace TrackMeWebAPI.Models
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public virtual ICollection<Trip> Trips { get; set; }
+        public string ApplicationUserID { get; set; }
     }
 }
