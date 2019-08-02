@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TrackMeWebAPI.Controllers
@@ -40,6 +42,14 @@ namespace TrackMeWebAPI.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        [HttpGet]
+        [Authorize(Roles ="Admin")]
+        [Route("test")]
+        public string Test()
+        {
+            return User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
         }
     }
 }

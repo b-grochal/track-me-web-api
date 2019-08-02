@@ -39,7 +39,12 @@ namespace TrackMeWebAPI
                 .AddEntityFrameworkStores<DatabaseContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
             .AddJwtBearer(options =>
             {
                 options.SaveToken = true;
@@ -50,7 +55,7 @@ namespace TrackMeWebAPI
                     ValidateAudience = true,
                     ValidAudience = "hello",
                     ValidIssuer = "hello",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecureKey"))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my security key hell yeach"))
                 };
             });
         }
@@ -77,9 +82,16 @@ namespace TrackMeWebAPI
                 app.UseHsts();
             }
 
+            app.UseCors(builder =>
+            builder.WithOrigins(Configuration["ApplicationSettings:ClientURL"].ToString())
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+
+
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseAuthentication();
+            
         }
     }
 }

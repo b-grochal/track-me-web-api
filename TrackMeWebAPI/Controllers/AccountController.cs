@@ -32,15 +32,17 @@ namespace TrackMeWebAPI.Controllers
         {
             var applicationUser = await userManager.FindByNameAsync(loginViewModel.Email);
             var isPasswordValid = await userManager.CheckPasswordAsync(applicationUser, loginViewModel.Password);
+            var identityOptions = new IdentityOptions(); 
 
             if (applicationUser != null && isPasswordValid)
             {
-                var applicationUserRole = userManager.GetRolesAsync(applicationUser).Result.First().ToString();
+                var applicationUserRole = userManager.GetRolesAsync(applicationUser).Result.First();
 
                 var authClaims = new[]
                 {
-                    new Claim(ClaimTypes.Email, applicationUser.UserName),
-                    new Claim(ClaimTypes.Role, applicationUserRole)
+                    new Claim("UserID", applicationUser.Id),
+                    new Claim(ClaimTypes.Email, applicationUser.Email),
+                    new Claim(identityOptions.ClaimsIdentity.RoleClaimType, applicationUserRole)
                 };
 
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my security key hell yeach"));
