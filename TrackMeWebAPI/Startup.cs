@@ -33,11 +33,14 @@ namespace TrackMeWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<DatabaseContext>(op => op.UseSqlServer(Configuration["ConnectionString:DBConnection"]));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<DatabaseContext>()
                 .AddDefaultTokenProviders();
+
+            
 
             services.AddAuthentication(options =>
             {
@@ -58,6 +61,8 @@ namespace TrackMeWebAPI
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my security key hell yeach"))
                 };
             });
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,6 +80,7 @@ namespace TrackMeWebAPI
                     DataSeeder.CreateSensorsValues(scope.ServiceProvider);
                     
                 }
+
             }
             else
             {
@@ -83,9 +89,9 @@ namespace TrackMeWebAPI
             }
 
             app.UseCors(builder =>
-            builder.WithOrigins(Configuration["ApplicationSettings:ClientURL"].ToString())
+            builder.AllowAnyOrigin()
             .AllowAnyHeader()
-            .AllowAnyMethod();
+            .AllowAnyMethod());
 
 
             app.UseAuthentication();
