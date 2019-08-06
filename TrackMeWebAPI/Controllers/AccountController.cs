@@ -43,9 +43,10 @@ namespace TrackMeWebAPI.Controllers
 
                 var authClaims = new[]
                 {
-                    new Claim("UserID", applicationUser.Id),
+                    new Claim("ApplicationUserID", applicationUser.Id),
                     new Claim("Email", applicationUser.Email),
-                    new Claim("Role", applicationUserRole)
+                    new Claim("Role", applicationUserRole),
+                    new Claim(identityOptions.ClaimsIdentity.RoleClaimType, applicationUserRole)
                 };
 
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my security key hell yeach"));
