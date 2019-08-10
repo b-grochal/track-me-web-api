@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using TrackMeWebAPI.DAL;
 using TrackMeWebAPI.Models;
 using TrackMeWebAPI.ViewModels;
 
@@ -22,10 +24,12 @@ namespace TrackMeWebAPI.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly DatabaseContext databaseContext;
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        public AccountController(UserManager<ApplicationUser> userManager, DatabaseContext databaseContext)
         {
             this.userManager = userManager;
+            this.databaseContext = databaseContext;
         }
 
         
@@ -66,8 +70,46 @@ namespace TrackMeWebAPI.Controllers
                 });
             }
             return Unauthorized();
-
+            
             
         }
+
+        [HttpPost]
+        [Route("Register")]
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel registerViewModel)
+        {
+            var duplicatedUser = await userManager.FindByEmailAsync(registerViewModel.Email);
+            if(duplicatedUser == null)
+            {
+                ApplicationUser applicationUser = new ApplicationUser
+                {
+                    Email = registerViewModel.Email,
+                    UserName = registerViewModel.Email
+                };
+
+                BasicUser basicUser = new BasicUser
+                {
+                    FirstName = registerViewModel.FirstName,
+                    LastName = registerViewModel.LastName,
+                    PhoneNumber = registerViewModel.PhoneNumber
+                };
+
+                string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUser, registerViewModel.Password);
+                applicationUser.PasswordHash = hashedPassword;
+                userManager.CreateAsync(applicationUser).Wait();
+                userManager.AddToRoleAsync(applicationUser, ApplicationRoles.BasicUser.ToString()).Wait();
+                basicUser.ApplicationUserID = applicationUser.Id;
+                databaseContext.BasicUsers.Add(basicUser as BasicUser);
+                databaseContext.SaveChanges();
+                return Ok();
+            }
+
+            return Conflict(new
+            {
+                message = "User with this email already exist."
+            });
+
+        }
+        
     }
 }
