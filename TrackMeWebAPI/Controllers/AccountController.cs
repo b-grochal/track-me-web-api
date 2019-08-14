@@ -66,7 +66,7 @@ namespace TrackMeWebAPI.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    role = applicationUserRole
                 });
             }
             return Unauthorized();

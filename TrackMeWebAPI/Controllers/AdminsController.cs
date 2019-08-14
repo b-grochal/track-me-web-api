@@ -13,7 +13,7 @@ namespace TrackMeWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "BasicUser")]
+    [Authorize(Roles = "Admin")]
     public class AdminsController : ControllerBase
     {
         private readonly DatabaseContext databaseContext;
