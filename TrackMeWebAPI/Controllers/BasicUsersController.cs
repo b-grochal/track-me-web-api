@@ -22,7 +22,7 @@ namespace TrackMeWebAPI.Controllers
             this.databaseContext = databaseContext;
         }
 
-        // GET api/basicusers
+        // GET api/basicUsers/all
         [HttpGet]
         [Authorize(Roles="Admin")]
         [Route("all")]
@@ -37,6 +37,42 @@ namespace TrackMeWebAPI.Controllers
                     PhoneNumber = x.PhoneNumber
                 }).ToListAsync();
 
+        }
+
+        // GET api/basicUsers/4
+        [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<BasicUserViewModel>> GetBasicUserDetails(int id)
+        {
+            var basicUser = await this.databaseContext.BasicUsers.FindAsync(id);
+
+            return new BasicUserViewModel
+            {
+                ID = basicUser.ID,
+                FirstName = basicUser.FirstName,
+                LastName = basicUser.LastName,
+                Email = basicUser.Email,
+                PhoneNumber = basicUser.PhoneNumber
+            };
+        }
+
+        // GET api/basicUsers
+        [HttpGet]
+        [Authorize(Roles = "BasicUser")]
+        public async Task<ActionResult<BasicUserViewModel>> GetBasicUserAccountDetails()
+        {
+            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+            var basicUserID = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID)).ID;
+            var basicUser = await this.databaseContext.BasicUsers.FindAsync(basicUserID);
+
+            return new BasicUserViewModel
+            {
+                ID = basicUser.ID,
+                FirstName = basicUser.FirstName,
+                LastName = basicUser.LastName,
+                Email = basicUser.Email,
+                PhoneNumber = basicUser.PhoneNumber
+            };
         }
     }
 }

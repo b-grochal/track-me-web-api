@@ -53,5 +53,13 @@ namespace TrackMeWebAPI.Controllers
             };
         }
 
+        // POST api/admins
+        [HttpPost]
+        public async Task<ActionResult> CreateAdmin(NewAdminViewModel newAdminViewModel)
+        {
+
+            return Ok();
+        }
+
     }
 }
