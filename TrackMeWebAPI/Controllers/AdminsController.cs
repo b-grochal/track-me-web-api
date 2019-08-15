@@ -38,5 +38,20 @@ namespace TrackMeWebAPI.Controllers
 
         }
 
+        // GET api/admins/4
+        [HttpGet("{id}")]
+        public async Task<ActionResult<AdminViewModel>> GetAdminDetails(int id)
+        {
+            var admin = await this.databaseContext.Admins.FindAsync(id);
+
+            return new AdminViewModel
+            {
+                ID = admin.ID,
+                FirstName = admin.FirstName,
+                LastName = admin.LastName,
+                Email = admin.Email
+            };
+        }
+
     }
 }
