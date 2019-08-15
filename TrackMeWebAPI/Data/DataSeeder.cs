@@ -36,7 +36,7 @@ namespace TrackMeWebAPI.Data
                     UserName = "adam@gmail.com"
                 };
 
-                string hashedPassword = userManager.PasswordHasher.HashPassword(applicationAdmin, "adam");
+                string hashedPassword = userManager.PasswordHasher.HashPassword(applicationAdmin, "P@ssw0rd");
                 applicationAdmin.PasswordHash = hashedPassword;
                 userManager.CreateAsync(applicationAdmin).Wait();
                 userManager.AddToRoleAsync(applicationAdmin, ApplicationRoles.Admin.ToString()).Wait();
@@ -44,8 +44,9 @@ namespace TrackMeWebAPI.Data
                 var admin = new Admin
                 {
                     FirstName = "Adam",
-                    LastName = "Małysz",
-                    ApplicationUserID = applicationAdmin.Id
+                    LastName = "Cole",
+                    ApplicationUserID = applicationAdmin.Id,
+                    Email = applicationAdmin.Email
 
                 };
 
@@ -79,12 +80,13 @@ namespace TrackMeWebAPI.Data
 
                 for(int i = 0; i < applicationUsers.Count; i++)
                 {
-                    string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUsers[i], "joe");
+                    string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUsers[i], "P@ssw0rd");
                     applicationUsers[i].PasswordHash = hashedPassword;
                     userManager.CreateAsync(applicationUsers[i]).Wait();
                     userManager.AddToRoleAsync(applicationUsers[i], ApplicationRoles.BasicUser.ToString()).Wait();
 
                     basicUsers[i].ApplicationUserID = applicationUsers[i].Id;
+                    basicUsers[i].Email = applicationUsers[i].Email;
                     
                     dbContext.BasicUsers.Add(basicUsers[i] as BasicUser);
                 }

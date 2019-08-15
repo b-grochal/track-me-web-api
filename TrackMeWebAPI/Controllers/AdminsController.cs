@@ -33,6 +33,7 @@ namespace TrackMeWebAPI.Controllers
                     ID = x.ID,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
+                    Email = x.Email
                 }).ToListAsync();
 
         }

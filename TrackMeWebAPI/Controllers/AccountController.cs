@@ -99,6 +99,7 @@ namespace TrackMeWebAPI.Controllers
                 userManager.CreateAsync(applicationUser).Wait();
                 userManager.AddToRoleAsync(applicationUser, ApplicationRoles.BasicUser.ToString()).Wait();
                 basicUser.ApplicationUserID = applicationUser.Id;
+                basicUser.Email = applicationUser.Email;
                 databaseContext.BasicUsers.Add(basicUser as BasicUser);
                 databaseContext.SaveChanges();
                 return Ok();

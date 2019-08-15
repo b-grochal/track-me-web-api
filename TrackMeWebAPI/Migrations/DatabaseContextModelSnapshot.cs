@@ -137,6 +137,8 @@ namespace TrackMeWebAPI.Migrations
 
                     b.Property<string>("ApplicationUserID");
 
+                    b.Property<string>("Email");
+
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
@@ -204,6 +206,8 @@ namespace TrackMeWebAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApplicationUserID");
+
+                    b.Property<string>("Email");
 
                     b.Property<string>("FirstName");
 

@@ -10,7 +10,7 @@ using TrackMeWebAPI.DAL;
 namespace TrackMeWebAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190725091236_Init")]
+    [Migration("20190815091111_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,6 +139,8 @@ namespace TrackMeWebAPI.Migrations
 
                     b.Property<string>("ApplicationUserID");
 
+                    b.Property<string>("Email");
+
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
@@ -206,6 +208,8 @@ namespace TrackMeWebAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApplicationUserID");
+
+                    b.Property<string>("Email");
 
                     b.Property<string>("FirstName");
 

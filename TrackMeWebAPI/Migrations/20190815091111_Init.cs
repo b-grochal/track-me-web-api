@@ -16,6 +16,7 @@ namespace TrackMeWebAPI.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
                     ApplicationUserID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -71,6 +72,7 @@ namespace TrackMeWebAPI.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
                     ApplicationUserID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

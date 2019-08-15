@@ -35,13 +35,16 @@ namespace TrackMeWebAPI.Controllers
                 .Select(x => new TripViewModel
                 {
                     ID = x.ID,
-                    Name = x.Name
+                    Name = x.Name,
+                    BasicUserEmail = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID == applicationUserID).Email
 
                 })
                 .ToListAsync();
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [Route("all")]
         public async Task<ActionResult<IEnumerable<TripViewModel>>> GetAllTrips()
         {
             return await this.databaseContext.Trips
