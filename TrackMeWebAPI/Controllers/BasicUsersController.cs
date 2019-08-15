@@ -25,7 +25,8 @@ namespace TrackMeWebAPI.Controllers
         // GET api/basicusers
         [HttpGet]
         [Authorize(Roles="Admin")]
-        public async Task<ActionResult<IEnumerable<BasicUserViewModel>>> GetBasicUsers()
+        [Route("all")]
+        public async Task<ActionResult<IEnumerable<BasicUserViewModel>>> GetAllBasicUsers()
         {
             return await this.databaseContext.BasicUsers
                 .Select(x => new BasicUserViewModel

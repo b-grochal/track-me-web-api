@@ -36,7 +36,7 @@ namespace TrackMeWebAPI.Controllers
                 {
                     ID = x.ID,
                     Name = x.Name,
-                    BasicUserEmail = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID == applicationUserID).Email
+                    BasicUserEmail = this.databaseContext.BasicUsers.SingleOrDefault(y => y.ApplicationUserID == applicationUserID).Email
 
                 })
                 .ToListAsync();
