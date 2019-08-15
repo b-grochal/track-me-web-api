@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace TrackMeWebAPI.ViewModels
 {
-    public class TripViewModel
+    public class BasicUserViewModel
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string BasicUserEmail { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
