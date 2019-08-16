@@ -66,9 +66,8 @@ namespace TrackMeWebAPI.Controllers
         public async Task<ActionResult<BasicUserViewModel>> GetBasicUserAccountDetails()
         {
             var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
-            var basicUserID = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID)).ID;
-            var basicUser = await this.databaseContext.BasicUsers.FindAsync(basicUserID);
-
+            var basicUser = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID));
+            
             return new BasicUserViewModel
             {
                 ID = basicUser.ID,

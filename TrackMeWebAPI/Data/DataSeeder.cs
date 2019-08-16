@@ -106,11 +106,11 @@ namespace TrackMeWebAPI.Data
             {
                 List<Trip> trips = new List<Trip>
                 {
-                    new Trip{Name="Holiday Trip", BasicUserID = dbContext.BasicUsers.Single(x => x.ID == 1).ID},
-                    new Trip{Name="Sunday Trip", BasicUserID = dbContext.BasicUsers.Single(x => x.ID == 2).ID},
-                    new Trip{Name="Moscow Trip", BasicUserID = dbContext.BasicUsers.Single(x => x.ID == 2).ID}
+                    new Trip{Name="Holiday Trip", BasicUserID = dbContext.BasicUsers.Single(x => x.Email.Equals("joe@gmail.com")).ID},
+                    new Trip{Name="Sunday Trip", BasicUserID = dbContext.BasicUsers.Single(x => x.Email.Equals("kyle@gmail.com")).ID},
+                    new Trip{Name="Moscow Trip", BasicUserID = dbContext.BasicUsers.Single(x => x.Email.Equals("kyle@gmail.com")).ID}
                 };
-                           foreach(Trip trip in trips)
+                foreach(Trip trip in trips)
                 {
                     dbContext.Trips.Add(trip as Trip);
                 }
