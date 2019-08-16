@@ -95,5 +95,24 @@ namespace TrackMeWebAPI.Controllers
             });
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAdmin(int id)
+        {
+            var admin = await databaseContext.Admins.FindAsync(id);
+            var applicationUser = await userManager.FindByEmailAsync(admin.Email);
+
+            if(admin != null && applicationUser != null)
+            {
+                databaseContext.Admins.Remove(admin);
+                await userManager.DeleteAsync(applicationUser);
+                return Ok();
+            }
+
+            return Conflict(new
+            {
+                message = "Error during deleting admin."
+            });
+        }
+
     }
 }
