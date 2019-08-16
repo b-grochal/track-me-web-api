@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Models;
 using TrackMeWebAPI.ViewModels;
 
 namespace TrackMeWebAPI.Controllers
@@ -16,15 +18,17 @@ namespace TrackMeWebAPI.Controllers
     public class BasicUsersController : ControllerBase
     {
         private readonly DatabaseContext databaseContext;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public BasicUsersController(DatabaseContext databaseContext)
+        public BasicUsersController(DatabaseContext databaseContext, UserManager<ApplicationUser> userManager)
         {
             this.databaseContext = databaseContext;
+            this.userManager = userManager;
         }
 
         // GET api/basicUsers/all
         [HttpGet]
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         [Route("all")]
         public async Task<ActionResult<IEnumerable<BasicUserViewModel>>> GetAllBasicUsers()
         {
@@ -73,6 +77,26 @@ namespace TrackMeWebAPI.Controllers
                 Email = basicUser.Email,
                 PhoneNumber = basicUser.PhoneNumber
             };
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles ="Admin")]
+        public async Task<ActionResult> DeleteBasicUser(int id)
+        {
+            var basicUser = await databaseContext.BasicUsers.FindAsync(id);
+            var applicationUser = await userManager.FindByEmailAsync(basicUser.Email);
+
+            if (basicUser != null && applicationUser != null)
+            {
+                databaseContext.BasicUsers.Remove(basicUser);
+                await userManager.DeleteAsync(applicationUser);
+                return Ok();
+            }
+
+            return Conflict(new
+            {
+                message = "Error during deleting basic user."
+            });
         }
     }
 }
