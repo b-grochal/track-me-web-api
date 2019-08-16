@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Models;
 using TrackMeWebAPI.ViewModels;
 
 namespace TrackMeWebAPI.Controllers
@@ -17,10 +19,12 @@ namespace TrackMeWebAPI.Controllers
     public class AdminsController : ControllerBase
     {
         private readonly DatabaseContext databaseContext;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public AdminsController(DatabaseContext databaseContext)
+        public AdminsController(DatabaseContext databaseContext, UserManager<ApplicationUser> userManager)
         {
             this.databaseContext = databaseContext;
+            this.userManager = userManager;
         }
 
         // GET api/admins
@@ -55,10 +59,40 @@ namespace TrackMeWebAPI.Controllers
 
         // POST api/admins
         [HttpPost]
-        public async Task<ActionResult> CreateAdmin(NewAdminViewModel newAdminViewModel)
+        public async Task<ActionResult> CreateAdmin([FromBody] NewAdminViewModel newAdminViewModel)
         {
+            var duplicatedAdmin = await userManager.FindByEmailAsync(newAdminViewModel.Email);
+            if (duplicatedAdmin == null)
+            {
+                ApplicationUser applicationUser = new ApplicationUser
+                {
+                    Email = newAdminViewModel.Email,
+                    UserName = newAdminViewModel.Email
+                };
 
-            return Ok();
+                Admin admin = new Admin
+                {
+                    FirstName = newAdminViewModel.FirstName,
+                    LastName = newAdminViewModel.LastName,
+                    Email = newAdminViewModel.Email
+                };
+
+                
+                string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUser, newAdminViewModel.Password);
+                applicationUser.PasswordHash = hashedPassword;
+                userManager.CreateAsync(applicationUser).Wait();
+                userManager.AddToRoleAsync(applicationUser, ApplicationRoles.Admin.ToString()).Wait();
+                admin.ApplicationUserID = applicationUser.Id;
+                admin.Email = applicationUser.Email;
+                databaseContext.Admins.Add(admin as Admin);
+                databaseContext.SaveChanges();
+                return Ok();
+            }
+
+            return Conflict(new
+            {
+                message = "Admin with this email already exist."
+            });
         }
 
     }
