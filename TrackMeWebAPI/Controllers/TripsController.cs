@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Models;
 using TrackMeWebAPI.ViewModels;
 
 namespace TrackMeWebAPI.Controllers
@@ -24,7 +25,7 @@ namespace TrackMeWebAPI.Controllers
 
         // GET api/trips
         [HttpGet]
-        [Authorize(Roles="BasicUser")]
+        [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult<IEnumerable<TripViewModel>>> GetTrips()
         {
             var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
@@ -57,6 +58,25 @@ namespace TrackMeWebAPI.Controllers
 
         }
 
+        [HttpPost]
+        [Authorize(Roles ="BasicUser")]
+        public async Task<ActionResult> CreateTrip([FromBody] NewTripViewModel newTripViewModel)
+        {
+
+            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+            var basicUserID = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID)).ID;
+
+            Trip trip = new Trip
+            {
+                Name = newTripViewModel.Name
+            };
+
+            trip.BasicUserID = basicUserID;
+            await this.databaseContext.Trips.AddAsync(trip);
+            this.databaseContext.SaveChanges();
+            return Ok();
+
+        }
 
     }
 }
