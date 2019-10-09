@@ -75,7 +75,6 @@ namespace TrackMeWebAPI.Controllers
             await this.databaseContext.Trips.AddAsync(trip);
             this.databaseContext.SaveChanges();
             return Ok();
-
         }
 
     }

@@ -89,6 +89,7 @@ namespace TrackMeWebAPI.Controllers
             {
                 databaseContext.BasicUsers.Remove(basicUser);
                 await userManager.DeleteAsync(applicationUser);
+                databaseContext.SaveChanges();
                 return Ok();
             }
 
@@ -97,5 +98,26 @@ namespace TrackMeWebAPI.Controllers
                 message = "Error during deleting basic user."
             });
         }
+
+        [HttpPut]
+        [Authorize(Roles = "BasicUser")]
+        public async Task<ActionResult> UpdateBasicUser([FromBody] UpdatedBasicUserViewModel updatedBasicUser)
+        {
+            
+            var oldBasicUser = await databaseContext.BasicUsers.FindAsync(updatedBasicUser.ID);
+            var applicationUser = await userManager.FindByEmailAsync(oldBasicUser.Email);
+            applicationUser.Email = updatedBasicUser.Email;
+            applicationUser.UserName = updatedBasicUser.Email;
+            oldBasicUser.Email = updatedBasicUser.Email;
+            oldBasicUser.FirstName = updatedBasicUser.FirstName;
+            oldBasicUser.LastName = updatedBasicUser.LastName;
+            oldBasicUser.PhoneNumber = updatedBasicUser.PhoneNumber;
+            await userManager.UpdateAsync(applicationUser);
+            databaseContext.BasicUsers.Update(oldBasicUser);
+            databaseContext.SaveChanges();
+            return Ok();
+        }
+
+
     }
 }
