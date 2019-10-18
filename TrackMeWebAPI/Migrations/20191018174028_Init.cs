@@ -207,7 +207,7 @@ namespace TrackMeWebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SensorValues",
+                name: "SensorsValues",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -215,13 +215,22 @@ namespace TrackMeWebAPI.Migrations
                     TripID = table.Column<int>(nullable: false),
                     UploadDate = table.Column<DateTime>(nullable: false),
                     Latitude = table.Column<double>(nullable: false),
-                    Longitude = table.Column<double>(nullable: false)
+                    Longitude = table.Column<double>(nullable: false),
+                    AccelerometerX = table.Column<double>(nullable: false),
+                    AccelerometerY = table.Column<double>(nullable: false),
+                    AccelerometerZ = table.Column<double>(nullable: false),
+                    GyroscopeX = table.Column<double>(nullable: false),
+                    GyroscopeY = table.Column<double>(nullable: false),
+                    GyroscopeZ = table.Column<double>(nullable: false),
+                    MagneticFieldX = table.Column<double>(nullable: false),
+                    MagneticFieldY = table.Column<double>(nullable: false),
+                    MagneticFieldZ = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SensorValues", x => x.ID);
+                    table.PrimaryKey("PK_SensorsValues", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_SensorValues_Trips_TripID",
+                        name: "FK_SensorsValues_Trips_TripID",
                         column: x => x.TripID,
                         principalTable: "Trips",
                         principalColumn: "ID",
@@ -268,8 +277,8 @@ namespace TrackMeWebAPI.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SensorValues_TripID",
-                table: "SensorValues",
+                name: "IX_SensorsValues_TripID",
+                table: "SensorsValues",
                 column: "TripID");
 
             migrationBuilder.CreateIndex(
@@ -299,7 +308,7 @@ namespace TrackMeWebAPI.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "SensorValues");
+                name: "SensorsValues");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

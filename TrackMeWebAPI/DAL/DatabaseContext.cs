@@ -13,7 +13,7 @@ namespace TrackMeWebAPI.DAL
         public DbSet<Admin> Admins { get; set; }
         public DbSet<BasicUser> BasicUsers { get; set; }
         public DbSet<Trip> Trips { get; set; }
-        public DbSet<SensorValues> SensorValues { get; set; }
+        public DbSet<SensorsValues> SensorsValues { get; set; }
         
 
 

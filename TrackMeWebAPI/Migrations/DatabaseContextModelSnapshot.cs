@@ -220,15 +220,33 @@ namespace TrackMeWebAPI.Migrations
                     b.ToTable("BasicUsers");
                 });
 
-            modelBuilder.Entity("TrackMeWebAPI.Models.SensorValues", b =>
+            modelBuilder.Entity("TrackMeWebAPI.Models.SensorsValues", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<double>("AccelerometerX");
+
+                    b.Property<double>("AccelerometerY");
+
+                    b.Property<double>("AccelerometerZ");
+
+                    b.Property<double>("GyroscopeX");
+
+                    b.Property<double>("GyroscopeY");
+
+                    b.Property<double>("GyroscopeZ");
+
                     b.Property<double>("Latitude");
 
                     b.Property<double>("Longitude");
+
+                    b.Property<double>("MagneticFieldX");
+
+                    b.Property<double>("MagneticFieldY");
+
+                    b.Property<double>("MagneticFieldZ");
 
                     b.Property<int>("TripID");
 
@@ -238,7 +256,7 @@ namespace TrackMeWebAPI.Migrations
 
                     b.HasIndex("TripID");
 
-                    b.ToTable("SensorValues");
+                    b.ToTable("SensorsValues");
                 });
 
             modelBuilder.Entity("TrackMeWebAPI.Models.Trip", b =>
@@ -303,7 +321,7 @@ namespace TrackMeWebAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TrackMeWebAPI.Models.SensorValues", b =>
+            modelBuilder.Entity("TrackMeWebAPI.Models.SensorsValues", b =>
                 {
                     b.HasOne("TrackMeWebAPI.Models.Trip")
                         .WithMany("SensorValues")
