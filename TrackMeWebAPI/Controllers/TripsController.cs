@@ -77,5 +77,50 @@ namespace TrackMeWebAPI.Controllers
             return Ok();
         }
 
+        // GET api/trips/4/details
+        [HttpGet("{id}/details")]
+        [Authorize(Roles = "BasicUser,Admin")]
+        public async Task<ActionResult<IEnumerable<SensorsValuesViewModel>>> GetTripDetails(int id)
+        {
+            return await this.databaseContext.SensorsValues
+                .Where(x => x.TripID == id)
+                .Select(x => new SensorsValuesViewModel
+                {
+                    UploadDate = x.UploadDate.ToLongDateString(),
+                    Latitude = x.Latitude,
+                    Longitude = x.Longitude,
+                    AccelerometerX = x.AccelerometerX,
+                    AccelerometerY = x.AccelerometerY,
+                    AccelerometerZ = x.AccelerometerZ,
+                    GyroscopeX = x.GyroscopeX,
+                    GyroscopeY = x.GyroscopeY,
+                    GyroscopeZ = x.GyroscopeZ,
+                    MagneticFieldX = x.MagneticFieldX,
+                    MagneticFieldY = x.MagneticFieldY,
+                    MagneticFieldZ = x.MagneticFieldZ
+
+                })
+                .ToListAsync();
+        }
+
     }
+
+    //[HttpPost]
+    //[Authorize(Roles = "BasicUser")]
+    //public async Task<ActionResult> CreateTripDetails([FromBody] NewTripViewModel newTripViewModel)
+    //{
+
+    //    var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+    //    var basicUserID = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID)).ID;
+
+    //    Trip trip = new Trip
+    //    {
+    //        Name = newTripViewModel.Name
+    //    };
+
+    //    trip.BasicUserID = basicUserID;
+    //    await this.databaseContext.Trips.AddAsync(trip);
+    //    this.databaseContext.SaveChanges();
+    //    return Ok();
+    //}
 }
