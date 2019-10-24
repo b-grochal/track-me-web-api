@@ -86,7 +86,7 @@ namespace TrackMeWebAPI.Controllers
                 .Where(x => x.TripID == id)
                 .Select(x => new SensorsValuesViewModel
                 {
-                    UploadDate = x.UploadDate.ToLongDateString(),
+                    UploadDate = x.UploadDate.ToShortDateString() + " " + x.UploadDate.ToShortTimeString(),
                     Latitude = x.Latitude,
                     Longitude = x.Longitude,
                     AccelerometerX = x.AccelerometerX,
@@ -103,24 +103,47 @@ namespace TrackMeWebAPI.Controllers
                 .ToListAsync();
         }
 
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,BasicUser")]
+        public async Task<ActionResult> DeleteTrip(int id)
+        {
+            var trip = await databaseContext.Trips.FindAsync(id);
+
+            if (trip != null)
+            {
+                databaseContext.Trips.Remove(trip);
+                databaseContext.SaveChanges();
+                return Ok();
+            }
+
+            return Conflict(new
+            {
+                message = "Error during deleting trip."
+            });
+        }
+
+        //[HttpPost]
+        //[Authorize(Roles = "BasicUser")]
+        //public async Task<ActionResult> CreateTripDetails([FromBody] NewTripViewModel newTripViewModel)
+        //{
+
+        //    var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+        //    var basicUserID = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID)).ID;
+
+        //    Trip trip = new Trip
+        //    {
+        //        Name = newTripViewModel.Name
+        //    };
+
+        //    trip.BasicUserID = basicUserID;
+        //    await this.databaseContext.Trips.AddAsync(trip);
+        //    this.databaseContext.SaveChanges();
+        //    return Ok();
+        //}
+
     }
 
-    //[HttpPost]
-    //[Authorize(Roles = "BasicUser")]
-    //public async Task<ActionResult> CreateTripDetails([FromBody] NewTripViewModel newTripViewModel)
-    //{
 
-    //    var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
-    //    var basicUserID = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID)).ID;
 
-    //    Trip trip = new Trip
-    //    {
-    //        Name = newTripViewModel.Name
-    //    };
 
-    //    trip.BasicUserID = basicUserID;
-    //    await this.databaseContext.Trips.AddAsync(trip);
-    //    this.databaseContext.SaveChanges();
-    //    return Ok();
-    //}
 }
