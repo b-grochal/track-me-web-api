@@ -9,5 +9,13 @@ namespace TrackMeWebAPI.Services.Interfaces
     public interface ITripsService
     {
         Task<IEnumerable<TripViewModel>> GetAllTrips();
+
+        Task<IEnumerable<TripViewModel>> GetTrips(string applicationUserID);
+
+        Task CreateTrip(string applicationUserID, NewTripViewModel newTripViewModel);
+
+        Task<IEnumerable<SensorsValuesViewModel>> GetTripDetails(int tripID);
+
+        Task DeleteTrip(int tripID);
     }
 }
