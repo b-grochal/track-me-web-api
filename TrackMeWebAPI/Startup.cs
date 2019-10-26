@@ -18,6 +18,8 @@ using Microsoft.IdentityModel.Tokens;
 using TrackMeWebAPI.DAL;
 using TrackMeWebAPI.Data;
 using TrackMeWebAPI.Models;
+using TrackMeWebAPI.Services.Interfaces;
+using TrackMeWebAPI.Services.Logic;
 
 namespace TrackMeWebAPI
 {
@@ -63,6 +65,7 @@ namespace TrackMeWebAPI
             });
 
             services.AddCors();
+            services.AddTransient<ITripsService, TripsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrackMeWebAPI.DAL;
 using TrackMeWebAPI.Models;
+using TrackMeWebAPI.Services.Interfaces;
+using TrackMeWebAPI.Services.Logic;
 using TrackMeWebAPI.ViewModels;
 
 namespace TrackMeWebAPI.Controllers
@@ -17,10 +19,12 @@ namespace TrackMeWebAPI.Controllers
     public class TripsController : ControllerBase
     {
         private readonly DatabaseContext databaseContext;
+        private readonly ITripsService tripsService;
 
-        public TripsController(DatabaseContext databaseContext)
+        public TripsController(DatabaseContext databaseContext, ITripsService tripsService)
         {
             this.databaseContext = databaseContext;
+            this.tripsService = tripsService;
         }
 
         // GET api/trips
@@ -48,14 +52,16 @@ namespace TrackMeWebAPI.Controllers
         [Route("all")]
         public async Task<ActionResult<IEnumerable<TripViewModel>>> GetAllTrips()
         {
-            return await this.databaseContext.Trips
-                .Select(x => new TripViewModel
-                {
-                    ID = x.ID,
-                    Name = x.Name,
-                    BasicUserEmail = this.databaseContext.BasicUsers.SingleOrDefault(y => y.ID == x.BasicUserID).Email
-                }).ToListAsync();
+            //var trips = await this.databaseContext.Trips
+            //    .Select(x => new TripViewModel
+            //    {
+            //        ID = x.ID,
+            //        Name = x.Name,
+            //        BasicUserEmail = this.databaseContext.BasicUsers.SingleOrDefault(y => y.ID == x.BasicUserID).Email
+            //    }).ToListAsync();
 
+            var trips = await tripsService.GetAllTrips();
+            return Ok(trips);
         }
 
         [HttpPost]
