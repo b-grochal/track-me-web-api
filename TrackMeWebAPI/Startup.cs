@@ -67,6 +67,8 @@ namespace TrackMeWebAPI
             services.AddCors();
             services.AddTransient<ITripsService, TripsService>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAdminsService, AdminsService>();
+            services.AddTransient<IBasicUsersService, BasicUsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -50,13 +50,8 @@ namespace TrackMeWebAPI.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel registerViewModel)
         {
-            var registrationResult = await this.accountService.Register(registerViewModel);
-            if(registrationResult == true)
-            {
-                return Ok();
-            }
-            return Conflict();
-
+            await this.accountService.Register(registerViewModel);
+            return Ok();
         }
         
     }

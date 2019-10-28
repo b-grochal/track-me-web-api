@@ -10,6 +10,6 @@ namespace TrackMeWebAPI.Services.Interfaces
     {
         Task<LoggedUserViewModel> Login(LoginViewModel loginViewModel);
 
-        Task<bool> Register(RegisterViewModel registerViewModel);
+        Task Register(RegisterViewModel registerViewModel);
     }
 }

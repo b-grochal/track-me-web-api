@@ -62,7 +62,7 @@ namespace TrackMeWebAPI.Services.Logic
             return null;
         }
 
-        public async Task<bool> Register(RegisterViewModel registerViewModel)
+        public async Task Register(RegisterViewModel registerViewModel)
         {
             var duplicatedUser = await userManager.FindByEmailAsync(registerViewModel.Email);
             if (duplicatedUser == null)
@@ -88,9 +88,9 @@ namespace TrackMeWebAPI.Services.Logic
                 basicUser.Email = applicationUser.Email;
                 databaseContext.BasicUsers.Add(basicUser as BasicUser);
                 databaseContext.SaveChanges();
-                return true;
+                
             }
-            return false;
+            
         }
     }
 }
