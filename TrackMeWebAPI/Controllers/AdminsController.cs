@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Exceptions;
 using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.ViewModels;
@@ -38,23 +39,46 @@ namespace TrackMeWebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<AdminViewModel>> GetAdminDetails(int id)
         {
-            var admin = await adminsService.GetAdminDetails(id);
-            return Ok(admin);
+            try
+            {
+                var admin = await adminsService.GetAdminDetails(id);
+                return Ok(admin);
+            }
+            catch(UserNotFoundException)
+            {
+                return NotFound();
+            }
+            
         }
 
         // POST api/admins
         [HttpPost]
         public async Task<ActionResult> CreateAdmin([FromBody] NewAdminViewModel newAdminViewModel)
         {
-            await adminsService.CreateAdmin(newAdminViewModel);
-            return Ok();
+            try
+            {
+                await adminsService.CreateAdmin(newAdminViewModel);
+                return Ok();
+            }
+            catch (DuplicatedUserException)
+            {
+                return Conflict();
+            }
+            
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAdmin(int id)
         {
-            await adminsService.DeleteAdmin(id);
-            return Ok();
+            try
+            {
+                await adminsService.DeleteAdmin(id);
+                return Ok();
+            }
+            catch (UserNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
     }

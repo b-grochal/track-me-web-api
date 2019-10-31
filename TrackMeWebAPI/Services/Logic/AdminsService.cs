@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Exceptions;
 using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.ViewModels;
@@ -40,7 +41,6 @@ namespace TrackMeWebAPI.Services.Logic
                     Email = newAdminViewModel.Email
                 };
 
-
                 string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUser, newAdminViewModel.Password);
                 applicationUser.PasswordHash = hashedPassword;
                 userManager.CreateAsync(applicationUser).Wait();
@@ -48,9 +48,9 @@ namespace TrackMeWebAPI.Services.Logic
                 admin.ApplicationUserID = applicationUser.Id;
                 admin.Email = applicationUser.Email;
                 databaseContext.Admins.Add(admin as Admin);
-                databaseContext.SaveChanges();
-               
+                databaseContext.SaveChanges();              
             }
+            throw new DuplicatedUserException();
                        
         }
 
@@ -64,19 +64,25 @@ namespace TrackMeWebAPI.Services.Logic
                 databaseContext.Admins.Remove(admin);
                 await userManager.DeleteAsync(applicationUser);
             }
+            throw new UserNotFoundException();
         }
 
         public async Task<AdminViewModel> GetAdminDetails(int adminId)
         {
             var admin = await this.databaseContext.Admins.FindAsync(adminId);
 
-            return new AdminViewModel
+            if(admin != null)
             {
-                ID = admin.ID,
-                FirstName = admin.FirstName,
-                LastName = admin.LastName,
-                Email = admin.Email
-            };
+                return new AdminViewModel
+                {
+                    ID = admin.ID,
+                    FirstName = admin.FirstName,
+                    LastName = admin.LastName,
+                    Email = admin.Email
+                };
+            }
+            throw new UserNotFoundException();
+            
         }
 
         public async Task<IEnumerable<AdminViewModel>> GetAdmins()

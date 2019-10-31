@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Exceptions;
 using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.ViewModels;
@@ -59,7 +60,7 @@ namespace TrackMeWebAPI.Services.Logic
                     Role = applicationUserRole
                 };
             }
-            return null;
+            throw new UserNotFoundException();
         }
 
         public async Task Register(RegisterViewModel registerViewModel)
@@ -88,8 +89,8 @@ namespace TrackMeWebAPI.Services.Logic
                 basicUser.Email = applicationUser.Email;
                 databaseContext.BasicUsers.Add(basicUser as BasicUser);
                 databaseContext.SaveChanges();
-                
             }
+            throw new DuplicatedUserException();
             
         }
     }

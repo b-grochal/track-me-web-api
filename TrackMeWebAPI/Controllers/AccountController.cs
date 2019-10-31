@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Exceptions;
 using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.ViewModels;
@@ -36,13 +37,15 @@ namespace TrackMeWebAPI.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel loginViewModel)
         {
-            var loggedUserData = await this.accountService.Login(loginViewModel);
-            if(loginViewModel != null)
+            try
             {
+                var loggedUserData = await this.accountService.Login(loginViewModel);
                 return Ok(loggedUserData);
             }
-            return Conflict();
-                       
+            catch(UserNotFoundException)
+            {
+                return NotFound();
+            }                 
         }
 
         // POST api/register
@@ -50,8 +53,16 @@ namespace TrackMeWebAPI.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel registerViewModel)
         {
-            await this.accountService.Register(registerViewModel);
-            return Ok();
+            try
+            {
+                await this.accountService.Register(registerViewModel);
+                return Ok();
+            }
+            catch(DuplicatedUserException)
+            {
+                return Conflict();
+            }
+            
         }
         
     }

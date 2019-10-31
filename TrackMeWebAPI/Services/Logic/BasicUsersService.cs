@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Exceptions;
 using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.ViewModels;
@@ -27,12 +28,13 @@ namespace TrackMeWebAPI.Services.Logic
             var basicUser = await databaseContext.BasicUsers.FindAsync(basicUserId);
             var applicationUser = await userManager.FindByEmailAsync(basicUser.Email);
 
-            if (basicUser != null || applicationUser != null)
+            if (basicUser != null && applicationUser != null)
             {
                 databaseContext.BasicUsers.Remove(basicUser);
                 await userManager.DeleteAsync(applicationUser);
                 databaseContext.SaveChanges();
             }
+            throw new UserNotFoundException();
         }
 
         public async Task<IEnumerable<BasicUserViewModel>> GetAllBasicUsers()
@@ -51,44 +53,56 @@ namespace TrackMeWebAPI.Services.Logic
         {
             var basicUser = await this.databaseContext.BasicUsers.SingleOrDefaultAsync(x => x.ApplicationUserID.Equals(applicationUserId));
 
-            return new BasicUserViewModel
+            if(basicUser != null)
             {
-                ID = basicUser.ID,
-                FirstName = basicUser.FirstName,
-                LastName = basicUser.LastName,
-                Email = basicUser.Email,
-                PhoneNumber = basicUser.PhoneNumber
-            };
+                return new BasicUserViewModel
+                {
+                    ID = basicUser.ID,
+                    FirstName = basicUser.FirstName,
+                    LastName = basicUser.LastName,
+                    Email = basicUser.Email,
+                    PhoneNumber = basicUser.PhoneNumber
+                };
+            }
+            throw new UserNotFoundException();
         }
 
         public async Task<BasicUserViewModel> GetBasicUserDetails(int basicUserId)
         {
             var basicUser = await this.databaseContext.BasicUsers.FindAsync(basicUserId);
 
-            return new BasicUserViewModel
+            if(basicUser != null)
             {
-                ID = basicUser.ID,
-                FirstName = basicUser.FirstName,
-                LastName = basicUser.LastName,
-                Email = basicUser.Email,
-                PhoneNumber = basicUser.PhoneNumber
-            };
+                return new BasicUserViewModel
+                {
+                    ID = basicUser.ID,
+                    FirstName = basicUser.FirstName,
+                    LastName = basicUser.LastName,
+                    Email = basicUser.Email,
+                    PhoneNumber = basicUser.PhoneNumber
+                };
+            }
+            throw new UserNotFoundException();
+            
         }
 
         public async Task UpdateBasicUser(UpdatedBasicUserViewModel updatedBasicUser)
         {
             var oldBasicUser = await databaseContext.BasicUsers.FindAsync(updatedBasicUser.ID);
             var applicationUser = await userManager.FindByEmailAsync(oldBasicUser.Email);
-            applicationUser.Email = updatedBasicUser.Email;
-            applicationUser.UserName = updatedBasicUser.Email;
-            oldBasicUser.Email = updatedBasicUser.Email;
-            oldBasicUser.FirstName = updatedBasicUser.FirstName;
-            oldBasicUser.LastName = updatedBasicUser.LastName;
-            oldBasicUser.PhoneNumber = updatedBasicUser.PhoneNumber;
-            await userManager.UpdateAsync(applicationUser);
-            databaseContext.BasicUsers.Update(oldBasicUser);
-            databaseContext.SaveChanges();
-            
+            if(oldBasicUser != null && applicationUser != null)
+            {
+                applicationUser.Email = updatedBasicUser.Email;
+                applicationUser.UserName = updatedBasicUser.Email;
+                oldBasicUser.Email = updatedBasicUser.Email;
+                oldBasicUser.FirstName = updatedBasicUser.FirstName;
+                oldBasicUser.LastName = updatedBasicUser.LastName;
+                oldBasicUser.PhoneNumber = updatedBasicUser.PhoneNumber;
+                await userManager.UpdateAsync(applicationUser);
+                databaseContext.BasicUsers.Update(oldBasicUser);
+                databaseContext.SaveChanges();
+            }
+            throw new UserNotFoundException();            
         }
     }
 }

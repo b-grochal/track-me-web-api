@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Exceptions;
 using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.ViewModels;
@@ -41,8 +42,15 @@ namespace TrackMeWebAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<BasicUserViewModel>> GetBasicUserDetails(int id)
         {
-            var basicUser = await basicUsersService.GetBasicUserDetails(id);
-            return Ok(basicUser);
+            try
+            {
+                var basicUser = await basicUsersService.GetBasicUserDetails(id);
+                return Ok(basicUser);
+            }
+            catch (UserNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         // GET api/basicUsers
@@ -50,26 +58,49 @@ namespace TrackMeWebAPI.Controllers
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult<BasicUserViewModel>> GetBasicUserAccountDetails()
         {
-            var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
-            var basicUser = await basicUsersService.GetBasicUserAccountDetails(applicationUserId);
-            return Ok(basicUser);
+            try
+            {
+                var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+                var basicUser = await basicUsersService.GetBasicUserAccountDetails(applicationUserId);
+                return Ok(basicUser);
+            }
+            catch(UserNotFoundException)
+            {
+                return NotFound();
+            }
+            
         }
 
         [HttpDelete("{id}")]
         [Authorize(Roles ="Admin")]
         public async Task<ActionResult> DeleteBasicUser(int id)
         {
-            await basicUsersService.DeleteBasicUser(id);
-            return Ok();
+            try
+            {
+                await basicUsersService.DeleteBasicUser(id);
+                return Ok();
+            }
+            catch(UserNotFoundException)
+            {
+                return NotFound();
+            }
+            
         }
 
         [HttpPut]
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult> UpdateBasicUser([FromBody] UpdatedBasicUserViewModel updatedBasicUser)
         {
-
-            await basicUsersService.UpdateBasicUser(updatedBasicUser);
-            return Ok();
+            try
+            {
+                await basicUsersService.UpdateBasicUser(updatedBasicUser);
+                return Ok();
+            }
+            catch (UserNotFoundException)
+            {
+                return NotFound();
+            }
+            
         }
 
 
