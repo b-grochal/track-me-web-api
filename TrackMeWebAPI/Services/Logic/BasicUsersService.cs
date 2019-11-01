@@ -34,7 +34,7 @@ namespace TrackMeWebAPI.Services.Logic
                 await userManager.DeleteAsync(applicationUser);
                 databaseContext.SaveChanges();
             }
-            throw new UserNotFoundException();
+            throw new UserNotFoundException("Cannot find user with passed ID.");
         }
 
         public async Task<IEnumerable<BasicUserViewModel>> GetAllBasicUsers()
@@ -64,7 +64,7 @@ namespace TrackMeWebAPI.Services.Logic
                     PhoneNumber = basicUser.PhoneNumber
                 };
             }
-            throw new UserNotFoundException();
+            throw new UserNotFoundException("Cannot find user with passed ID.");
         }
 
         public async Task<BasicUserViewModel> GetBasicUserDetails(int basicUserId)
@@ -82,7 +82,7 @@ namespace TrackMeWebAPI.Services.Logic
                     PhoneNumber = basicUser.PhoneNumber
                 };
             }
-            throw new UserNotFoundException();
+            throw new UserNotFoundException("Cannot find user with passed ID.");
             
         }
 
@@ -102,7 +102,7 @@ namespace TrackMeWebAPI.Services.Logic
                 databaseContext.BasicUsers.Update(oldBasicUser);
                 databaseContext.SaveChanges();
             }
-            throw new UserNotFoundException();            
+            throw new UserNotFoundException("Cannot find user with passed ID.");            
         }
     }
 }

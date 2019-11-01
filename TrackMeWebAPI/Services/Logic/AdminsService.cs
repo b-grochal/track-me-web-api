@@ -50,7 +50,7 @@ namespace TrackMeWebAPI.Services.Logic
                 databaseContext.Admins.Add(admin as Admin);
                 databaseContext.SaveChanges();              
             }
-            throw new DuplicatedUserException();
+            throw new DuplicatedUserException("User with passed email already exists.");
                        
         }
 
@@ -64,7 +64,7 @@ namespace TrackMeWebAPI.Services.Logic
                 databaseContext.Admins.Remove(admin);
                 await userManager.DeleteAsync(applicationUser);
             }
-            throw new UserNotFoundException();
+            throw new UserNotFoundException("Cannot find user with passed ID.");
         }
 
         public async Task<AdminViewModel> GetAdminDetails(int adminId)
@@ -81,7 +81,7 @@ namespace TrackMeWebAPI.Services.Logic
                     Email = admin.Email
                 };
             }
-            throw new UserNotFoundException();
+            throw new UserNotFoundException("Cannot find user with passed ID.");
             
         }
 

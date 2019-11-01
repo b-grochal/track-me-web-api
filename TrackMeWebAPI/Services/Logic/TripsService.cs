@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Exceptions;
 using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.ViewModels;
@@ -31,10 +32,12 @@ namespace TrackMeWebAPI.Services.Logic
 
         public async Task<IEnumerable<TripViewModel>> GetTrips(string applicationUserID)
         {
-            var basicUserID = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID)).ID;
+            var basicUser = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID));
 
-            return await this.databaseContext.Trips
-                .Where(x => x.BasicUserID == basicUserID)
+            if(basicUser != null)
+            {
+                return await this.databaseContext.Trips
+                .Where(x => x.BasicUserID == basicUser.ID)
                 .Select(x => new TripViewModel
                 {
                     ID = x.ID,
@@ -43,20 +46,28 @@ namespace TrackMeWebAPI.Services.Logic
 
                 })
                 .ToListAsync();
+            }
+            throw new UserNotFoundException("Cannot find user with passed ID.");
+            
         }
 
         public async Task CreateTrip(string applicationUserID, NewTripViewModel newTripViewModel)
         {
-            var basicUserID = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID)).ID;
+            var basicUser = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID));
 
-            Trip trip = new Trip
+            if(basicUser != null)
             {
-                Name = newTripViewModel.Name
-            };
+                Trip trip = new Trip
+                {
+                    Name = newTripViewModel.Name
+                };
 
-            trip.BasicUserID = basicUserID;
-            await this.databaseContext.Trips.AddAsync(trip);
-            this.databaseContext.SaveChanges();
+                trip.BasicUserID = basicUser.ID;
+                await this.databaseContext.Trips.AddAsync(trip);
+                this.databaseContext.SaveChanges();
+            }
+            throw new UserNotFoundException("Cannot find user with passed ID.");
+            
         }
 
         public async Task<IEnumerable<SensorsValuesViewModel>> GetTripDetails(int tripId)
@@ -84,9 +95,15 @@ namespace TrackMeWebAPI.Services.Logic
 
         public async Task DeleteTrip(int tripID)
         {
+
             var trip = await databaseContext.Trips.FindAsync(tripID);
-            databaseContext.Trips.Remove(trip);
-            databaseContext.SaveChanges();
+            if(trip != null)
+            {
+                databaseContext.Trips.Remove(trip);
+                databaseContext.SaveChanges();
+            }
+            throw new TripNotFoundException("Cannot find trip with passed ID.");
+            
         }
     }
 }

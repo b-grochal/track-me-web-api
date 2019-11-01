@@ -42,7 +42,7 @@ namespace TrackMeWebAPI.Controllers
                 var loggedUserData = await this.accountService.Login(loginViewModel);
                 return Ok(loggedUserData);
             }
-            catch(UserNotFoundException)
+            catch(UserNotFoundException ex)
             {
                 return NotFound();
             }                 

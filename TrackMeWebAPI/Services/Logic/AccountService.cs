@@ -60,7 +60,7 @@ namespace TrackMeWebAPI.Services.Logic
                     Role = applicationUserRole
                 };
             }
-            throw new UserNotFoundException();
+            throw new UserNotFoundException("Cannot find user with passed data.");
         }
 
         public async Task Register(RegisterViewModel registerViewModel)
@@ -90,7 +90,7 @@ namespace TrackMeWebAPI.Services.Logic
                 databaseContext.BasicUsers.Add(basicUser as BasicUser);
                 databaseContext.SaveChanges();
             }
-            throw new DuplicatedUserException();
+            throw new DuplicatedUserException("User with passed email already exists.");
             
         }
     }
