@@ -44,9 +44,12 @@ namespace TrackMeWebAPI.Controllers
                 var admin = await adminsService.GetAdminDetails(id);
                 return Ok(admin);
             }
-            catch(UserNotFoundException)
+            catch(UserNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
             }
             
         }
@@ -60,9 +63,12 @@ namespace TrackMeWebAPI.Controllers
                 await adminsService.CreateAdmin(newAdminViewModel);
                 return Ok();
             }
-            catch (DuplicatedUserException)
+            catch (DuplicatedUserException ex)
             {
-                return Conflict();
+                return Conflict(new
+                {
+                    message = ex.Message
+                });
             }
             
         }
@@ -75,9 +81,12 @@ namespace TrackMeWebAPI.Controllers
                 await adminsService.DeleteAdmin(id);
                 return Ok();
             }
-            catch (UserNotFoundException)
+            catch (UserNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
             }
         }
 

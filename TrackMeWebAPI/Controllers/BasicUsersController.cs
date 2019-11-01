@@ -47,9 +47,12 @@ namespace TrackMeWebAPI.Controllers
                 var basicUser = await basicUsersService.GetBasicUserDetails(id);
                 return Ok(basicUser);
             }
-            catch (UserNotFoundException)
+            catch (UserNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
             }
         }
 
@@ -64,9 +67,12 @@ namespace TrackMeWebAPI.Controllers
                 var basicUser = await basicUsersService.GetBasicUserAccountDetails(applicationUserId);
                 return Ok(basicUser);
             }
-            catch(UserNotFoundException)
+            catch(UserNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
             }
             
         }
@@ -80,9 +86,12 @@ namespace TrackMeWebAPI.Controllers
                 await basicUsersService.DeleteBasicUser(id);
                 return Ok();
             }
-            catch(UserNotFoundException)
+            catch(UserNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
             }
             
         }
@@ -96,9 +105,12 @@ namespace TrackMeWebAPI.Controllers
                 await basicUsersService.UpdateBasicUser(updatedBasicUser);
                 return Ok();
             }
-            catch (UserNotFoundException)
+            catch (UserNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
             }
             
         }

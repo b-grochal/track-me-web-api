@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Exceptions;
 using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.Services.Logic;
@@ -30,9 +31,20 @@ namespace TrackMeWebAPI.Controllers
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult<IEnumerable<TripViewModel>>> GetTrips()
         {
-            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
-            var trips = await this.tripsService.GetTrips(applicationUserID);
-            return Ok(trips);
+            try
+            {
+                var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+                var trips = await this.tripsService.GetTrips(applicationUserID);
+                return Ok(trips);
+            }
+            catch (UserNotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
+            
         }
 
         // GET api/trips/all
@@ -50,9 +62,20 @@ namespace TrackMeWebAPI.Controllers
         [Authorize(Roles ="BasicUser")]
         public async Task<ActionResult> CreateTrip([FromBody] NewTripViewModel newTripViewModel)
         {
-            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
-            await this.tripsService.CreateTrip(applicationUserID, newTripViewModel);
-            return Ok();
+            try
+            {
+                var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+                await this.tripsService.CreateTrip(applicationUserID, newTripViewModel);
+                return Ok();
+            }
+            catch(UserNotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
+            
         }
 
         // GET api/trips/4/details
@@ -69,8 +92,19 @@ namespace TrackMeWebAPI.Controllers
         [Authorize(Roles = "Admin,BasicUser")]
         public async Task<ActionResult> DeleteTrip(int id)
         {
-            await this.tripsService.DeleteTrip(id);
-            return Ok();
+            try
+            {
+                await this.tripsService.DeleteTrip(id);
+                return Ok();
+            }
+            catch (TripNotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
+            
         }
 
         //[HttpPost]

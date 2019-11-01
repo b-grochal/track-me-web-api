@@ -44,7 +44,10 @@ namespace TrackMeWebAPI.Controllers
             }
             catch(UserNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
             }                 
         }
 
@@ -58,9 +61,12 @@ namespace TrackMeWebAPI.Controllers
                 await this.accountService.Register(registerViewModel);
                 return Ok();
             }
-            catch(DuplicatedUserException)
+            catch(DuplicatedUserException ex)
             {
-                return Conflict();
+                return Conflict(new
+                {
+                    message = ex.Message
+                });
             }
             
         }
