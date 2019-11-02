@@ -26,31 +26,32 @@ namespace TrackMeWebAPI.Services.Logic
         public async Task CreateAdmin(NewAdminViewModel newAdminViewModel)
         {
             var duplicatedAdmin = await userManager.FindByEmailAsync(newAdminViewModel.Email);
-            if (duplicatedAdmin == null)
+            if (duplicatedAdmin != null)
             {
-                ApplicationUser applicationUser = new ApplicationUser
-                {
-                    Email = newAdminViewModel.Email,
-                    UserName = newAdminViewModel.Email
-                };
-
-                Admin admin = new Admin
-                {
-                    FirstName = newAdminViewModel.FirstName,
-                    LastName = newAdminViewModel.LastName,
-                    Email = newAdminViewModel.Email
-                };
-
-                string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUser, newAdminViewModel.Password);
-                applicationUser.PasswordHash = hashedPassword;
-                userManager.CreateAsync(applicationUser).Wait();
-                userManager.AddToRoleAsync(applicationUser, ApplicationRoles.Admin.ToString()).Wait();
-                admin.ApplicationUserID = applicationUser.Id;
-                admin.Email = applicationUser.Email;
-                databaseContext.Admins.Add(admin as Admin);
-                databaseContext.SaveChanges();              
+                throw new DuplicatedUserException("User with passed email already exists.");
             }
-            throw new DuplicatedUserException("User with passed email already exists.");
+
+            ApplicationUser applicationUser = new ApplicationUser
+            {
+                Email = newAdminViewModel.Email,
+                UserName = newAdminViewModel.Email
+            };
+
+            Admin admin = new Admin
+            {
+                FirstName = newAdminViewModel.FirstName,
+                LastName = newAdminViewModel.LastName,
+                Email = newAdminViewModel.Email
+            };
+
+            string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUser, newAdminViewModel.Password);
+            applicationUser.PasswordHash = hashedPassword;
+            userManager.CreateAsync(applicationUser).Wait();
+            userManager.AddToRoleAsync(applicationUser, ApplicationRoles.Admin.ToString()).Wait();
+            admin.ApplicationUserID = applicationUser.Id;
+            admin.Email = applicationUser.Email;
+            databaseContext.Admins.Add(admin as Admin);
+            databaseContext.SaveChanges();
                        
         }
 
@@ -59,12 +60,12 @@ namespace TrackMeWebAPI.Services.Logic
             var admin = await databaseContext.Admins.FindAsync(adminId);
             var applicationUser = await userManager.FindByEmailAsync(admin.Email);
 
-            if (admin != null && applicationUser != null)
+            if (admin == null || applicationUser == null)
             {
-                databaseContext.Admins.Remove(admin);
-                await userManager.DeleteAsync(applicationUser);
+                throw new UserNotFoundException("Cannot find user with passed ID.");
             }
-            throw new UserNotFoundException("Cannot find user with passed ID.");
+            databaseContext.Admins.Remove(admin);
+            await userManager.DeleteAsync(applicationUser);
         }
 
         public async Task<AdminViewModel> GetAdminDetails(int adminId)
