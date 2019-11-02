@@ -90,7 +90,7 @@ namespace TrackMeWebAPI.Services.Logic
         {
             var oldBasicUser = await databaseContext.BasicUsers.FindAsync(updatedBasicUser.ID);
             var applicationUser = await userManager.FindByEmailAsync(oldBasicUser.Email);
-            if(oldBasicUser == null && applicationUser == null)
+            if(oldBasicUser == null || applicationUser == null)
             {
                 throw new UserNotFoundException("Cannot find user with passed ID.");
             }
