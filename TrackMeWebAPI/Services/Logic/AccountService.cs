@@ -66,32 +66,32 @@ namespace TrackMeWebAPI.Services.Logic
         public async Task Register(RegisterViewModel registerViewModel)
         {
             var duplicatedUser = await userManager.FindByEmailAsync(registerViewModel.Email);
-            if (duplicatedUser == null)
+            if (duplicatedUser != null)
             {
-                ApplicationUser applicationUser = new ApplicationUser
-                {
-                    Email = registerViewModel.Email,
-                    UserName = registerViewModel.Email
-                };
-
-                BasicUser basicUser = new BasicUser
-                {
-                    FirstName = registerViewModel.FirstName,
-                    LastName = registerViewModel.LastName,
-                    PhoneNumber = registerViewModel.PhoneNumber
-                };
-
-                string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUser, registerViewModel.Password);
-                applicationUser.PasswordHash = hashedPassword;
-                userManager.CreateAsync(applicationUser).Wait();
-                userManager.AddToRoleAsync(applicationUser, ApplicationRoles.BasicUser.ToString()).Wait();
-                basicUser.ApplicationUserID = applicationUser.Id;
-                basicUser.Email = applicationUser.Email;
-                databaseContext.BasicUsers.Add(basicUser as BasicUser);
-                databaseContext.SaveChanges();
+                throw new DuplicatedUserException("User with passed email already exists.");
             }
-            throw new DuplicatedUserException("User with passed email already exists.");
-            
+
+            ApplicationUser applicationUser = new ApplicationUser
+            {
+                Email = registerViewModel.Email,
+                UserName = registerViewModel.Email
+            };
+
+            BasicUser basicUser = new BasicUser
+            {
+                FirstName = registerViewModel.FirstName,
+                LastName = registerViewModel.LastName,
+                PhoneNumber = registerViewModel.PhoneNumber
+            };
+
+            string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUser, registerViewModel.Password);
+            applicationUser.PasswordHash = hashedPassword;
+            userManager.CreateAsync(applicationUser).Wait();
+            userManager.AddToRoleAsync(applicationUser, ApplicationRoles.BasicUser.ToString()).Wait();
+            basicUser.ApplicationUserID = applicationUser.Id;
+            basicUser.Email = applicationUser.Email;
+            databaseContext.BasicUsers.Add(basicUser as BasicUser);
+            databaseContext.SaveChanges();
         }
     }
 }
