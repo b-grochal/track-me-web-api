@@ -90,19 +90,20 @@ namespace TrackMeWebAPI.Services.Logic
         {
             var oldBasicUser = await databaseContext.BasicUsers.FindAsync(updatedBasicUser.ID);
             var applicationUser = await userManager.FindByEmailAsync(oldBasicUser.Email);
-            if(oldBasicUser != null && applicationUser != null)
+            if(oldBasicUser == null && applicationUser == null)
             {
-                applicationUser.Email = updatedBasicUser.Email;
-                applicationUser.UserName = updatedBasicUser.Email;
-                oldBasicUser.Email = updatedBasicUser.Email;
-                oldBasicUser.FirstName = updatedBasicUser.FirstName;
-                oldBasicUser.LastName = updatedBasicUser.LastName;
-                oldBasicUser.PhoneNumber = updatedBasicUser.PhoneNumber;
-                await userManager.UpdateAsync(applicationUser);
-                databaseContext.BasicUsers.Update(oldBasicUser);
-                databaseContext.SaveChanges();
+                throw new UserNotFoundException("Cannot find user with passed ID.");
             }
-            throw new UserNotFoundException("Cannot find user with passed ID.");            
+            applicationUser.Email = updatedBasicUser.Email;
+            applicationUser.UserName = updatedBasicUser.Email;
+            oldBasicUser.Email = updatedBasicUser.Email;
+            oldBasicUser.FirstName = updatedBasicUser.FirstName;
+            oldBasicUser.LastName = updatedBasicUser.LastName;
+            oldBasicUser.PhoneNumber = updatedBasicUser.PhoneNumber;
+            await userManager.UpdateAsync(applicationUser);
+            databaseContext.BasicUsers.Update(oldBasicUser);
+            databaseContext.SaveChanges();
+                   
         }
     }
 }
