@@ -55,18 +55,20 @@ namespace TrackMeWebAPI.Services.Logic
         {
             var basicUser = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID));
 
-            if(basicUser != null)
+            if(basicUser == null)
             {
-                Trip trip = new Trip
-                {
-                    Name = newTripViewModel.Name
-                };
-
-                trip.BasicUserID = basicUser.ID;
-                await this.databaseContext.Trips.AddAsync(trip);
-                this.databaseContext.SaveChanges();
+                throw new UserNotFoundException("Cannot find user with passed ID.");
             }
-            throw new UserNotFoundException("Cannot find user with passed ID.");
+
+            Trip trip = new Trip
+            {
+                Name = newTripViewModel.Name
+            };
+
+            trip.BasicUserID = basicUser.ID;
+            await this.databaseContext.Trips.AddAsync(trip);
+            this.databaseContext.SaveChanges();
+           
             
         }
 
@@ -97,12 +99,13 @@ namespace TrackMeWebAPI.Services.Logic
         {
 
             var trip = await databaseContext.Trips.FindAsync(tripID);
-            if(trip != null)
+            if(trip == null)
             {
-                databaseContext.Trips.Remove(trip);
-                databaseContext.SaveChanges();
+                throw new TripNotFoundException("Cannot find trip with passed ID.");
             }
-            throw new TripNotFoundException("Cannot find trip with passed ID.");
+            databaseContext.Trips.Remove(trip);
+            databaseContext.SaveChanges();
+            
             
         }
     }
