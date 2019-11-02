@@ -28,13 +28,14 @@ namespace TrackMeWebAPI.Services.Logic
             var basicUser = await databaseContext.BasicUsers.FindAsync(basicUserId);
             var applicationUser = await userManager.FindByEmailAsync(basicUser.Email);
 
-            if (basicUser != null && applicationUser != null)
+            if (basicUser == null || applicationUser == null)
             {
-                databaseContext.BasicUsers.Remove(basicUser);
-                await userManager.DeleteAsync(applicationUser);
-                databaseContext.SaveChanges();
+                throw new UserNotFoundException("Cannot find user with passed ID.");
             }
-            throw new UserNotFoundException("Cannot find user with passed ID.");
+            databaseContext.BasicUsers.Remove(basicUser);
+            await userManager.DeleteAsync(applicationUser);
+            databaseContext.SaveChanges();
+            
         }
 
         public async Task<IEnumerable<BasicUserViewModel>> GetAllBasicUsers()
