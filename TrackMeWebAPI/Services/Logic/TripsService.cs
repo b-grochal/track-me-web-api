@@ -108,5 +108,28 @@ namespace TrackMeWebAPI.Services.Logic
             
             
         }
+
+        public async Task CreateTripDetails(SensorsValuesViewModel sensorsValuesViewModel)
+        {
+            var sensorValues = new SensorsValues
+            {
+                TripID = sensorsValuesViewModel.TripID,
+                UploadDate = DateTime.Now,
+                Latitude = sensorsValuesViewModel.Latitude,
+                Longitude = sensorsValuesViewModel.Longitude,
+                AccelerometerX = sensorsValuesViewModel.AccelerometerX,
+                AccelerometerY = sensorsValuesViewModel.AccelerometerY,
+                AccelerometerZ = sensorsValuesViewModel.AccelerometerZ,
+                GyroscopeX = sensorsValuesViewModel.GyroscopeX,
+                GyroscopeY = sensorsValuesViewModel.GyroscopeY,
+                GyroscopeZ = sensorsValuesViewModel.GyroscopeZ,
+                MagneticFieldX = sensorsValuesViewModel.MagneticFieldX,
+                MagneticFieldY = sensorsValuesViewModel.MagneticFieldY,
+                MagneticFieldZ = sensorsValuesViewModel.MagneticFieldZ,
+            };
+            await databaseContext.SensorsValues.AddAsync(sensorValues);
+            databaseContext.SaveChanges();
+
+        }
     }
 }

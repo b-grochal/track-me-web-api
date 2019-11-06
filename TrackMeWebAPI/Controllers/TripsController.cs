@@ -107,28 +107,23 @@ namespace TrackMeWebAPI.Controllers
             
         }
 
-        //[HttpPost]
-        //[Authorize(Roles = "BasicUser")]
-        //public async Task<ActionResult> CreateTripDetails([FromBody] NewTripViewModel newTripViewModel)
-        //{
-
-        //    var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
-        //    var basicUserID = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID)).ID;
-
-        //    Trip trip = new Trip
-        //    {
-        //        Name = newTripViewModel.Name
-        //    };
-
-        //    trip.BasicUserID = basicUserID;
-        //    await this.databaseContext.Trips.AddAsync(trip);
-        //    this.databaseContext.SaveChanges();
-        //    return Ok();
-        //}
+        [HttpPost]
+        [Authorize(Roles = "BasicUser")]
+        public async Task<ActionResult> CreateTripDetails([FromBody] SensorsValuesViewModel sensorsValuesViewModel)
+        {
+            try
+            {
+                await this.tripsService.CreateTripDetails(sensorsValuesViewModel);
+                return Ok();
+            }
+            catch(TripNotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
+        }
 
     }
-
-
-
-
 }
