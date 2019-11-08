@@ -109,11 +109,11 @@ namespace TrackMeWebAPI.Services.Logic
             
         }
 
-        public async Task CreateTripDetails(SensorsValuesViewModel sensorsValuesViewModel)
+        public async Task CreateTripDetails(int tripId, SensorsValuesViewModel sensorsValuesViewModel)
         {
             var sensorValues = new SensorsValues
             {
-                TripID = sensorsValuesViewModel.TripID,
+                TripID = tripId,
                 UploadDate = DateTime.Now,
                 Latitude = sensorsValuesViewModel.Latitude,
                 Longitude = sensorsValuesViewModel.Longitude,

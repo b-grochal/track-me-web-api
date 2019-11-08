@@ -14,7 +14,7 @@ namespace TrackMeWebAPI.Services.Interfaces
 
         Task CreateTrip(string applicationUserID, NewTripViewModel newTripViewModel);
 
-        Task CreateTripDetails(SensorsValuesViewModel sensorsValuesViewModel);
+        Task CreateTripDetails(int tripId, SensorsValuesViewModel sensorsValuesViewModel);
 
         Task<IEnumerable<SensorsValuesViewModel>> GetTripDetails(int tripID);
 

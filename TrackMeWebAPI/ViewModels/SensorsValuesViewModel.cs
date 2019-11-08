@@ -7,7 +7,6 @@ namespace TrackMeWebAPI.ViewModels
 {
     public class SensorsValuesViewModel
     {
-        public int TripID { get; set; }
         public string UploadDate { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }

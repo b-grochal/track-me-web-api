@@ -114,7 +114,7 @@ namespace TrackMeWebAPI.Controllers
         {
             try
             {
-                await this.tripsService.CreateTripDetails(sensorsValuesViewModel);
+                await this.tripsService.CreateTripDetails(tripId, sensorsValuesViewModel);
                 return Ok();
             }
             catch(TripNotFoundException ex)
