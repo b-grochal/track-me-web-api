@@ -38,13 +38,13 @@ namespace TrackMeWebAPI.Controllers
         }
 
         // GET api/basicUsers/4
-        [HttpGet("{id}")]
+        [HttpGet("{basicUserId}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<BasicUserViewModel>> GetBasicUserDetails(int id)
+        public async Task<ActionResult<BasicUserViewModel>> GetBasicUserDetails(int basicUserId)
         {
             try
             {
-                var basicUser = await basicUsersService.GetBasicUserDetails(id);
+                var basicUser = await basicUsersService.GetBasicUserDetails(basicUserId);
                 return Ok(basicUser);
             }
             catch (UserNotFoundException ex)
@@ -77,13 +77,14 @@ namespace TrackMeWebAPI.Controllers
             
         }
 
-        [HttpDelete("{id}")]
+        // DELETE api/basicUsers/4
+        [HttpDelete("{basicUserId}")]
         [Authorize(Roles ="Admin")]
-        public async Task<ActionResult> DeleteBasicUser(int id)
+        public async Task<ActionResult> DeleteBasicUser(int basicUserId)
         {
             try
             {
-                await basicUsersService.DeleteBasicUser(id);
+                await basicUsersService.DeleteBasicUser(basicUserId);
                 return Ok();
             }
             catch(UserNotFoundException ex)
@@ -96,6 +97,7 @@ namespace TrackMeWebAPI.Controllers
             
         }
 
+        // PUT api/basicUsers
         [HttpPut]
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult> UpdateBasicUser([FromBody] UpdatedBasicUserViewModel updatedBasicUser)

@@ -36,12 +36,12 @@ namespace TrackMeWebAPI.Controllers
         }
 
         // GET api/admins/4
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AdminViewModel>> GetAdminDetails(int id)
+        [HttpGet("{adminId}")]
+        public async Task<ActionResult<AdminViewModel>> GetAdminDetails(int adminId)
         {
             try
             {
-                var admin = await adminsService.GetAdminDetails(id);
+                var admin = await adminsService.GetAdminDetails(adminId);
                 return Ok(admin);
             }
             catch(UserNotFoundException ex)
@@ -73,12 +73,13 @@ namespace TrackMeWebAPI.Controllers
             
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAdmin(int id)
+        // DELETE api/admins/4
+        [HttpDelete("{adminId}")]
+        public async Task<ActionResult> DeleteAdmin(int adminId)
         {
             try
             {
-                await adminsService.DeleteAdmin(id);
+                await adminsService.DeleteAdmin(adminId);
                 return Ok();
             }
             catch (UserNotFoundException ex)

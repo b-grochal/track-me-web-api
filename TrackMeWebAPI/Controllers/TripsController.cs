@@ -79,22 +79,22 @@ namespace TrackMeWebAPI.Controllers
         }
 
         // GET api/trips/4/details
-        [HttpGet("{id}/details")]
+        [HttpGet("{tripId}/details")]
         [Authorize(Roles = "BasicUser,Admin")]
-        public async Task<ActionResult<IEnumerable<SensorsValuesViewModel>>> GetTripDetails(int id)
+        public async Task<ActionResult<IEnumerable<SensorsValuesViewModel>>> GetTripDetails(int tripId)
         {
-            var tripDetails = await this.tripsService.GetTripDetails(id);
+            var tripDetails = await this.tripsService.GetTripDetails(tripId);
             return Ok(tripDetails);
         }
 
         // DELETE api/trips/4
-        [HttpDelete("{id}")]
+        [HttpDelete("{tripId}")]
         [Authorize(Roles = "Admin,BasicUser")]
-        public async Task<ActionResult> DeleteTrip(int id)
+        public async Task<ActionResult> DeleteTrip(int tripId)
         {
             try
             {
-                await this.tripsService.DeleteTrip(id);
+                await this.tripsService.DeleteTrip(tripId);
                 return Ok();
             }
             catch (TripNotFoundException ex)
@@ -107,9 +107,10 @@ namespace TrackMeWebAPI.Controllers
             
         }
 
-        [HttpPost]
+        // POST api/trips/4/details
+        [HttpPost("{tripId}/details")]
         [Authorize(Roles = "BasicUser")]
-        public async Task<ActionResult> CreateTripDetails([FromBody] SensorsValuesViewModel sensorsValuesViewModel)
+        public async Task<ActionResult> CreateTripDetails(int tripId, [FromBody] SensorsValuesViewModel sensorsValuesViewModel)
         {
             try
             {
