@@ -58,9 +58,9 @@ namespace TrackMeWebAPI
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidAudience = "hello",
-                    ValidIssuer = "hello",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my security key hell yeach"))
+                    ValidAudience = Configuration["ApplicationSettings:Audience"],
+                    ValidIssuer = Configuration["ApplicationSettings:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:AuthSigningKey"]))
                 };
             });
 

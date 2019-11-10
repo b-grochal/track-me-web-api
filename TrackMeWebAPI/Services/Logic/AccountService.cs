@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -19,11 +20,13 @@ namespace TrackMeWebAPI.Services.Logic
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly DatabaseContext databaseContext;
+        private readonly ApplicationSettings applicationSettings;
 
-        public AccountService(UserManager<ApplicationUser> userManager, DatabaseContext databaseContext)
+        public AccountService(UserManager<ApplicationUser> userManager, DatabaseContext databaseContext, IOptions<ApplicationSettings> applicationSettings)
         {
             this.userManager = userManager;
             this.databaseContext = databaseContext;
+            this.applicationSettings = applicationSettings.Value;
         }
 
         public async Task<LoggedUserViewModel> Login(LoginViewModel loginViewModel)
@@ -44,11 +47,11 @@ namespace TrackMeWebAPI.Services.Logic
                     new Claim(identityOptions.ClaimsIdentity.RoleClaimType, applicationUserRole)
                 };
 
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my security key hell yeach"));
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(applicationSettings.AuthSigningKey));
 
                 var token = new JwtSecurityToken(
-                    issuer: "hello",
-                    audience: "hello",
+                    issuer: applicationSettings.Issuer,
+                    audience: applicationSettings.Audience,
                     expires: DateTime.Now.AddHours(3),
                     claims: authClaims,
                     signingCredentials: new Microsoft.IdentityModel.Tokens.SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
