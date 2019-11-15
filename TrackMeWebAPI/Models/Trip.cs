@@ -10,6 +10,6 @@ namespace TrackMeWebAPI.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public int BasicUserID { get; set; }
-        public virtual ICollection<SensorValues> SensorValues { get; set; }
+        public virtual ICollection<SensorsValues> SensorValues { get; set; }
     }
 }

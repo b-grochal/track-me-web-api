@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Exceptions;
 using TrackMeWebAPI.Models;
+using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.ViewModels;
 
 namespace TrackMeWebAPI.Controllers
@@ -17,13 +19,11 @@ namespace TrackMeWebAPI.Controllers
     [ApiController]
     public class BasicUsersController : ControllerBase
     {
-        private readonly DatabaseContext databaseContext;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IBasicUsersService basicUsersService;
 
-        public BasicUsersController(DatabaseContext databaseContext, UserManager<ApplicationUser> userManager)
+        public BasicUsersController(IBasicUsersService basicUsersService)
         {
-            this.databaseContext = databaseContext;
-            this.userManager = userManager;
+            this.basicUsersService = basicUsersService;
         }
 
         // GET api/basicUsers/all
@@ -32,32 +32,28 @@ namespace TrackMeWebAPI.Controllers
         [Route("all")]
         public async Task<ActionResult<IEnumerable<BasicUserViewModel>>> GetAllBasicUsers()
         {
-            return await this.databaseContext.BasicUsers
-                .Select(x => new BasicUserViewModel
-                {
-                    ID = x.ID,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    PhoneNumber = x.PhoneNumber
-                }).ToListAsync();
+            var basicUsers = await basicUsersService.GetAllBasicUsers();
+            return Ok(basicUsers);
 
         }
 
         // GET api/basicUsers/4
-        [HttpGet("{id}")]
+        [HttpGet("{basicUserId}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<BasicUserViewModel>> GetBasicUserDetails(int id)
+        public async Task<ActionResult<BasicUserViewModel>> GetBasicUserDetails(int basicUserId)
         {
-            var basicUser = await this.databaseContext.BasicUsers.FindAsync(id);
-
-            return new BasicUserViewModel
+            try
             {
-                ID = basicUser.ID,
-                FirstName = basicUser.FirstName,
-                LastName = basicUser.LastName,
-                Email = basicUser.Email,
-                PhoneNumber = basicUser.PhoneNumber
-            };
+                var basicUser = await basicUsersService.GetBasicUserDetails(basicUserId);
+                return Ok(basicUser);
+            }
+            catch (UserNotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
         }
 
         // GET api/basicUsers
@@ -65,57 +61,60 @@ namespace TrackMeWebAPI.Controllers
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult<BasicUserViewModel>> GetBasicUserAccountDetails()
         {
-            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
-            var basicUser = await this.databaseContext.BasicUsers.SingleOrDefaultAsync(x => x.ApplicationUserID.Equals(applicationUserID));
-            
-            return new BasicUserViewModel
+            try
             {
-                ID = basicUser.ID,
-                FirstName = basicUser.FirstName,
-                LastName = basicUser.LastName,
-                Email = basicUser.Email,
-                PhoneNumber = basicUser.PhoneNumber
-            };
+                var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+                var basicUser = await basicUsersService.GetBasicUserAccountDetails(applicationUserId);
+                return Ok(basicUser);
+            }
+            catch(UserNotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
+            
         }
 
-        [HttpDelete("{id}")]
+        // DELETE api/basicUsers/4
+        [HttpDelete("{basicUserId}")]
         [Authorize(Roles ="Admin")]
-        public async Task<ActionResult> DeleteBasicUser(int id)
+        public async Task<ActionResult> DeleteBasicUser(int basicUserId)
         {
-            var basicUser = await databaseContext.BasicUsers.FindAsync(id);
-            var applicationUser = await userManager.FindByEmailAsync(basicUser.Email);
-
-            if (basicUser != null && applicationUser != null)
+            try
             {
-                databaseContext.BasicUsers.Remove(basicUser);
-                await userManager.DeleteAsync(applicationUser);
-                databaseContext.SaveChanges();
+                await basicUsersService.DeleteBasicUser(basicUserId);
                 return Ok();
             }
-
-            return Conflict(new
+            catch(UserNotFoundException ex)
             {
-                message = "Error during deleting basic user."
-            });
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
+            
         }
 
+        // PUT api/basicUsers
         [HttpPut]
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult> UpdateBasicUser([FromBody] UpdatedBasicUserViewModel updatedBasicUser)
         {
+            try
+            {
+                await basicUsersService.UpdateBasicUser(updatedBasicUser);
+                return Ok();
+            }
+            catch (UserNotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
             
-            var oldBasicUser = await databaseContext.BasicUsers.FindAsync(updatedBasicUser.ID);
-            var applicationUser = await userManager.FindByEmailAsync(oldBasicUser.Email);
-            applicationUser.Email = updatedBasicUser.Email;
-            applicationUser.UserName = updatedBasicUser.Email;
-            oldBasicUser.Email = updatedBasicUser.Email;
-            oldBasicUser.FirstName = updatedBasicUser.FirstName;
-            oldBasicUser.LastName = updatedBasicUser.LastName;
-            oldBasicUser.PhoneNumber = updatedBasicUser.PhoneNumber;
-            await userManager.UpdateAsync(applicationUser);
-            databaseContext.BasicUsers.Update(oldBasicUser);
-            databaseContext.SaveChanges();
-            return Ok();
         }
 
 

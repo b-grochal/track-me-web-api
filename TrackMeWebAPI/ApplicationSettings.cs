@@ -8,5 +8,8 @@ namespace TrackMeWebAPI
     public class ApplicationSettings
     {
         public string ClientURL { get; set; }
+        public string AuthSigningKey { get; set; }
+        public string Issuer { get; set; }
+        public string Audience { get; set; }
     }
 }

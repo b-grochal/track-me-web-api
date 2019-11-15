@@ -18,6 +18,8 @@ using Microsoft.IdentityModel.Tokens;
 using TrackMeWebAPI.DAL;
 using TrackMeWebAPI.Data;
 using TrackMeWebAPI.Models;
+using TrackMeWebAPI.Services.Interfaces;
+using TrackMeWebAPI.Services.Logic;
 
 namespace TrackMeWebAPI
 {
@@ -56,13 +58,17 @@ namespace TrackMeWebAPI
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidAudience = "hello",
-                    ValidIssuer = "hello",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my security key hell yeach"))
+                    ValidAudience = Configuration["ApplicationSettings:Audience"],
+                    ValidIssuer = Configuration["ApplicationSettings:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:AuthSigningKey"]))
                 };
             });
 
             services.AddCors();
+            services.AddTransient<ITripsService, TripsService>();
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAdminsService, AdminsService>();
+            services.AddTransient<IBasicUsersService, BasicUsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,7 +84,6 @@ namespace TrackMeWebAPI
                     DataSeeder.CreateBasicUsers(scope.ServiceProvider);
                     DataSeeder.CreateTrips(scope.ServiceProvider);
                     DataSeeder.CreateSensorsValues(scope.ServiceProvider);
-                    
                 }
 
             }

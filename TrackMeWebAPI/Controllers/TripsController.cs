@@ -7,7 +7,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrackMeWebAPI.DAL;
+using TrackMeWebAPI.Exceptions;
 using TrackMeWebAPI.Models;
+using TrackMeWebAPI.Services.Interfaces;
+using TrackMeWebAPI.Services.Logic;
 using TrackMeWebAPI.ViewModels;
 
 namespace TrackMeWebAPI.Controllers
@@ -16,11 +19,11 @@ namespace TrackMeWebAPI.Controllers
     [ApiController]
     public class TripsController : ControllerBase
     {
-        private readonly DatabaseContext databaseContext;
+        private readonly ITripsService tripsService;
 
-        public TripsController(DatabaseContext databaseContext)
+        public TripsController(DatabaseContext databaseContext, ITripsService tripsService)
         {
-            this.databaseContext = databaseContext;
+            this.tripsService = tripsService;
         }
 
         // GET api/trips
@@ -28,53 +31,99 @@ namespace TrackMeWebAPI.Controllers
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult<IEnumerable<TripViewModel>>> GetTrips()
         {
-            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
-            var basicUserID = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID)).ID;
-
-            return await this.databaseContext.Trips
-                .Where(x => x.BasicUserID == basicUserID)
-                .Select(x => new TripViewModel
+            try
+            {
+                var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+                var trips = await this.tripsService.GetTrips(applicationUserID);
+                return Ok(trips);
+            }
+            catch (UserNotFoundException ex)
+            {
+                return NotFound(new
                 {
-                    ID = x.ID,
-                    Name = x.Name,
-                    BasicUserEmail = this.databaseContext.BasicUsers.SingleOrDefault(y => y.ApplicationUserID == applicationUserID).Email
-
-                })
-                .ToListAsync();
+                    message = ex.Message
+                });
+            }
+            
         }
 
+        // GET api/trips/all
         [HttpGet]
         [Authorize(Roles = "Admin")]
         [Route("all")]
         public async Task<ActionResult<IEnumerable<TripViewModel>>> GetAllTrips()
         {
-            return await this.databaseContext.Trips
-                .Select(x => new TripViewModel
-                {
-                    ID = x.ID,
-                    Name = x.Name,
-                    BasicUserEmail = this.databaseContext.BasicUsers.SingleOrDefault(y => y.ID == x.BasicUserID).Email
-                }).ToListAsync();
-
+            var trips = await tripsService.GetAllTrips();
+            return Ok(trips);
         }
 
+        // POST api/trips
         [HttpPost]
         [Authorize(Roles ="BasicUser")]
         public async Task<ActionResult> CreateTrip([FromBody] NewTripViewModel newTripViewModel)
         {
-
-            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
-            var basicUserID = this.databaseContext.BasicUsers.SingleOrDefault(x => x.ApplicationUserID.Equals(applicationUserID)).ID;
-
-            Trip trip = new Trip
+            try
             {
-                Name = newTripViewModel.Name
-            };
+                var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+                await this.tripsService.CreateTrip(applicationUserID, newTripViewModel);
+                return Ok();
+            }
+            catch(UserNotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
+            
+        }
 
-            trip.BasicUserID = basicUserID;
-            await this.databaseContext.Trips.AddAsync(trip);
-            this.databaseContext.SaveChanges();
-            return Ok();
+        // GET api/trips/4/details
+        [HttpGet("{tripId}/details")]
+        [Authorize(Roles = "BasicUser,Admin")]
+        public async Task<ActionResult<IEnumerable<SensorsValuesViewModel>>> GetTripDetails(int tripId)
+        {
+            var tripDetails = await this.tripsService.GetTripDetails(tripId);
+            return Ok(tripDetails);
+        }
+
+        // DELETE api/trips/4
+        [HttpDelete("{tripId}")]
+        [Authorize(Roles = "Admin,BasicUser")]
+        public async Task<ActionResult> DeleteTrip(int tripId)
+        {
+            try
+            {
+                await this.tripsService.DeleteTrip(tripId);
+                return Ok();
+            }
+            catch (TripNotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
+            
+        }
+
+        // POST api/trips/4/details
+        [HttpPost("{tripId}/details")]
+        [Authorize(Roles = "BasicUser")]
+        public async Task<ActionResult> CreateTripDetails(int tripId, [FromBody] SensorsValuesViewModel sensorsValuesViewModel)
+        {
+            try
+            {
+                await this.tripsService.CreateTripDetails(tripId, sensorsValuesViewModel);
+                return Ok();
+            }
+            catch(TripNotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
         }
 
     }
