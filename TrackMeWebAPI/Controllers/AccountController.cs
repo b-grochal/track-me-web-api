@@ -32,7 +32,7 @@ namespace TrackMeWebAPI.Controllers
             this.accountService = accountService;
         }
 
-        // POST api/login
+        // POST api/account/login
         [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel loginViewModel)
@@ -51,7 +51,7 @@ namespace TrackMeWebAPI.Controllers
             }                 
         }
 
-        // POST api/register
+        // POST api/account/register
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel registerViewModel)
