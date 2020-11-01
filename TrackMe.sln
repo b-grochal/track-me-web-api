@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Database", "TrackMe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Models", "TrackMe.Models\TrackMe.Models.csproj", "{F9FF81AA-AAF2-4CF2-9F34-69AAA7A72988}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Services", "TrackMe.Services\TrackMe.Services.csproj", "{735548F3-3961-4AEB-A26C-F5C65F829987}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.BusinessServices", "TrackMe.BusinessServices\TrackMe.BusinessServices.csproj", "{C6C07935-D864-46F8-BE97-1A703582B315}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{F9FF81AA-AAF2-4CF2-9F34-69AAA7A72988}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9FF81AA-AAF2-4CF2-9F34-69AAA7A72988}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9FF81AA-AAF2-4CF2-9F34-69AAA7A72988}.Release|Any CPU.Build.0 = Release|Any CPU
+		{735548F3-3961-4AEB-A26C-F5C65F829987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{735548F3-3961-4AEB-A26C-F5C65F829987}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{735548F3-3961-4AEB-A26C-F5C65F829987}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{735548F3-3961-4AEB-A26C-F5C65F829987}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6C07935-D864-46F8-BE97-1A703582B315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6C07935-D864-46F8-BE97-1A703582B315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6C07935-D864-46F8-BE97-1A703582B315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6C07935-D864-46F8-BE97-1A703582B315}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
