@@ -8,7 +8,7 @@ using TrackMeWebAPI.Models;
 
 namespace TrackMeWebAPI.DAL
 {
-    public class DatabaseContext : IdentityDbContext<ApplicationUser>
+    public class DbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Admin> Admins { get; set; }
         public DbSet<BasicUser> BasicUsers { get; set; }
@@ -17,7 +17,7 @@ namespace TrackMeWebAPI.DAL
         
 
 
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+        public DbContext(DbContextOptions<DbContext> options) : base(options)
         {
             
         }
