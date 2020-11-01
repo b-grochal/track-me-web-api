@@ -9,7 +9,7 @@ using TrackMeWebAPI.Models;
 
 namespace TrackMeWebAPI.Data
 {
-    public class DataSeeder
+    public class DbSeeder
     {
         public static void CreateRoles(IServiceProvider serviceProvider)
         {
