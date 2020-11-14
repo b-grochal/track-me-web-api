@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TrackMeWebAPI.Models
 {
-    public enum ApplicationRoles
+    public enum ApplicationUserRoles
     {
         Admin,
         BasicUser

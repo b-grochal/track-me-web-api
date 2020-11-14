@@ -7,9 +7,10 @@ namespace TrackMeWebAPI.Models
 {
     public class Trip
     {
-        public int ID { get; set; }
+        public int TripId { get; set; }
         public string Name { get; set; }
-        public int BasicUserID { get; set; }
-        public virtual ICollection<SensorsValues> SensorValues { get; set; }
+        public int BasicUserId { get; set; }
+        public BasicUser BassicUser { get; set; }
+        public virtual ICollection<SensorData> SensorValues { get; set; }
     }
 }
