@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace TrackMeWebAPI.Models
 {
-    public class SensorsValues
+    public class SensorData
     {
-        public int ID { get; set; }
-        public int TripID { get; set; }
+        public int SensorsDataId { get; set; }
+        public int TripId { get; set; }
         public DateTime UploadDate { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
@@ -20,6 +20,7 @@ namespace TrackMeWebAPI.Models
         public double  GyroscopeZ { get; set; }
         public double  MagneticFieldX { get; set; }
         public double  MagneticFieldY { get; set; }
-        public double  MagneticFieldZ { get; set; }
+        public double MagneticFieldZ { get; set; }
+        public Trip Trip { get; set; }
     }
 }
