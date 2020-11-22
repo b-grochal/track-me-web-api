@@ -31,5 +31,20 @@ namespace TrackMe.Services.Logic
 
             throw new AuthorizationException("Incorrect email or password.");
         }
+
+        public async Task Register(ApplicationUserIdentity newApplicationUserIdentity, string password)
+        {
+            var duplicatedBasicUser = await applicationUserIdentityManager.FindByEmailAsync(newApplicationUserIdentity.Email);
+            
+            if (duplicatedBasicUser != null)
+            {
+                throw new RegistrationException("User with passed email already exists.");
+            }
+
+            string hashedPassword = applicationUserIdentityManager.PasswordHasher.HashPassword(newApplicationUserIdentity, password);
+            newApplicationUserIdentity.PasswordHash = hashedPassword;
+            await applicationUserIdentityManager.CreateAsync(newApplicationUserIdentity);
+            await applicationUserIdentityManager.AddToRoleAsync(newApplicationUserIdentity, ApplicationUserRoles.BasicUser.ToString());
+        }
     }
 }
