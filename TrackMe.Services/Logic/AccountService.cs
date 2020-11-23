@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using TrackMe.Domain.Entities;
 using TrackMe.Services.Exceptions;
 using TrackMe.Services.Interfaces;
-using TrackMeWebAPI.Models;
 
 namespace TrackMe.Services.Logic
 {

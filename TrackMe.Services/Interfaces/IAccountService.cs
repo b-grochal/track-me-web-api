@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TrackMe.Domain.Entities;
-using TrackMeWebAPI.Models;
 
 namespace TrackMe.Services.Interfaces
 {
