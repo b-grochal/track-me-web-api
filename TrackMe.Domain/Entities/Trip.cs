@@ -9,7 +9,7 @@ namespace TrackMe.Domain.Entities
     {
         public int TripId { get; set; }
         public string Name { get; set; }
-        public int BasicUserId { get; set; }
+        public string BasicUserId { get; set; }
         public BasicUser BassicUser { get; set; }
         public virtual ICollection<SensorData> SensorValues { get; set; }
     }
