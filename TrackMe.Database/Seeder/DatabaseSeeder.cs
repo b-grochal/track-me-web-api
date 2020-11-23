@@ -6,14 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using TrackMe.Database.Context;
 using TrackMe.Domain.Entities;
-using TrackMeWebAPI.DAL;
-using TrackMeWebAPI.Models;
 
 namespace TrackMeWebAPI.Data
 {
-    public static class DbSeeder
+    public static class DatabaseSeeder
     {
-        public static void SeedData(DatabaseContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUserIdentity> userManager)
+        public static void SeedData(DatabaseContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             SeedApplicationUserRoles(roleManager);
             SeedAdmins(userManager, dbContext);
@@ -31,37 +29,29 @@ namespace TrackMeWebAPI.Data
             }
         }
 
-        private static void SeedAdmins(UserManager<ApplicationUserIdentity> userManager, DbContext dbContext)
+        private static void SeedAdmins(UserManager<ApplicationUser> userManager, DatabaseContext dbContext)
         {   
             if(!dbContext.Admins.Any())
             {
                 ApplicationUser admin = new Admin
                 {
                     FirstName = "Michael",
-                    LastName = "Scott"
-                };
-
-                dbContext.ApplicationUsers.Add(admin);
-                dbContext.SaveChanges();
-
-                ApplicationUserIdentity adminIdentity = new ApplicationUserIdentity
-                {
+                    LastName = "Scott",
                     Email = "michael@scott.com",
                     UserName = "michael@scott.com",
                     PhoneNumber = "123-123-123",
                     EmailConfirmed = true,
-                    PhoneNumberConfirmed = true,
-                    ApplicationUserId = admin.ApplicationUserId
+                    PhoneNumberConfirmed = true
                 };
-                
-                string hashedPassword = userManager.PasswordHasher.HashPassword(adminIdentity, "P@ssw0rd");
-                adminIdentity.PasswordHash = hashedPassword;
-                userManager.CreateAsync(adminIdentity).Wait();
-                userManager.AddToRoleAsync(adminIdentity, ApplicationUserRoles.Admin.ToString()).Wait();
+
+                string hashedPassword = userManager.PasswordHasher.HashPassword(admin, "P@ssw0rd");
+                admin.PasswordHash = hashedPassword;
+                userManager.CreateAsync(admin).Wait();
+                userManager.AddToRoleAsync(admin, ApplicationUserRoles.Admin.ToString()).Wait();
             }
         }
 
-        private static void SeedBasicUsers(UserManager<ApplicationUserIdentity> userManager, DbContext dbContext)
+        private static void SeedBasicUsers(UserManager<ApplicationUser> userManager, DatabaseContext dbContext)
         {
             if (!dbContext.BasicUsers.Any())
             {
@@ -69,37 +59,30 @@ namespace TrackMeWebAPI.Data
                 {
                     FirstName = "Dwight",
                     LastName = "Schrute",
-                };
-
-                dbContext.ApplicationUsers.Add(basicUser);
-                dbContext.SaveChanges();
-
-                ApplicationUserIdentity basicUserIdentity = new ApplicationUserIdentity
-                {
                     Email = "dwight@schrute.com",
                     UserName = "dwight@schrute.com",
                     PhoneNumber = "123-123-123",
                     EmailConfirmed = true,
-                    PhoneNumberConfirmed = true,
-                    ApplicationUserId = basicUser.ApplicationUserId
+                    PhoneNumberConfirmed = true
                 };
 
-                string hashedPassword = userManager.PasswordHasher.HashPassword(basicUserIdentity, "P@ssw0rd");
-                basicUserIdentity.PasswordHash = hashedPassword;
-                userManager.CreateAsync(basicUserIdentity).Wait();
-                userManager.AddToRoleAsync(basicUserIdentity, ApplicationUserRoles.BasicUser.ToString()).Wait();
+
+                string hashedPassword = userManager.PasswordHasher.HashPassword(basicUser, "P@ssw0rd");
+                basicUser.PasswordHash = hashedPassword;
+                userManager.CreateAsync(basicUser).Wait();
+                userManager.AddToRoleAsync(basicUser, ApplicationUserRoles.BasicUser.ToString()).Wait();
             }
         }
 
-        private static void SeedTrips(DbContext dbContext)
+        private static void SeedTrips(DatabaseContext dbContext)
         {
             if (!dbContext.Trips.Any())
             {
                 List<Trip> trips = new List<Trip>
                 {
-                    new Trip{ Name="Holiday Trip", BasicUserId = dbContext.Users.Single(x => x.Email.Equals("dwight@schrute.com")).ApplicationUserId },
-                    new Trip{ Name="Sunday Trip", BasicUserId = dbContext.Users.Single(x => x.Email.Equals("dwight@schrute.com")).ApplicationUserId },
-                    new Trip{ Name="Moscow Trip", BasicUserId = dbContext.Users.Single(x => x.Email.Equals("dwight@schrute.com")).ApplicationUserId }
+                    new Trip{ Name="Holiday Trip", BasicUserId = dbContext.BasicUsers.Single(x => x.Email.Equals("dwight@schrute.com")).ApplicationUserId },
+                    new Trip{ Name="Sunday Trip", BasicUserId = dbContext.BasicUsers.Single(x => x.Email.Equals("dwight@schrute.com")).ApplicationUserId },
+                    new Trip{ Name="Moscow Trip", BasicUserId = dbContext.BasicUsers.Single(x => x.Email.Equals("dwight@schrute.com")).ApplicationUserId }
                 };
 
                 foreach(Trip trip in trips)
@@ -111,7 +94,7 @@ namespace TrackMeWebAPI.Data
             }
         }
 
-        private static void SeedSensorData(DbContext dbContext)
+        private static void SeedSensorData(DatabaseContext dbContext)
         {
             if (!dbContext.SensorData.Any())
             {

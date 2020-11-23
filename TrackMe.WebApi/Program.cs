@@ -40,7 +40,7 @@ namespace TrackMeWebAPI
                     var context = services.GetRequiredService<DbContext>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     var userManager = services.GetRequiredService<UserManager<ApplicationUserIdentity>>();
-                    DbSeeder.SeedData(context, roleManager, userManager);
+                    DatabaseSeeder.SeedData(context, roleManager, userManager);
                 }
                 catch (Exception ex)
                 {
