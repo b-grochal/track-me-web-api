@@ -9,13 +9,12 @@ using TrackMe.Domain.Entities;
 
 namespace TrackMe.Database.Context
 {
-    public class DatabaseContext : IdentityDbContext<ApplicationUserIdentity>
+    public class DatabaseContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Admin> Admins { get; set; }
         public DbSet<BasicUser> BasicUsers { get; set; }
         public DbSet<Trip> Trips { get; set; }
         public DbSet<SensorData> SensorData { get; set; }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {

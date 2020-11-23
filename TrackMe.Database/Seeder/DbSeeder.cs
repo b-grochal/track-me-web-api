@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TrackMe.Database.Context;
 using TrackMe.Domain.Entities;
 using TrackMeWebAPI.DAL;
 using TrackMeWebAPI.Models;
@@ -12,7 +13,7 @@ namespace TrackMeWebAPI.Data
 {
     public static class DbSeeder
     {
-        public static void SeedData(DbContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUserIdentity> userManager)
+        public static void SeedData(DatabaseContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUserIdentity> userManager)
         {
             SeedApplicationUserRoles(roleManager);
             SeedAdmins(userManager, dbContext);
