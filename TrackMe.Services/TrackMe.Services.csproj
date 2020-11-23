@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TrackMe.Database\TrackMe.Database.csproj" />
     <ProjectReference Include="..\TrackMe.Domain\TrackMe.Domain.csproj" />
   </ItemGroup>
 

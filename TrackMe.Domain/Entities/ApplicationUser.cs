@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TrackMe.Domain.Entities;
 
-namespace TrackMeWebAPI.Models
+namespace TrackMe.Domain.Entities
 {
     public abstract class ApplicationUser
     {
