@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TrackMeWebAPI.DAL;
+using TrackMe.Database.Context;
+using TrackMe.Domain.Entities;
 using TrackMeWebAPI.Exceptions;
-using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.ViewModels;
 
@@ -44,14 +44,14 @@ namespace TrackMeWebAPI.Services.Logic
                 Email = newAdminViewModel.Email
             };
 
-            string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUser, newAdminViewModel.Password);
-            applicationUser.PasswordHash = hashedPassword;
-            userManager.CreateAsync(applicationUser).Wait();
-            userManager.AddToRoleAsync(applicationUser, ApplicationRoles.Admin.ToString()).Wait();
-            admin.ApplicationUserID = applicationUser.Id;
-            admin.Email = applicationUser.Email;
-            databaseContext.Admins.Add(admin as Admin);
-            databaseContext.SaveChanges();
+            //string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUser, newAdminViewModel.Password);
+            //applicationUser.PasswordHash = hashedPassword;
+            //userManager.CreateAsync(applicationUser).Wait();
+            //userManager.AddToRoleAsync(applicationUser, ApplicationRoles.Admin.ToString()).Wait();
+            //admin.ApplicationUserID = applicationUser.Id;
+            //admin.Email = applicationUser.Email;
+            //databaseContext.Admins.Add(admin as Admin);
+            //databaseContext.SaveChanges();
                        
         }
 
@@ -72,30 +72,32 @@ namespace TrackMeWebAPI.Services.Logic
         {
             var admin = await this.databaseContext.Admins.FindAsync(adminId);
 
-            if(admin != null)
-            {
-                return new AdminViewModel
-                {
-                    ID = admin.ID,
-                    FirstName = admin.FirstName,
-                    LastName = admin.LastName,
-                    Email = admin.Email
-                };
-            }
-            throw new UserNotFoundException("Cannot find user with passed ID.");
-            
+            //if(admin != null)
+            //{
+            //    return new AdminViewModel
+            //    {
+            //        ID = admin.ID,
+            //        FirstName = admin.FirstName,
+            //        LastName = admin.LastName,
+            //        Email = admin.Email
+            //    };
+            //}
+            //throw new UserNotFoundException("Cannot find user with passed ID.");
+            return null;
+
         }
 
         public async Task<IEnumerable<AdminViewModel>> GetAdmins()
         {
-            return await this.databaseContext.Admins
-                .Select(x => new AdminViewModel
-                {
-                    ID = x.ID,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    Email = x.Email
-                }).ToListAsync();
+            //return await this.databaseContext.Admins
+            //    .Select(x => new AdminViewModel
+            //    {
+            //        ID = x.ID,
+            //        FirstName = x.FirstName,
+            //        LastName = x.LastName,
+            //        Email = x.Email
+            //    }).ToListAsync();
+            return null;
         }
     }
 }

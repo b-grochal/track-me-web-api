@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TrackMeWebAPI.DAL;
+using TrackMe.Database.Context;
+using TrackMe.Domain.Entities;
 using TrackMeWebAPI.Exceptions;
-using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.ViewModels;
 
@@ -40,49 +40,50 @@ namespace TrackMeWebAPI.Services.Logic
 
         public async Task<IEnumerable<BasicUserViewModel>> GetAllBasicUsers()
         {
-            return await this.databaseContext.BasicUsers
-                .Select(x => new BasicUserViewModel
-                {
-                    ID = x.ID,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    PhoneNumber = x.PhoneNumber
-                }).ToListAsync();
+            //return await this.databaseContext.BasicUsers
+            //    .Select(x => new BasicUserViewModel
+            //    {
+            //        ID = x.ID,
+            //        FirstName = x.FirstName,
+            //        LastName = x.LastName,
+            //        PhoneNumber = x.PhoneNumber
+            //    }).ToListAsync();
+            return null;
         }
 
         public async Task<BasicUserViewModel> GetBasicUserAccountDetails(string applicationUserId)
         {
-            var basicUser = await this.databaseContext.BasicUsers.SingleOrDefaultAsync(x => x.ApplicationUserID.Equals(applicationUserId));
+            //var basicUser = await this.databaseContext.BasicUsers.SingleOrDefaultAsync(x => x.ApplicationUserID.Equals(applicationUserId));
 
-            if(basicUser != null)
-            {
-                return new BasicUserViewModel
-                {
-                    ID = basicUser.ID,
-                    FirstName = basicUser.FirstName,
-                    LastName = basicUser.LastName,
-                    Email = basicUser.Email,
-                    PhoneNumber = basicUser.PhoneNumber
-                };
-            }
+            //if(basicUser != null)
+            //{
+            //    return new BasicUserViewModel
+            //    {
+            //        ID = basicUser.ID,
+            //        FirstName = basicUser.FirstName,
+            //        LastName = basicUser.LastName,
+            //        Email = basicUser.Email,
+            //        PhoneNumber = basicUser.PhoneNumber
+            //    };
+            //}
             throw new UserNotFoundException("Cannot find user with passed ID.");
         }
 
         public async Task<BasicUserViewModel> GetBasicUserDetails(int basicUserId)
         {
-            var basicUser = await this.databaseContext.BasicUsers.FindAsync(basicUserId);
+            //var basicUser = await this.databaseContext.BasicUsers.FindAsync(basicUserId);
 
-            if(basicUser != null)
-            {
-                return new BasicUserViewModel
-                {
-                    ID = basicUser.ID,
-                    FirstName = basicUser.FirstName,
-                    LastName = basicUser.LastName,
-                    Email = basicUser.Email,
-                    PhoneNumber = basicUser.PhoneNumber
-                };
-            }
+            //if(basicUser != null)
+            //{
+            //    return new BasicUserViewModel
+            //    {
+            //        ID = basicUser.ID,
+            //        FirstName = basicUser.FirstName,
+            //        LastName = basicUser.LastName,
+            //        Email = basicUser.Email,
+            //        PhoneNumber = basicUser.PhoneNumber
+            //    };
+            //}
             throw new UserNotFoundException("Cannot find user with passed ID.");
             
         }

@@ -7,7 +7,7 @@ namespace TrackMe.Domain.Entities
 {
     public class SensorData
     {
-        public int SensorsDataId { get; set; }
+        public int SensorDataId { get; set; }
         public int TripId { get; set; }
         public DateTime UploadDate { get; set; }
         public double Latitude { get; set; }

@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TrackMe.Database.Context;
 using TrackMe.Domain.Entities;
-using TrackMeWebAPI.DAL;
 using TrackMeWebAPI.Data;
 
 namespace TrackMeWebAPI
@@ -37,9 +37,9 @@ namespace TrackMeWebAPI
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<DbContext>();
+                    var context = services.GetRequiredService<DatabaseContext>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    var userManager = services.GetRequiredService<UserManager<ApplicationUserIdentity>>();
+                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     DatabaseSeeder.SeedData(context, roleManager, userManager);
                 }
                 catch (Exception ex)
