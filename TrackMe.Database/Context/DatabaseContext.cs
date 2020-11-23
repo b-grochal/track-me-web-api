@@ -30,6 +30,11 @@ namespace TrackMe.Database.Context
             .HasDiscriminator<string>("ApplicationUserType")
             .HasValue<Admin>(ApplicationUserRoles.Admin.ToString())
             .HasValue<BasicUser>(ApplicationUserRoles.BasicUser.ToString());
+
+            builder.Entity<Trip>().HasOne(o => o.BassicUser)
+                .WithMany(a => a.Trips)
+                .HasForeignKey(o => o.BasicUserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
