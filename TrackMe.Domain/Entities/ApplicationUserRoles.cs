@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace TrackMe.Domain.Entities
 {
-    public enum ApplicationUserRoles
+    public static class ApplicationUserRoles
     {
-        Admin,
-        BasicUser
+        public static string Admin = "Admin";
+        public static string BasicUser = "BasicUser";
     }
 }

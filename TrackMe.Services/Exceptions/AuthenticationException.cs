@@ -4,9 +4,9 @@ using System.Text;
 
 namespace TrackMe.Services.Exceptions
 {
-    public class AuthorizationException : Exception
+    public class AuthenticationException : Exception
     {
-        public AuthorizationException(string message) : base(message)
+        public AuthenticationException(string message) : base(message)
         {
         }
     }

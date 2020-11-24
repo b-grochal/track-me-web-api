@@ -28,7 +28,7 @@ namespace TrackMe.Services.Logic
                 return applicationUserIdentity;
             }
 
-            throw new AuthorizationException("Incorrect email or password.");
+            throw new AuthenticationException("Incorrect email or password.");
         }
 
         public async Task Register(ApplicationUserIdentity newApplicationUserIdentity, string password)
