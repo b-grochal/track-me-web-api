@@ -22,12 +22,18 @@ namespace TrackMe.WebApi.Controllers
             this.authBusinessService = authBusinessService;
         }
 
+        // POST: api/login
+        [HttpPost]
+        [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var authenticatedUserDto = await authBusinessService.Authenticate(loginDto);
             return Ok(authenticatedUserDto);
         }
 
+        // POST: api/register
+        [HttpPost]
+        [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegistrationDto registrationDto)
         {
             await authBusinessService.Register(registrationDto);

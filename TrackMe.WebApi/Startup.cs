@@ -101,7 +101,14 @@ namespace TrackMeWebAPI
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
-            
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
         }
     }
 }

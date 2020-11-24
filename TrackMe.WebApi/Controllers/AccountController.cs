@@ -49,7 +49,7 @@ namespace TrackMeWebAPI.Controllers
             }                 
         }
 
-        // POST api/account/register
+        // POST api/register
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel registerViewModel)
