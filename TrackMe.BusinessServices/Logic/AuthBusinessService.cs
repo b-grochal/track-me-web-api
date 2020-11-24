@@ -22,9 +22,9 @@ namespace TrackMe.BusinessServices.Logic
             this.authService = authService;
         }
 
-        public async Task<AuthenticatedUserDto> Authenticate(string email, string password)
+        public async Task<AuthenticatedUserDto> Authenticate(LoginDto loginDto)
         {
-            var authenticatedBasicUser = await authService.Authenticate(email, password);
+            var authenticatedBasicUser = await authService.Authenticate(loginDto.Email, loginDto.Password);
             return mapper.Map<AuthenticatedUserDto>(authenticatedBasicUser);
         }
 
