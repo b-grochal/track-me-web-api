@@ -5,19 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrackMe.Domain.Entities;
-using TrackMeWebAPI.Models;
 
-namespace TrackMeWebAPI.DAL
+
+namespace TrackMe.Database.Context
 {
-    public class DbContext : IdentityDbContext<ApplicationUserIdentity>
+    public class DatabaseContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Admin> Admins { get; set; }
         public DbSet<BasicUser> BasicUsers { get; set; }
         public DbSet<Trip> Trips { get; set; }
         public DbSet<SensorData> SensorData { get; set; }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         
-        public DbContext(DbContextOptions<DbContext> options) : base(options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
             
         }
@@ -31,6 +30,11 @@ namespace TrackMeWebAPI.DAL
             .HasDiscriminator<string>("ApplicationUserType")
             .HasValue<Admin>(ApplicationUserRoles.Admin.ToString())
             .HasValue<BasicUser>(ApplicationUserRoles.BasicUser.ToString());
+
+            builder.Entity<Trip>().HasOne(o => o.BassicUser)
+                .WithMany(a => a.Trips)
+                .HasForeignKey(o => o.BasicUserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

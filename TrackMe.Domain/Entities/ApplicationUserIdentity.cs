@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TrackMeWebAPI.Models;
 
 namespace TrackMe.Domain.Entities
 {

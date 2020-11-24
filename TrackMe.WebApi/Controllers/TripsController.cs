@@ -6,9 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TrackMeWebAPI.DAL;
 using TrackMeWebAPI.Exceptions;
-using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.Services.Logic;
 using TrackMeWebAPI.ViewModels;
@@ -21,7 +19,7 @@ namespace TrackMeWebAPI.Controllers
     {
         private readonly ITripsService tripsService;
 
-        public TripsController(DatabaseContext databaseContext, ITripsService tripsService)
+        public TripsController(ITripsService tripsService)
         {
             this.tripsService = tripsService;
         }

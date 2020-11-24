@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TrackMe.Services.Logic
+namespace TrackMe.BusinessServices.Logic
 {
-    class IApplicationUsersService
+    class ApplicationUsersBusinessService
     {
     }
 }

@@ -8,9 +8,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using TrackMeWebAPI.DAL;
+using TrackMe.Database.Context;
+using TrackMe.Domain.Entities;
 using TrackMeWebAPI.Exceptions;
-using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.ViewModels;
 
@@ -87,14 +87,14 @@ namespace TrackMeWebAPI.Services.Logic
                 PhoneNumber = registerViewModel.PhoneNumber
             };
 
-            string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUser, registerViewModel.Password);
-            applicationUser.PasswordHash = hashedPassword;
-            userManager.CreateAsync(applicationUser).Wait();
-            userManager.AddToRoleAsync(applicationUser, ApplicationRoles.BasicUser.ToString()).Wait();
-            basicUser.ApplicationUserID = applicationUser.Id;
-            basicUser.Email = applicationUser.Email;
-            databaseContext.BasicUsers.Add(basicUser as BasicUser);
-            databaseContext.SaveChanges();
+            //string hashedPassword = userManager.PasswordHasher.HashPassword(applicationUser, registerViewModel.Password);
+            //applicationUser.PasswordHash = hashedPassword;
+            //userManager.CreateAsync(applicationUser).Wait();
+            //userManager.AddToRoleAsync(applicationUser, ApplicationRoles.BasicUser.ToString()).Wait();
+            //basicUser.ApplicationUserID = applicationUser.Id;
+            //basicUser.Email = applicationUser.Email;
+            //databaseContext.BasicUsers.Add(basicUser as BasicUser);
+            //databaseContext.SaveChanges();
         }
     }
 }

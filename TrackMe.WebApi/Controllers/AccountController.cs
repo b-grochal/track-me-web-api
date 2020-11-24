@@ -12,9 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using TrackMeWebAPI.DAL;
 using TrackMeWebAPI.Exceptions;
-using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.ViewModels;
 

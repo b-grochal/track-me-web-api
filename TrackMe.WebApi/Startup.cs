@@ -15,9 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using TrackMeWebAPI.DAL;
+using TrackMe.Database.Context;
+using TrackMe.Domain.Entities;
 using TrackMeWebAPI.Data;
-using TrackMeWebAPI.Models;
 using TrackMeWebAPI.Services.Interfaces;
 using TrackMeWebAPI.Services.Logic;
 
@@ -37,7 +37,7 @@ namespace TrackMeWebAPI
         {
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddDbContext<DatabaseContext>(op => op.UseSqlServer(Configuration["ConnectionString:DBConnection"]));
+            services.AddDbContext<DatabaseContext>(op => op.UseSqlServer(Configuration["ConnectionString:DBConnection"], x => x.MigrationsAssembly("TrackMe.Database")));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<DatabaseContext>()
                 .AddDefaultTokenProviders();
@@ -77,14 +77,14 @@ namespace TrackMeWebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                using (var scope = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope())
-                {
-                    DataSeeder.CreateRoles(scope.ServiceProvider);
-                    DataSeeder.CreateAdmins(scope.ServiceProvider);
-                    DataSeeder.CreateBasicUsers(scope.ServiceProvider);
-                    DataSeeder.CreateTrips(scope.ServiceProvider);
-                    DataSeeder.CreateSensorsValues(scope.ServiceProvider);
-                }
+                //using (var scope = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope())
+                //{
+                //    DataSeeder.CreateRoles(scope.ServiceProvider);
+                //    DataSeeder.CreateAdmins(scope.ServiceProvider);
+                //    DataSeeder.CreateBasicUsers(scope.ServiceProvider);
+                //    DataSeeder.CreateTrips(scope.ServiceProvider);
+                //    DataSeeder.CreateSensorsValues(scope.ServiceProvider);
+                //}
 
             }
             else
@@ -101,7 +101,6 @@ namespace TrackMeWebAPI
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
-            app.UseMvc();
             
         }
     }
