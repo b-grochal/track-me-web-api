@@ -34,12 +34,12 @@ namespace TrackMe.Services.Logic
 
         public async Task DeleteTrip(int tripId)
         {
-            var tripToDelete = await databaseContext.Trips.FindAsync(tripId);
-            if(tripToDelete == null)
+            var trip = await databaseContext.Trips.FindAsync(tripId);
+            if(trip == null)
             {
                 throw new TripNotFoundException("Cannot find trip with passed Id.");
             }
-            databaseContext.Trips.Remove(tripToDelete);
+            databaseContext.Trips.Remove(trip);
             await databaseContext.SaveChangesAsync();
         }
 
