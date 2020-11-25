@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TrackMe.BusinessServices.Logic
 {
-    class ApplicationUsersBusinessService
+    public class BasicUsersBusinessService
     {
     }
 }

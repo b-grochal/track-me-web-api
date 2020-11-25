@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TrackMe.BusinessServices.Interfaces
 {
-    interface ITripsBusinessService
+    public interface ITripsBusinessService
     {
     }
 }

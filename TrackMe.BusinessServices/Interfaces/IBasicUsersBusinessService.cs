@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TrackMe.BusinessServices.Logic
+namespace TrackMe.BusinessServices.Interfaces
 {
-    class SensorDataBusinessService
+    interface IBasicUsersBusinessService
     {
     }
 }
