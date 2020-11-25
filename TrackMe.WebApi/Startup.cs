@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +36,8 @@ namespace TrackMeWebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
+
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddDbContext<DatabaseContext>(op => op.UseSqlServer(Configuration["ConnectionString:DBConnection"], x => x.MigrationsAssembly("TrackMe.Database")));
