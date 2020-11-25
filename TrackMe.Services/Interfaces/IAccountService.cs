@@ -10,5 +10,6 @@ namespace TrackMe.Services.Interfaces
     {
         Task ChangePassword(string applicationUserId, string oldPassword, string newPassword);
         Task UdpateAccountData(ApplicationUser applicationUser);
+        Task<ApplicationUser> GetApplicationUser(string applicationUserId);
     }
 }

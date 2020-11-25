@@ -24,6 +24,11 @@ namespace TrackMe.Services.Logic
             await userManager.ChangePasswordAsync(applicationUser, oldPassword, newPassword);
         }
 
+        public async Task<ApplicationUser> GetApplicationUser(string applicationUserId)
+        {
+            return await userManager.FindByIdAsync(applicationUserId);
+        }
+
         public async Task UdpateAccountData(ApplicationUser applicationUser)
         {
             await userManager.UpdateAsync(applicationUser);
