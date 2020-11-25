@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TrackMe.BusinessServices\TrackMe.BusinessServices.csproj" />
     <ProjectReference Include="..\TrackMe.Database\TrackMe.Database.csproj" />
   </ItemGroup>
 
