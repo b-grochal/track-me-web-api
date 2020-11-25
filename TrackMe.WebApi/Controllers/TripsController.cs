@@ -6,10 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TrackMeWebAPI.Exceptions;
-using TrackMeWebAPI.Services.Interfaces;
-using TrackMeWebAPI.Services.Logic;
-using TrackMeWebAPI.ViewModels;
+using TrackMe.BusinessServices.Interfaces;
+using TrackMe.Models.DTOs.Trips;
 
 namespace TrackMeWebAPI.Controllers
 {
@@ -17,72 +15,50 @@ namespace TrackMeWebAPI.Controllers
     [ApiController]
     public class TripsController : ControllerBase
     {
-        private readonly ITripsService tripsService;
+        private readonly ITripsBusinessService tripsBusinessService;
 
-        public TripsController(ITripsService tripsService)
+        public TripsController(ITripsBusinessService tripsBusinessService)
         {
-            this.tripsService = tripsService;
+            this.tripsBusinessService = tripsBusinessService;
         }
 
         // GET api/trips
         [HttpGet]
         [Authorize(Roles = "BasicUser")]
-        public async Task<ActionResult<IEnumerable<TripViewModel>>> GetTrips()
+        public async Task<ActionResult<IEnumerable<TripDto>>> GetTrips()
         {
-            try
-            {
-                var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
-                var trips = await this.tripsService.GetTrips(applicationUserID);
-                return Ok(trips);
-            }
-            catch (UserNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    message = ex.Message
-                });
-            }
-            
+            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+            var trips = await this.tripsBusinessService.GetTrips(applicationUserID);
+            return Ok(trips);
         }
 
         // GET api/trips/all
         [HttpGet]
         [Authorize(Roles = "Admin")]
         [Route("all")]
-        public async Task<ActionResult<IEnumerable<TripViewModel>>> GetAllTrips()
+        public async Task<ActionResult<IEnumerable<TripDto>>> GetAllTrips()
         {
-            var trips = await tripsService.GetAllTrips();
+            var trips = await tripsBusinessService.GetTrips();
             return Ok(trips);
         }
 
         // POST api/trips
         [HttpPost]
-        [Authorize(Roles ="BasicUser")]
-        public async Task<ActionResult> CreateTrip([FromBody] NewTripViewModel newTripViewModel)
+        [Authorize(Roles = "BasicUser")]
+        public async Task<ActionResult> CreateTrip([FromBody] NewTripDto newTripDto)
         {
-            try
-            {
-                var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
-                await this.tripsService.CreateTrip(applicationUserID, newTripViewModel);
-                return Ok();
-            }
-            catch(UserNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    message = ex.Message
-                });
-            }
-            
+            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+            await this.tripsBusinessService.CreateTrip(newTripDto);
+            return Ok();
         }
 
         // GET api/trips/4/details
         [HttpGet("{tripId}/details")]
         [Authorize(Roles = "BasicUser,Admin")]
-        public async Task<ActionResult<IEnumerable<SensorsValuesViewModel>>> GetTripDetails(int tripId)
+        public async Task<ActionResult<TripSensorDataDto>> GetTripSensorData(int tripId)
         {
-            var tripDetails = await this.tripsService.GetTripDetails(tripId);
-            return Ok(tripDetails);
+            var tripSensorData = await this.tripsBusinessService.GetTripSensorDataDto(tripId);
+            return Ok(tripSensorData);
         }
 
         // DELETE api/trips/4
@@ -90,38 +66,17 @@ namespace TrackMeWebAPI.Controllers
         [Authorize(Roles = "Admin,BasicUser")]
         public async Task<ActionResult> DeleteTrip(int tripId)
         {
-            try
-            {
-                await this.tripsService.DeleteTrip(tripId);
-                return Ok();
-            }
-            catch (TripNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    message = ex.Message
-                });
-            }
-            
+            await this.tripsBusinessService.DeleteTrip(tripId);
+            return Ok();
         }
 
         // POST api/trips/4/details
         [HttpPost("{tripId}/details")]
         [Authorize(Roles = "BasicUser")]
-        public async Task<ActionResult> CreateTripDetails(int tripId, [FromBody] SensorsValuesViewModel sensorsValuesViewModel)
+        public async Task<ActionResult> CreateTripDetails(int tripId, [FromBody] NewSensorDataDto newSensorDataDto)
         {
-            try
-            {
-                await this.tripsService.CreateTripDetails(tripId, sensorsValuesViewModel);
-                return Ok();
-            }
-            catch(TripNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    message = ex.Message
-                });
-            }
+            await this.tripsBusinessService.CreateTripSensorData(tripId, newSensorDataDto);
+            return Ok();
         }
 
     }

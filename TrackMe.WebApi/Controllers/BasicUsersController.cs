@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TrackMeWebAPI.Exceptions;
-using TrackMeWebAPI.Services.Interfaces;
-using TrackMeWebAPI.ViewModels;
+using TrackMe.BusinessServices.Interfaces;
+using TrackMe.Models.DTOs.BasicUsers;
 
 namespace TrackMeWebAPI.Controllers
 {
@@ -17,20 +16,20 @@ namespace TrackMeWebAPI.Controllers
     [ApiController]
     public class BasicUsersController : ControllerBase
     {
-        private readonly IBasicUsersService basicUsersService;
+        private readonly IBasicUsersBusinessService basicUsersBusinessService;
 
-        public BasicUsersController(IBasicUsersService basicUsersService)
+        public BasicUsersController(IBasicUsersBusinessService basicUsersBusinessService)
         {
-            this.basicUsersService = basicUsersService;
+            this.basicUsersBusinessService = basicUsersBusinessService;
         }
 
         // GET api/basicUsers/all
         [HttpGet]
         [Authorize(Roles = "Admin")]
         [Route("all")]
-        public async Task<ActionResult<IEnumerable<BasicUserViewModel>>> GetAllBasicUsers()
+        public async Task<ActionResult<IEnumerable<BasicUserDto>>> GetAllBasicUsers()
         {
-            var basicUsers = await basicUsersService.GetAllBasicUsers();
+            var basicUsers = await basicUsersBusinessService.GetBasicUsers();
             return Ok(basicUsers);
 
         }
@@ -38,83 +37,19 @@ namespace TrackMeWebAPI.Controllers
         // GET api/basicUsers/4
         [HttpGet("{basicUserId}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<BasicUserViewModel>> GetBasicUserDetails(int basicUserId)
+        public async Task<ActionResult<BasicUserDto>> GetBasicUser(string basicUserId)
         {
-            try
-            {
-                var basicUser = await basicUsersService.GetBasicUserDetails(basicUserId);
-                return Ok(basicUser);
-            }
-            catch (UserNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    message = ex.Message
-                });
-            }
-        }
-
-        // GET api/basicUsers
-        [HttpGet]
-        [Authorize(Roles = "BasicUser")]
-        public async Task<ActionResult<BasicUserViewModel>> GetBasicUserAccountDetails()
-        {
-            try
-            {
-                var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
-                var basicUser = await basicUsersService.GetBasicUserAccountDetails(applicationUserId);
-                return Ok(basicUser);
-            }
-            catch(UserNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    message = ex.Message
-                });
-            }
-            
+            var basicUser = await basicUsersBusinessService.GetBasicUser(basicUserId);
+            return Ok(basicUser);
         }
 
         // DELETE api/basicUsers/4
         [HttpDelete("{basicUserId}")]
-        [Authorize(Roles ="Admin")]
-        public async Task<ActionResult> DeleteBasicUser(int basicUserId)
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> DeleteBasicUser(string basicUserId)
         {
-            try
-            {
-                await basicUsersService.DeleteBasicUser(basicUserId);
-                return Ok();
-            }
-            catch(UserNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    message = ex.Message
-                });
-            }
-            
+            await basicUsersBusinessService.DeleteBasicUser(basicUserId);
+            return Ok();
         }
-
-        // PUT api/basicUsers
-        [HttpPut]
-        [Authorize(Roles = "BasicUser")]
-        public async Task<ActionResult> UpdateBasicUser([FromBody] UpdatedBasicUserViewModel updatedBasicUser)
-        {
-            try
-            {
-                await basicUsersService.UpdateBasicUser(updatedBasicUser);
-                return Ok();
-            }
-            catch (UserNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    message = ex.Message
-                });
-            }
-            
-        }
-
-
     }
 }

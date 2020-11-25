@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,11 +17,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using TrackMe.BusinessServices.Interfaces;
+using TrackMe.BusinessServices.Logic;
 using TrackMe.Database.Context;
 using TrackMe.Domain.Entities;
+using TrackMe.Services.Interfaces;
+using TrackMe.Services.Logic;
+using TrackMe.WebApi.Infrastructure;
 using TrackMeWebAPI.Data;
-using TrackMeWebAPI.Services.Interfaces;
-using TrackMeWebAPI.Services.Logic;
 
 namespace TrackMeWebAPI
 {
@@ -35,6 +39,8 @@ namespace TrackMeWebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
+
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddDbContext<DatabaseContext>(op => op.UseSqlServer(Configuration["ConnectionString:DBConnection"], x => x.MigrationsAssembly("TrackMe.Database")));
@@ -65,10 +71,18 @@ namespace TrackMeWebAPI
             });
 
             services.AddCors();
-            services.AddTransient<ITripsService, TripsService>();
+            
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAdminsService, AdminsService>();
+            services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IBasicUsersService, BasicUsersService>();
+            services.AddTransient<ITripsService, TripsService>();
+
+            services.AddTransient<IAccountBusinessService, AccountBusinessService>();
+            services.AddTransient<IAdminsBusinessService, AdminsBusinessService>();
+            services.AddTransient<IAuthBusinessService, AuthBusinessService>();
+            services.AddTransient<IBasicUsersBusinessService, BasicUsersBusinessService>();
+            services.AddTransient<ITripsBusinessService, TripsBusinessService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

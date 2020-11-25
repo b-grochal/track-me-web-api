@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace TrackMe.Services.Exceptions
 {
-    public class TripNotFoundException : Exception
+    public class DuplicatedApplicationUserException : Exception
     {
-        public TripNotFoundException(string message)
+        public DuplicatedApplicationUserException(string message)
             : base(message)
         {
         }
