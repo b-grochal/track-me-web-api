@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TrackMeWebAPI.Exceptions;
-using TrackMeWebAPI.Services.Interfaces;
-using TrackMeWebAPI.ViewModels;
+using TrackMe.BusinessServices.Interfaces;
+using TrackMe.Models.DTOs.Admins;
 
 namespace TrackMeWebAPI.Controllers
 {
@@ -18,75 +17,43 @@ namespace TrackMeWebAPI.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminsController : ControllerBase
     {
-        private readonly IAdminsService adminsService;
+        private readonly IAdminsBusinessService adminsBusinessService;
 
-        public AdminsController(IAdminsService adminsService)
+        public AdminsController(IAdminsBusinessService adminsBusinessService)
         {
-            this.adminsService = adminsService;
+            this.adminsBusinessService = adminsBusinessService;
         }
 
         // GET api/admins
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AdminViewModel>>> GetAdmins()
+        public async Task<ActionResult<IEnumerable<AdminDto>>> GetAdmins()
         {
-            var admins = await adminsService.GetAdmins();
+            var admins = await adminsBusinessService.GetAdmins();
             return Ok(admins);
         }
 
         // GET api/admins/4
         [HttpGet("{adminId}")]
-        public async Task<ActionResult<AdminViewModel>> GetAdminDetails(int adminId)
+        public async Task<ActionResult<AdminDto>> GetAdmin(string adminId)
         {
-            try
-            {
-                var admin = await adminsService.GetAdminDetails(adminId);
-                return Ok(admin);
-            }
-            catch(UserNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    message = ex.Message
-                });
-            }
-            
+            var admin = await adminsBusinessService.GetAdmin(adminId);
+            return Ok(admin);
         }
 
         // POST api/admins
         [HttpPost]
-        public async Task<ActionResult> CreateAdmin([FromBody] NewAdminViewModel newAdminViewModel)
+        public async Task<ActionResult> CreateAdmin([FromBody] NewAdminDto newAdminDto)
         {
-            try
-            {
-                await adminsService.CreateAdmin(newAdminViewModel);
-                return Ok();
-            }
-            catch (DuplicatedUserException ex)
-            {
-                return Conflict(new
-                {
-                    message = ex.Message
-                });
-            }
-            
+            await adminsBusinessService.CreateAdmin(newAdminDto);
+            return Ok();
         }
 
         // DELETE api/admins/4
         [HttpDelete("{adminId}")]
-        public async Task<ActionResult> DeleteAdmin(int adminId)
+        public async Task<ActionResult> DeleteAdmin(string adminId)
         {
-            try
-            {
-                await adminsService.DeleteAdmin(adminId);
-                return Ok();
-            }
-            catch (UserNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    message = ex.Message
-                });
-            }
+            await adminsBusinessService.DeleteAdmin(adminId);
+            return Ok();
         }
 
     }

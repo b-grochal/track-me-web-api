@@ -12,61 +12,41 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using TrackMeWebAPI.Exceptions;
-using TrackMeWebAPI.Services.Interfaces;
-using TrackMeWebAPI.ViewModels;
+using TrackMe.BusinessServices.Interfaces;
+using TrackMe.Models.DTOs.Account;
 
 namespace TrackMeWebAPI.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "BasicUser")]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountService accountService;
+        private readonly IAccountBusinessService accountBusinessService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountBusinessService accountBusinessService)
         {
-            this.accountService = accountService;
+            this.accountBusinessService = accountBusinessService;
         }
 
-        // POST api/account/login
+        // POST: api/account/change-password
         [HttpPost]
-        [Route("Login")]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel loginViewModel)
+        [Route("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
         {
-            try
-            {
-                var loggedUserData = await this.accountService.Login(loginViewModel);
-                return Ok(loggedUserData);
-            }
-            catch(UserNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    message = ex.Message
-                });
-            }                 
+            var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+            await accountBusinessService.ChangePassword(applicationUserId, changePasswordDto);
+            return Ok();
         }
 
-        // POST api/register
+        // POST: api/account/update-account-data
         [HttpPost]
-        [Route("Register")]
-        public async Task<IActionResult> Register([FromBody] RegisterViewModel registerViewModel)
+        [Route("update-account-data")]
+        public async Task<IActionResult> UpdateAccountData([FromBody] UpdateAccountDataDto updateAccountDataDto)
         {
-            try
-            {
-                await this.accountService.Register(registerViewModel);
-                return Ok();
-            }
-            catch(DuplicatedUserException ex)
-            {
-                return Conflict(new
-                {
-                    message = ex.Message
-                });
-            }
-            
+            var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+            await accountBusinessService.UpdateAccountData(applicationUserId, updateAccountDataDto);
+            return Ok();
         }
         
     }

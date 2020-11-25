@@ -14,6 +14,12 @@ namespace TrackMe.BusinessServices.Logic
         private readonly IMapper mapper;
         private readonly IBasicUsersService basicUsersService;
 
+        public BasicUsersBusinessService(IMapper mapper, IBasicUsersService basicUsersService)
+        {
+            this.mapper = mapper;
+            this.basicUsersService = basicUsersService;
+        }
+
         public async Task DeleteBasicUser(string basicUserId)
         {
             await basicUsersService.DeleteBasicUser(basicUserId);
