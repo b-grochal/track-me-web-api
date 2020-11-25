@@ -17,11 +17,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using TrackMe.BusinessServices.Interfaces;
+using TrackMe.BusinessServices.Logic;
 using TrackMe.Database.Context;
 using TrackMe.Domain.Entities;
+using TrackMe.Services.Interfaces;
+using TrackMe.Services.Logic;
+using TrackMe.WebApi.Infrastructure;
 using TrackMeWebAPI.Data;
-using TrackMeWebAPI.Services.Interfaces;
-using TrackMeWebAPI.Services.Logic;
 
 namespace TrackMeWebAPI
 {
@@ -68,10 +71,18 @@ namespace TrackMeWebAPI
             });
 
             services.AddCors();
-            services.AddTransient<ITripsService, TripsService>();
+            
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAdminsService, AdminsService>();
+            services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IBasicUsersService, BasicUsersService>();
+            services.AddTransient<ITripsService, TripsService>();
+
+            services.AddTransient<IAccountBusinessService, AccountBusinessService>();
+            services.AddTransient<IAdminsBusinessService, AdminsBusinessService>();
+            services.AddTransient<IAuthBusinessService, AuthBusinessService>();
+            services.AddTransient<IBasicUsersBusinessService, BasicUsersBusinessService>();
+            services.AddTransient<ITripsBusinessService, TripsBusinessService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
