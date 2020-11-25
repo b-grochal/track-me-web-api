@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -32,7 +33,6 @@ namespace TrackMeWebAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
@@ -71,41 +71,28 @@ namespace TrackMeWebAPI
             services.AddTransient<IBasicUsersService, BasicUsersService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //using (var scope = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope())
-                //{
-                //    DataSeeder.CreateRoles(scope.ServiceProvider);
-                //    DataSeeder.CreateAdmins(scope.ServiceProvider);
-                //    DataSeeder.CreateBasicUsers(scope.ServiceProvider);
-                //    DataSeeder.CreateTrips(scope.ServiceProvider);
-                //    DataSeeder.CreateSensorsValues(scope.ServiceProvider);
-                //}
-
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
-            app.UseCors(builder =>
-            builder.AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod());
-
-
-            app.UseAuthentication();
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
 
