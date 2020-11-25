@@ -8,6 +8,7 @@ namespace TrackMe.Services.Interfaces
 {
     public interface IAccountService
     {
-        Task<ApplicationUserIdentity> Authenticate(string email, string password);
+        Task ChangePassword(string applicationUserId, string oldPassword, string newPassword);
+        Task UdpateAccountData(ApplicationUser applicationUser);
     }
 }

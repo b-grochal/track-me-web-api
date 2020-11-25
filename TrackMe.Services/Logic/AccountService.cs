@@ -11,39 +11,22 @@ namespace TrackMe.Services.Logic
 {
     public class AccountService : IAccountService
     {
-        public readonly UserManager<ApplicationUserIdentity> applicationUserIdentityManager;
+        public readonly UserManager<ApplicationUser> userManager;
 
-        public AccountService(UserManager<ApplicationUserIdentity> userManager)
+        public AccountService(UserManager<ApplicationUser> userManager)
         {
-            this.applicationUserIdentityManager = userManager;
+            this.userManager = userManager;
         }
 
-        public async Task<ApplicationUserIdentity> Authenticate(string email, string password)
+        public async Task ChangePassword(string applicationUserId, string oldPassword, string newPassword)
         {
-            var applicationUserIdentity = await applicationUserIdentityManager.FindByNameAsync(email);
-            var isPasswordValid = await applicationUserIdentityManager.CheckPasswordAsync(applicationUserIdentity, password);
-
-            if (applicationUserIdentity != null && isPasswordValid)
-            {
-                return applicationUserIdentity;
-            }
-
-            throw new AuthenticationException("Incorrect email or password.");
+            var applicationUser = await userManager.FindByIdAsync(applicationUserId);
+            await userManager.ChangePasswordAsync(applicationUser, oldPassword, newPassword);
         }
 
-        public async Task Register(ApplicationUserIdentity newApplicationUserIdentity, string password)
+        public async Task UdpateAccountData(ApplicationUser applicationUser)
         {
-            var duplicatedBasicUser = await applicationUserIdentityManager.FindByEmailAsync(newApplicationUserIdentity.Email);
-            
-            if (duplicatedBasicUser != null)
-            {
-                throw new RegistrationException("User with passed email already exists.");
-            }
-
-            string hashedPassword = applicationUserIdentityManager.PasswordHasher.HashPassword(newApplicationUserIdentity, password);
-            newApplicationUserIdentity.PasswordHash = hashedPassword;
-            await applicationUserIdentityManager.CreateAsync(newApplicationUserIdentity);
-            await applicationUserIdentityManager.AddToRoleAsync(newApplicationUserIdentity, ApplicationUserRoles.BasicUser.ToString());
+            await userManager.UpdateAsync(applicationUser);
         }
     }
 }
