@@ -74,6 +74,7 @@ namespace TrackMeWebAPI
             
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAdminsService, AdminsService>();
+            services.AddTransient<IApplicationUserRolesService, ApplicationUserRolesService>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IBasicUsersService, BasicUsersService>();
             services.AddTransient<ITripsService, TripsService>();
