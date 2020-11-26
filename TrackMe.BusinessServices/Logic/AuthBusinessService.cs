@@ -53,7 +53,8 @@ namespace TrackMe.BusinessServices.Logic
                 {
                     new Claim("ApplicationUserId", applicationUserId),
                     new Claim("Email", email),
-                    new Claim("Role", role)
+                    new Claim("Role", role),
+                    new Claim(ClaimTypes.Role, role)
                 };
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSigningKeyValue));
