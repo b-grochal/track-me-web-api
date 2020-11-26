@@ -34,7 +34,7 @@ namespace TrackMeWebAPI.Controllers
         [Route("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
         {
-            var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+            var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserId").Value;
             await accountBusinessService.ChangePassword(applicationUserId, changePasswordDto);
             return Ok();
         }
@@ -44,7 +44,7 @@ namespace TrackMeWebAPI.Controllers
         [Route("update-account-data")]
         public async Task<IActionResult> UpdateAccountData([FromBody] UpdateAccountDataDto updateAccountDataDto)
         {
-            var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+            var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserId").Value;
             await accountBusinessService.UpdateAccountData(applicationUserId, updateAccountDataDto);
             return Ok();
         }
