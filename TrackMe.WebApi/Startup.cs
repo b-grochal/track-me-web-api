@@ -21,6 +21,7 @@ using TrackMe.BusinessServices.Interfaces;
 using TrackMe.BusinessServices.Logic;
 using TrackMe.Database.Context;
 using TrackMe.Domain.Entities;
+using TrackMe.Models.Profiles;
 using TrackMe.Services.Interfaces;
 using TrackMe.Services.Logic;
 using TrackMe.WebApi.Infrastructure;
@@ -39,8 +40,6 @@ namespace TrackMeWebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(Startup));
-
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddDbContext<DatabaseContext>(op => op.UseSqlServer(Configuration["ConnectionString:DBConnection"], x => x.MigrationsAssembly("TrackMe.Database")));
@@ -74,6 +73,7 @@ namespace TrackMeWebAPI
             
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAdminsService, AdminsService>();
+            services.AddTransient<IApplicationUserRolesService, ApplicationUserRolesService>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IBasicUsersService, BasicUsersService>();
             services.AddTransient<ITripsService, TripsService>();
@@ -83,6 +83,18 @@ namespace TrackMeWebAPI
             services.AddTransient<IAuthBusinessService, AuthBusinessService>();
             services.AddTransient<IBasicUsersBusinessService, BasicUsersBusinessService>();
             services.AddTransient<ITripsBusinessService, TripsBusinessService>();
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AuthProfile());
+                mc.AddProfile(new AccountProfile());
+                mc.AddProfile(new AdminsProfile());
+                mc.AddProfile(new BasicUsersProfile());
+                mc.AddProfile(new TripsProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

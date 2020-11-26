@@ -33,7 +33,7 @@ namespace TrackMe.Services.Logic
 
         public async Task Register(BasicUser newBasicUser, string password)
         {
-            var isBasicUserDuplicated = await userManager.FindByEmailAsync(newBasicUser.Email) == null;
+            var isBasicUserDuplicated = await userManager.FindByEmailAsync(newBasicUser.Email) != null;
 
             if (isBasicUserDuplicated)
             {

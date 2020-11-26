@@ -27,7 +27,7 @@ namespace TrackMeWebAPI.Controllers
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult<IEnumerable<TripDto>>> GetTrips()
         {
-            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserId").Value;
             var trips = await this.tripsBusinessService.GetTrips(applicationUserID);
             return Ok(trips);
         }
@@ -47,7 +47,7 @@ namespace TrackMeWebAPI.Controllers
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult> CreateTrip([FromBody] NewTripDto newTripDto)
         {
-            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserID").Value;
+            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserId").Value;
             await this.tripsBusinessService.CreateTrip(newTripDto);
             return Ok();
         }
