@@ -12,7 +12,7 @@ using TrackMe.Models.DTOs.BasicUsers;
 
 namespace TrackMeWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/basic-users")]
     [ApiController]
     public class BasicUsersController : ControllerBase
     {
