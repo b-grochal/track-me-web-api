@@ -9,9 +9,7 @@ namespace TrackMe.Services.Interfaces
     public interface IBasicUsersService
     {
         Task<IEnumerable<BasicUser>> GetBasicUsers();
-
         Task<BasicUser> GetBasicUser(string basicUserId);
-
         Task DeleteBasicUser(string basicUserId);
     }
 }

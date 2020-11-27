@@ -22,7 +22,7 @@ namespace TrackMeWebAPI.Controllers
             this.tripsBusinessService = tripsBusinessService;
         }
 
-        // GET api/trips
+        // GET: api/trips
         [HttpGet]
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult<IEnumerable<TripDto>>> GetTrips()
@@ -32,7 +32,7 @@ namespace TrackMeWebAPI.Controllers
             return Ok(trips);
         }
 
-        // GET api/trips/all
+        // GET: api/trips/all
         [HttpGet]
         [Authorize(Roles = "Admin")]
         [Route("all")]
@@ -42,7 +42,7 @@ namespace TrackMeWebAPI.Controllers
             return Ok(trips);
         }
 
-        // POST api/trips
+        // POST: api/trips
         [HttpPost]
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult> CreateTrip([FromBody] NewTripDto newTripDto)
@@ -52,8 +52,8 @@ namespace TrackMeWebAPI.Controllers
             return Ok();
         }
 
-        // GET api/trips/4/details
-        [HttpGet("{tripId}/details")]
+        // GET: api/trips/4/sensor-data
+        [HttpGet("{tripId}/sensor-data")]
         [Authorize(Roles = "BasicUser,Admin")]
         public async Task<ActionResult<TripSensorDataDto>> GetTripSensorData(int tripId)
         {
@@ -61,7 +61,7 @@ namespace TrackMeWebAPI.Controllers
             return Ok(tripSensorData);
         }
 
-        // DELETE api/trips/4
+        // DELETE: api/trips/4
         [HttpDelete("{tripId}")]
         [Authorize(Roles = "Admin,BasicUser")]
         public async Task<ActionResult> DeleteTrip(int tripId)
@@ -70,7 +70,7 @@ namespace TrackMeWebAPI.Controllers
             return Ok();
         }
 
-        // POST api/trips/4/details
+        // POST: api/trips/4/details
         [HttpPost("{tripId}/details")]
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult> CreateTripDetails(int tripId, [FromBody] NewSensorDataDto newSensorDataDto)
@@ -78,6 +78,5 @@ namespace TrackMeWebAPI.Controllers
             await this.tripsBusinessService.CreateTripSensorData(tripId, newSensorDataDto);
             return Ok();
         }
-
     }
 }
