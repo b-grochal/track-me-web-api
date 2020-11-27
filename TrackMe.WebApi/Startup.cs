@@ -20,12 +20,14 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using TrackMe.BusinessServices.Interfaces;
 using TrackMe.BusinessServices.Logic;
+using TrackMe.Common.Settings;
 using TrackMe.Database.Context;
 using TrackMe.Domain.Entities;
+using TrackMe.Helpers.Services.Interfaces;
+using TrackMe.Helpers.Services.Logic;
 using TrackMe.Models.Profiles;
 using TrackMe.Services.Interfaces;
 using TrackMe.Services.Logic;
-using TrackMe.WebApi.Infrastructure;
 using TrackMe.WebApi.Middlewares;
 using TrackMeWebAPI.Data;
 
@@ -89,6 +91,8 @@ namespace TrackMeWebAPI
             services.AddTransient<IAuthBusinessService, AuthBusinessService>();
             services.AddTransient<IBasicUsersBusinessService, BasicUsersBusinessService>();
             services.AddTransient<ITripsBusinessService, TripsBusinessService>();
+
+            services.AddTransient<IJwtService, JwtService>();
 
             var mappingConfig = new MapperConfiguration(mc =>
             {

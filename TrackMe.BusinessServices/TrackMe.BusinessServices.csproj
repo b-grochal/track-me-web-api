@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TrackMe.Helpers\TrackMe.Helpers.csproj" />
     <ProjectReference Include="..\TrackMe.Models\TrackMe.Models.csproj" />
     <ProjectReference Include="..\TrackMe.Services\TrackMe.Services.csproj" />
   </ItemGroup>

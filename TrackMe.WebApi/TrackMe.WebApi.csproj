@@ -30,7 +30,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrackMe.BusinessServices\TrackMe.BusinessServices.csproj" />
+    <ProjectReference Include="..\TrackMe.Common\TrackMe.Common.csproj" />
     <ProjectReference Include="..\TrackMe.Database\TrackMe.Database.csproj" />
+    <ProjectReference Include="..\TrackMe.Helpers\TrackMe.Helpers.csproj" />
   </ItemGroup>
 
 </Project>

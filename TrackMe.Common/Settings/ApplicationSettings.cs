@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TrackMe.WebApi.Infrastructure
+namespace TrackMe.Common.Settings
 {
     public class ApplicationSettings
     {
