@@ -25,6 +25,7 @@ using TrackMe.Models.Profiles;
 using TrackMe.Services.Interfaces;
 using TrackMe.Services.Logic;
 using TrackMe.WebApi.Infrastructure;
+using TrackMe.WebApi.Middlewares;
 using TrackMeWebAPI.Data;
 
 namespace TrackMeWebAPI
@@ -107,6 +108,8 @@ namespace TrackMeWebAPI
             {
                 app.UseHsts();
             }
+
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
             app.UseRouting();
 
