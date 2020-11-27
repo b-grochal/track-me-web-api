@@ -9,11 +9,8 @@ namespace TrackMe.Services.Interfaces
     public interface IAdminsService
     {
         Task<IEnumerable<Admin>> GetAdmins();
-
         Task<Admin> GetAdmin(string adminId);
-
         Task CreateAdmin(Admin newAdmin, string password);
-
         Task DeleteAdmin(string adminId);
     }
 }

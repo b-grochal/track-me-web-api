@@ -23,7 +23,7 @@ namespace TrackMeWebAPI.Controllers
             this.basicUsersBusinessService = basicUsersBusinessService;
         }
 
-        // GET api/basicUsers/all
+        // GET: api/basicUsers/all
         [HttpGet]
         [Authorize(Roles = "Admin")]
         [Route("all")]
@@ -34,7 +34,7 @@ namespace TrackMeWebAPI.Controllers
 
         }
 
-        // GET api/basicUsers/4
+        // GET: api/basicUsers/4
         [HttpGet("{basicUserId}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<BasicUserDto>> GetBasicUser(string basicUserId)
@@ -43,7 +43,7 @@ namespace TrackMeWebAPI.Controllers
             return Ok(basicUser);
         }
 
-        // DELETE api/basicUsers/4
+        // DELETE: api/basicUsers/4
         [HttpDelete("{basicUserId}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteBasicUser(string basicUserId)

@@ -7,8 +7,7 @@ namespace TrackMe.Services.Exceptions
 {
     public class TripNotFoundException : Exception
     {
-        public TripNotFoundException(string message)
-            : base(message)
+        public TripNotFoundException(string message) : base(message)
         {
         }
     }

@@ -24,7 +24,7 @@ namespace TrackMeWebAPI.Controllers
             this.adminsBusinessService = adminsBusinessService;
         }
 
-        // GET api/admins
+        // GET: api/admins
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AdminDto>>> GetAdmins()
         {
@@ -32,7 +32,7 @@ namespace TrackMeWebAPI.Controllers
             return Ok(admins);
         }
 
-        // GET api/admins/4
+        // GET: api/admins/4
         [HttpGet("{adminId}")]
         public async Task<ActionResult<AdminDto>> GetAdmin(string adminId)
         {
@@ -40,7 +40,7 @@ namespace TrackMeWebAPI.Controllers
             return Ok(admin);
         }
 
-        // POST api/admins
+        // POST: api/admins
         [HttpPost]
         public async Task<ActionResult> CreateAdmin([FromBody] NewAdminDto newAdminDto)
         {
@@ -48,7 +48,7 @@ namespace TrackMeWebAPI.Controllers
             return Ok();
         }
 
-        // DELETE api/admins/4
+        // DELETE: api/admins/4
         [HttpDelete("{adminId}")]
         public async Task<ActionResult> DeleteAdmin(string adminId)
         {

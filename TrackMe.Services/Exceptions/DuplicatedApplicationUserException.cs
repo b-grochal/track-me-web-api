@@ -7,8 +7,7 @@ namespace TrackMe.Services.Exceptions
 {
     public class DuplicatedApplicationUserException : Exception
     {
-        public DuplicatedApplicationUserException(string message)
-            : base(message)
+        public DuplicatedApplicationUserException(string message) : base(message)
         {
         }
     }
