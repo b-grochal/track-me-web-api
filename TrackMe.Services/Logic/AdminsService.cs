@@ -24,7 +24,7 @@ namespace TrackMe.Services.Logic
 
         public async Task CreateAdmin(Admin newAdmin, string password)
         {
-            var isAdminDuplicated = await userManager.FindByEmailAsync(newAdmin.Email) == null;
+            var isAdminDuplicated = await userManager.FindByEmailAsync(newAdmin.Email) != null;
 
             if (isAdminDuplicated)
             {
