@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using TrackMe.BusinessServices.Interfaces;
 using TrackMe.BusinessServices.Logic;
 using TrackMe.Database.Context;
@@ -47,8 +48,12 @@ namespace TrackMeWebAPI
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<DatabaseContext>()
                 .AddDefaultTokenProviders();
-
             
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TrackMe WebAPI", Version = "v1" });
+            });
+
 
             services.AddAuthentication(options =>
             {
@@ -123,6 +128,13 @@ namespace TrackMeWebAPI
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TrackMe WebAPI");
             });
 
         }
