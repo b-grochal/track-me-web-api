@@ -5,15 +5,19 @@ VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackMe.WebApi", "TrackMe.WebApi\TrackMe.WebApi.csproj", "{2CEEC33D-35BB-4155-BE77-7A16CEC146ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Domain", "TrackMe.Domain\TrackMe.Domain.csproj", "{572DA8E2-F147-493E-88F8-5FB0F04D2C29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackMe.Domain", "TrackMe.Domain\TrackMe.Domain.csproj", "{572DA8E2-F147-493E-88F8-5FB0F04D2C29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Database", "TrackMe.Database\TrackMe.Database.csproj", "{A27E2DD9-B9C5-4166-8091-2307B5F95564}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackMe.Database", "TrackMe.Database\TrackMe.Database.csproj", "{A27E2DD9-B9C5-4166-8091-2307B5F95564}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Models", "TrackMe.Models\TrackMe.Models.csproj", "{F9FF81AA-AAF2-4CF2-9F34-69AAA7A72988}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackMe.Models", "TrackMe.Models\TrackMe.Models.csproj", "{F9FF81AA-AAF2-4CF2-9F34-69AAA7A72988}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Services", "TrackMe.Services\TrackMe.Services.csproj", "{735548F3-3961-4AEB-A26C-F5C65F829987}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackMe.Services", "TrackMe.Services\TrackMe.Services.csproj", "{735548F3-3961-4AEB-A26C-F5C65F829987}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.BusinessServices", "TrackMe.BusinessServices\TrackMe.BusinessServices.csproj", "{C6C07935-D864-46F8-BE97-1A703582B315}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackMe.BusinessServices", "TrackMe.BusinessServices\TrackMe.BusinessServices.csproj", "{C6C07935-D864-46F8-BE97-1A703582B315}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Common", "TrackMe.Common\TrackMe.Common.csproj", "{46D0BA49-E6ED-4E80-91A0-D40114F8BCD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Helpers", "TrackMe.Helpers\TrackMe.Helpers.csproj", "{4120D825-11E6-414D-93AB-A681A02C6C96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{C6C07935-D864-46F8-BE97-1A703582B315}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6C07935-D864-46F8-BE97-1A703582B315}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6C07935-D864-46F8-BE97-1A703582B315}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46D0BA49-E6ED-4E80-91A0-D40114F8BCD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46D0BA49-E6ED-4E80-91A0-D40114F8BCD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46D0BA49-E6ED-4E80-91A0-D40114F8BCD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46D0BA49-E6ED-4E80-91A0-D40114F8BCD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4120D825-11E6-414D-93AB-A681A02C6C96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4120D825-11E6-414D-93AB-A681A02C6C96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4120D825-11E6-414D-93AB-A681A02C6C96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4120D825-11E6-414D-93AB-A681A02C6C96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
