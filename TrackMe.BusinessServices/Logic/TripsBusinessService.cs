@@ -21,9 +21,10 @@ namespace TrackMe.BusinessServices.Logic
             this.tripsService = tripsService;
         }
 
-        public async Task CreateTrip(NewTripDto newTrip)
+        public async Task CreateTrip(string basicUserId, NewTripDto newTrip)
         {
             var trip = mapper.Map<Trip>(newTrip);
+            trip.BasicUserId = basicUserId;
             await tripsService.CreateTrip(trip);
         }
 
