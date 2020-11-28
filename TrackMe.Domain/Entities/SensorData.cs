@@ -21,6 +21,6 @@ namespace TrackMe.Domain.Entities
         public double  MagneticFieldX { get; set; }
         public double  MagneticFieldY { get; set; }
         public double MagneticFieldZ { get; set; }
-        public Trip Trip { get; set; }
+        public virtual Trip Trip { get; set; }
     }
 }
