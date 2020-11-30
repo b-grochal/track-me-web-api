@@ -18,6 +18,7 @@ namespace TrackMe.BusinessServices.Logic
         public AccountBusinessService(IMapper mapper, IAccountService accountService)
         {
             this.accountService = accountService;
+            this.mapper = mapper;
         }
 
         public async Task ChangePassword(string applicationUserId, ChangePasswordDto changePasswordDto)

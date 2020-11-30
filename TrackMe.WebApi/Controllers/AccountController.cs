@@ -52,7 +52,7 @@ namespace TrackMeWebAPI.Controllers
         // GET: api/account/account-data
         [HttpGet]
         [Route("account-data")]
-        public async Task<IActionResult> GetAccountData([FromBody] AccountDataDto updateAccountDataDto)
+        public async Task<IActionResult> GetAccountData()
         {
             var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserId").Value;
             var accountData = await accountBusinessService.GetAccountData(applicationUserId);
