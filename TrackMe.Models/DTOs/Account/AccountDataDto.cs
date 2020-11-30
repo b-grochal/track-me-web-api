@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TrackMe.Models.DTOs.Account
 {
-    public class UpdateAccountDataDto
+    public class AccountDataDto
     {
         [Required]
         public string FirstName { get; set; }

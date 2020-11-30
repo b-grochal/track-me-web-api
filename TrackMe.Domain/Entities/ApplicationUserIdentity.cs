@@ -8,6 +8,6 @@ namespace TrackMe.Domain.Entities
     public class ApplicationUserIdentity : IdentityUser
     {
         public int ApplicationUserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

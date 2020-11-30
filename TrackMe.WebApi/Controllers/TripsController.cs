@@ -47,8 +47,8 @@ namespace TrackMeWebAPI.Controllers
         [Authorize(Roles = "BasicUser")]
         public async Task<ActionResult> CreateTrip([FromBody] NewTripDto newTripDto)
         {
-            var applicationUserID = User.Claims.First(x => x.Type == "ApplicationUserId").Value;
-            await this.tripsBusinessService.CreateTrip(newTripDto);
+            var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserId").Value;
+            await this.tripsBusinessService.CreateTrip(applicationUserId, newTripDto);
             return Ok();
         }
 
@@ -71,9 +71,9 @@ namespace TrackMeWebAPI.Controllers
         }
 
         // POST: api/trips/4/details
-        [HttpPost("{tripId}/details")]
+        [HttpPost("{tripId}/sensor-data")]
         [Authorize(Roles = "BasicUser")]
-        public async Task<ActionResult> CreateTripDetails(int tripId, [FromBody] NewSensorDataDto newSensorDataDto)
+        public async Task<ActionResult> CreateTripSensorData(int tripId, [FromBody] NewSensorDataDto newSensorDataDto)
         {
             await this.tripsBusinessService.CreateTripSensorData(tripId, newSensorDataDto);
             return Ok();

@@ -10,7 +10,7 @@ namespace TrackMe.BusinessServices.Interfaces
     {
         Task<IEnumerable<TripDto>> GetTrips();
         Task<IEnumerable<TripDto>> GetTrips(string basicUserId);
-        Task CreateTrip(NewTripDto newTrip);
+        Task CreateTrip(string basicUserId, NewTripDto newTrip);
         Task CreateTripSensorData(int tripId, NewSensorDataDto newSensorData);
         Task<TripDto> GetTrip(int tripId);
         Task<TripSensorDataDto> GetTripSensorDataDto(int tripId);

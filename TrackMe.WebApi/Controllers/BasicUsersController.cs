@@ -12,7 +12,7 @@ using TrackMe.Models.DTOs.BasicUsers;
 
 namespace TrackMeWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/basic-users")]
     [ApiController]
     public class BasicUsersController : ControllerBase
     {
@@ -23,11 +23,10 @@ namespace TrackMeWebAPI.Controllers
             this.basicUsersBusinessService = basicUsersBusinessService;
         }
 
-        // GET: api/basicUsers/all
+        // GET: api/basicUsers
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        [Route("all")]
-        public async Task<ActionResult<IEnumerable<BasicUserDto>>> GetAllBasicUsers()
+        public async Task<ActionResult<IEnumerable<BasicUserDto>>> GetBasicUsers()
         {
             var basicUsers = await basicUsersBusinessService.GetBasicUsers();
             return Ok(basicUsers);
