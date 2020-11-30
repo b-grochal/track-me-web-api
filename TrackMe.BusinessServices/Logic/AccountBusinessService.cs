@@ -15,7 +15,7 @@ namespace TrackMe.BusinessServices.Logic
         private readonly IMapper mapper;
         private readonly IAccountService accountService;
         
-        public AccountBusinessService(IAccountService accountService)
+        public AccountBusinessService(IMapper mapper, IAccountService accountService)
         {
             this.accountService = accountService;
         }
@@ -25,11 +25,17 @@ namespace TrackMe.BusinessServices.Logic
             await accountService.ChangePassword(applicationUserId, changePasswordDto.OldPassword, changePasswordDto.NewPassword);
         }
 
-        public async Task UpdateAccountData(string applicationUserId, UpdateAccountDataDto updateAccountDataDto)
+        public async Task UpdateAccountData(string applicationUserId, AccountDataDto updateAccountDataDto)
         {
             var applicationUser = await accountService.GetApplicationUser(applicationUserId);
             var updatedApplicationUser = mapper.Map(updateAccountDataDto, applicationUser);
             await accountService.UdpateAccountData(updatedApplicationUser);
+        }
+
+        public async Task<AccountDataDto> GetAccountData(string applicationUserId)
+        {
+            var applicationUser = await accountService.GetApplicationUser(applicationUserId);
+            return mapper.Map<AccountDataDto>(applicationUser);
         }
     }
 }

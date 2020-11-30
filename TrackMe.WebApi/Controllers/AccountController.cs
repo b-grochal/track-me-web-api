@@ -39,15 +39,25 @@ namespace TrackMeWebAPI.Controllers
             return Ok();
         }
 
-        // POST: api/account/update-account-data
+        // POST: api/account/account-data
         [HttpPost]
-        [Route("update-account-data")]
-        public async Task<IActionResult> UpdateAccountData([FromBody] UpdateAccountDataDto updateAccountDataDto)
+        [Route("account-data")]
+        public async Task<IActionResult> UpdateAccountData([FromBody] AccountDataDto updateAccountDataDto)
         {
             var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserId").Value;
             await accountBusinessService.UpdateAccountData(applicationUserId, updateAccountDataDto);
             return Ok();
         }
-        
+
+        // GET: api/account/account-data
+        [HttpGet]
+        [Route("account-data")]
+        public async Task<IActionResult> GetAccountData([FromBody] AccountDataDto updateAccountDataDto)
+        {
+            var applicationUserId = User.Claims.First(x => x.Type == "ApplicationUserId").Value;
+            var accountData = await accountBusinessService.GetAccountData(applicationUserId);
+            return Ok(accountData);
+        }
+
     }
 }

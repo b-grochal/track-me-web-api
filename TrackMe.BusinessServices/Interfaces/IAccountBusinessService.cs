@@ -9,6 +9,7 @@ namespace TrackMe.BusinessServices.Interfaces
     public interface IAccountBusinessService
     {
         Task ChangePassword(string applicationUserId, ChangePasswordDto changePasswordDto);
-        Task UpdateAccountData(string applicationUserId, UpdateAccountDataDto updateAccountDataDto);
+        Task UpdateAccountData(string applicationUserId, AccountDataDto updateAccountDataDto);
+        Task<AccountDataDto> GetAccountData(string applicationUserId);
     }
 }
