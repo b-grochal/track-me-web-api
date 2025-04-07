@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30621.155
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackMe.WebApi", "TrackMe.WebApi\TrackMe.WebApi.csproj", "{2CEEC33D-35BB-4155-BE77-7A16CEC146ED}"
 EndProject
@@ -15,9 +15,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackMe.Services", "TrackMe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackMe.BusinessServices", "TrackMe.BusinessServices\TrackMe.BusinessServices.csproj", "{C6C07935-D864-46F8-BE97-1A703582B315}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Common", "TrackMe.Common\TrackMe.Common.csproj", "{46D0BA49-E6ED-4E80-91A0-D40114F8BCD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackMe.Common", "TrackMe.Common\TrackMe.Common.csproj", "{46D0BA49-E6ED-4E80-91A0-D40114F8BCD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Helpers", "TrackMe.Helpers\TrackMe.Helpers.csproj", "{4120D825-11E6-414D-93AB-A681A02C6C96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackMe.Helpers", "TrackMe.Helpers\TrackMe.Helpers.csproj", "{4120D825-11E6-414D-93AB-A681A02C6C96}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D8423A62-1748-46C8-853A-30E158C82AB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Application", "TrackMe.Application\TrackMe.Application.csproj", "{98AED86B-91B2-4832-BD18-048D5F61F0BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Infrastructure", "TrackMe.Infrastructure\TrackMe.Infrastructure.csproj", "{2714E07A-6FD7-4C03-B198-5A90C51F7E57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,9 +63,21 @@ Global
 		{4120D825-11E6-414D-93AB-A681A02C6C96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4120D825-11E6-414D-93AB-A681A02C6C96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4120D825-11E6-414D-93AB-A681A02C6C96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98AED86B-91B2-4832-BD18-048D5F61F0BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98AED86B-91B2-4832-BD18-048D5F61F0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98AED86B-91B2-4832-BD18-048D5F61F0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98AED86B-91B2-4832-BD18-048D5F61F0BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2714E07A-6FD7-4C03-B198-5A90C51F7E57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2714E07A-6FD7-4C03-B198-5A90C51F7E57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2714E07A-6FD7-4C03-B198-5A90C51F7E57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2714E07A-6FD7-4C03-B198-5A90C51F7E57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{98AED86B-91B2-4832-BD18-048D5F61F0BE} = {D8423A62-1748-46C8-853A-30E158C82AB5}
+		{2714E07A-6FD7-4C03-B198-5A90C51F7E57} = {D8423A62-1748-46C8-853A-30E158C82AB5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A44C35B-CBB7-444C-AD3A-290EC09CAC54}
