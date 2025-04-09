@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackMe.Helpers", "TrackMe.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D8423A62-1748-46C8-853A-30E158C82AB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Application", "TrackMe.Application\TrackMe.Application.csproj", "{98AED86B-91B2-4832-BD18-048D5F61F0BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "TrackMe.Application\Application.csproj", "{98AED86B-91B2-4832-BD18-048D5F61F0BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackMe.Infrastructure", "TrackMe.Infrastructure\TrackMe.Infrastructure.csproj", "{2714E07A-6FD7-4C03-B198-5A90C51F7E57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "TrackMe.Infrastructure\Infrastructure.csproj", "{2714E07A-6FD7-4C03-B198-5A90C51F7E57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

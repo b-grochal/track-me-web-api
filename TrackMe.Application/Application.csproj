@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Abstractions\Authentication\" />
+    <Folder Include="Abstractions\Behaviors\" />
+    <Folder Include="Abstractions\Data\" />
+    <Folder Include="Members\" />
+    <Folder Include="Admins\" />
+    <Folder Include="MyAccount\" />
+    <Folder Include="MyTrips\GetMyTrips\" />
+    <Folder Include="MyTrips\GetMyTripById\" />
+    <Folder Include="Trips\DeleteTrip\" />
+    <Folder Include="Trips\GetTrips\" />
+    <Folder Include="Trips\GetTripById\" />
+  </ItemGroup>
+
+</Project>
