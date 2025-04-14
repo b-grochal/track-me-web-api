@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Trips;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrackMe.Database.Context;
-using TrackMe.Domain.Entities;
 using TrackMe.Services.Exceptions;
 using TrackMe.Services.Interfaces;
 
@@ -26,7 +26,7 @@ namespace TrackMe.Services.Logic
             await databaseContext.SaveChangesAsync();
         }
 
-        public async Task CreateTripSensorData(SensorData newSensorData)
+        public async Task CreateTripSensorData(Location newSensorData)
         {
             await databaseContext.SensorData.AddAsync(newSensorData);
             await databaseContext.SaveChangesAsync();

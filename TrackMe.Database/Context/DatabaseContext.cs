@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Domain.Trips;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace TrackMe.Database.Context
         public DbSet<Admin> Admins { get; set; }
         public DbSet<BasicUser> BasicUsers { get; set; }
         public DbSet<Trip> Trips { get; set; }
-        public DbSet<SensorData> SensorData { get; set; }
+        public DbSet<Location> SensorData { get; set; }
         
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {

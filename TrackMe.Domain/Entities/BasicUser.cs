@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TrackMe.Domain.Entities;
+using Domain.Trips;
 
 namespace TrackMe.Domain.Entities
 {

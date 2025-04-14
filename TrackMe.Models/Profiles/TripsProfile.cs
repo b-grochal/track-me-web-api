@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Domain.Trips;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TrackMe.Domain.Entities;
 using TrackMe.Models.DTOs.Trips;
 
 namespace TrackMe.Models.Profiles
@@ -16,10 +16,10 @@ namespace TrackMe.Models.Profiles
             CreateMap<Trip, TripDto>()
                 .ForMember(dest => dest.BasicUserEmail, opts => opts.MapFrom(src => src.BassicUser.Email));
 
-            CreateMap<NewSensorDataDto, SensorData>()
+            CreateMap<NewSensorDataDto, Location>()
                 .ForMember(dest => dest.UploadDate, opts => opts.MapFrom(d => DateTime.Now));
 
-            CreateMap<SensorData, SensorDataDto>()
+            CreateMap<Location, SensorDataDto>()
                 .ForMember(dest => dest.UploadDate, opts => opts.MapFrom(src => src.UploadDate.ToString()));
 
             CreateMap<Trip, TripSensorDataDto>()

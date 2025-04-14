@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TrackMe.Domain.Entities;
 
-namespace TrackMe.Domain.Entities
+namespace Domain.Trips
 {
     public class Trip
     {
@@ -11,6 +12,6 @@ namespace TrackMe.Domain.Entities
         public string Name { get; set; }
         public string BasicUserId { get; set; }
         public virtual BasicUser BassicUser { get; set; }
-        public virtual ICollection<SensorData> SensorValues { get; set; }
+        public virtual ICollection<Location> SensorValues { get; set; }
     }
 }

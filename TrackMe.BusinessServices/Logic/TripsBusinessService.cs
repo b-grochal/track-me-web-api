@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using Domain.Trips;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TrackMe.BusinessServices.Interfaces;
-using TrackMe.Domain.Entities;
 using TrackMe.Models.DTOs.Trips;
 using TrackMe.Services.Interfaces;
 
@@ -30,7 +30,7 @@ namespace TrackMe.BusinessServices.Logic
 
         public async Task CreateTripSensorData(int tripId, NewSensorDataDto newSensorData)
         {
-            var sensorData = mapper.Map<SensorData>(newSensorData);
+            var sensorData = mapper.Map<Location>(newSensorData);
             sensorData.TripId = tripId;
             await tripsService.CreateTripSensorData(sensorData);
         }

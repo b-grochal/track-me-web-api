@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using TrackMe.Domain.Entities;
+using Domain.Trips;
 
 namespace TrackMe.Services.Interfaces
 {
@@ -11,7 +11,7 @@ namespace TrackMe.Services.Interfaces
         Task<IEnumerable<Trip>> GetTrips();
         Task<IEnumerable<Trip>> GetTrips(string basicUserId);
         Task CreateTrip(Trip newTrip);
-        Task CreateTripSensorData(SensorData newSensorData);
+        Task CreateTripSensorData(Location newSensorData);
         Task<Trip> GetTrip(int tripId);
         Task DeleteTrip(int tripId);
     }
