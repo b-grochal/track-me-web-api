@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstractions\Authentication\" />
-    <Folder Include="Abstractions\Behaviors\" />
-    <Folder Include="Abstractions\Data\" />
+    <Folder Include="Common\Authentication\" />
+    <Folder Include="Common\Behaviors\" />
+    <Folder Include="Common\Data\" />
     <Folder Include="Members\" />
     <Folder Include="Admins\" />
     <Folder Include="MyAccount\" />
@@ -18,6 +18,14 @@
     <Folder Include="Trips\DeleteTrip\" />
     <Folder Include="Trips\GetTrips\" />
     <Folder Include="Trips\GetTripById\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
 </Project>
