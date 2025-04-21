@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using Domain.Admins;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TrackMe.BusinessServices.Interfaces;
-using TrackMe.Domain.Entities;
 using TrackMe.Models.DTOs.Admins;
 using TrackMe.Services.Interfaces;
 

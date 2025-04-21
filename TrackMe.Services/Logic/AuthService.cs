@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.ApplicationUsers;
+using Domain.Members;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,7 +33,7 @@ namespace TrackMe.Services.Logic
             throw new AuthenticationException("Incorrect email or password.");
         }
 
-        public async Task Register(BasicUser newBasicUser, string password)
+        public async Task Register(Member newBasicUser, string password)
         {
             var isBasicUserDuplicated = await userManager.FindByEmailAsync(newBasicUser.Email) != null;
 

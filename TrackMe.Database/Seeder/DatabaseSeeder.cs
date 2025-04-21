@@ -1,4 +1,6 @@
-﻿using Domain.Trips;
+﻿using Domain.ApplicationUsers;
+using Domain.Locations;
+using Domain.Trips;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;

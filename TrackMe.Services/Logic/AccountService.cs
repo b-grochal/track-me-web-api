@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.ApplicationUsers;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using TrackMe.Domain.Entities;
 using TrackMe.Services.Exceptions;
 using TrackMe.Services.Interfaces;
 

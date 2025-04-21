@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Domain.ApplicationUsers;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TrackMe.Domain.Entities;
 using TrackMe.Models.DTOs.Account;
 
 namespace TrackMe.Models.Profiles

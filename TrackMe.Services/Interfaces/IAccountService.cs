@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using TrackMe.Domain.Entities;
+using Domain.ApplicationUsers;
 
 namespace TrackMe.Services.Interfaces
 {

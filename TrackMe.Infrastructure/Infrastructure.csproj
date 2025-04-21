@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Admins\" />
+    <Folder Include="Database\Configurations\" />
+    <Folder Include="Members\" />
+    <Folder Include="Locations\" />
+    <Folder Include="ApplicationUsers\" />
+    <Folder Include="Trips\" />
+  </ItemGroup>
+
 </Project>

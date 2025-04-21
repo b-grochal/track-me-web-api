@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TrackMe.Domain.Entities;
+using Domain.ApplicationUsers;
 
-namespace TrackMe.Domain.Entities
+namespace Domain.Admins
 {
     public class Admin : ApplicationUser
     {

@@ -1,4 +1,5 @@
-﻿using Domain.Trips;
+﻿using Domain.Locations;
+using Domain.Trips;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

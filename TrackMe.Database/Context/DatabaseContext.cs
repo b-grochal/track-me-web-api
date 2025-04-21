@@ -1,4 +1,8 @@
-﻿using Domain.Trips;
+﻿using Domain.Admins;
+using Domain.ApplicationUsers;
+using Domain.Locations;
+using Domain.Members;
+using Domain.Trips;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,7 +17,7 @@ namespace TrackMe.Database.Context
     public class DatabaseContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Admin> Admins { get; set; }
-        public DbSet<BasicUser> BasicUsers { get; set; }
+        public DbSet<Member> BasicUsers { get; set; }
         public DbSet<Trip> Trips { get; set; }
         public DbSet<Location> SensorData { get; set; }
         
@@ -30,7 +34,7 @@ namespace TrackMe.Database.Context
             .ToTable("ApplicationUsers")
             .HasDiscriminator<string>("ApplicationUserType")
             .HasValue<Admin>(ApplicationUserRoles.Admin.ToString())
-            .HasValue<BasicUser>(ApplicationUserRoles.BasicUser.ToString());
+            .HasValue<Member>(ApplicationUserRoles.BasicUser.ToString());
 
             builder.Entity<Trip>().HasOne(o => o.BassicUser)
                 .WithMany(a => a.Trips)

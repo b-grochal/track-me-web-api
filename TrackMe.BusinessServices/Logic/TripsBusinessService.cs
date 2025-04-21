@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Locations;
 using Domain.Trips;
 using System;
 using System.Collections.Generic;

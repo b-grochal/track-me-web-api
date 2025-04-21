@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Locations;
 using Domain.Trips;
 
 namespace TrackMe.Services.Interfaces

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using AutoMapper;
+using Domain.ApplicationUsers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -14,7 +15,6 @@ using TrackMe.BusinessServices.Interfaces;
 using TrackMe.BusinessServices.Logic;
 using TrackMe.Common.Settings;
 using TrackMe.Database.Context;
-using TrackMe.Domain.Entities;
 using TrackMe.Helpers.Services.Interfaces;
 using TrackMe.Helpers.Services.Logic;
 using TrackMe.Models.Profiles;

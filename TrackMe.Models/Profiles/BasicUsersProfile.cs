@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Domain.Members;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TrackMe.Domain.Entities;
 using TrackMe.Models.DTOs.BasicUsers;
 
 namespace TrackMe.Models.Profiles
@@ -11,7 +11,7 @@ namespace TrackMe.Models.Profiles
     {
         public BasicUsersProfile()
         {
-            CreateMap<BasicUser, BasicUserDto>()
+            CreateMap<Member, BasicUserDto>()
                 .ForMember(dest => dest.BasicUserId, opts => opts.MapFrom(src => src.Id));
         }
     }

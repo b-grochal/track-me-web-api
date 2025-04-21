@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.ApplicationUsers;
+using Domain.Members;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TrackMe.Database.Context;
-using TrackMe.Domain.Entities;
 using TrackMe.Services.Interfaces;
 
 namespace TrackMe.Services.Logic
@@ -27,13 +28,13 @@ namespace TrackMe.Services.Logic
             await userManager.DeleteAsync(basicUser);
         }
 
-        public async Task<BasicUser> GetBasicUser(string basicUserId)
+        public async Task<Member> GetBasicUser(string basicUserId)
         {
             return await databaseContext.BasicUsers
                 .FindAsync(basicUserId);
         }
 
-        public async Task<IEnumerable<BasicUser>> GetBasicUsers()
+        public async Task<IEnumerable<Member>> GetBasicUsers()
         {
             return await databaseContext.BasicUsers
                 .ToListAsync();
