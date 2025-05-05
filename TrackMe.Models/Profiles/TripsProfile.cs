@@ -15,7 +15,7 @@ namespace TrackMe.Models.Profiles
             CreateMap<NewTripDto, Trip>();
 
             CreateMap<Trip, TripDto>()
-                .ForMember(dest => dest.BasicUserEmail, opts => opts.MapFrom(src => src.BassicUser.Email));
+                .ForMember(dest => dest.BasicUserEmail, opts => opts.MapFrom(src => src.Member.Email));
 
             CreateMap<NewSensorDataDto, Location>()
                 .ForMember(dest => dest.UploadDate, opts => opts.MapFrom(d => DateTime.Now));
@@ -24,7 +24,7 @@ namespace TrackMe.Models.Profiles
                 .ForMember(dest => dest.UploadDate, opts => opts.MapFrom(src => src.UploadDate.ToString()));
 
             CreateMap<Trip, TripSensorDataDto>()
-                .ForMember(dest => dest.BasicUserEmail, opts => opts.MapFrom(src => src.BassicUser.Email))
+                .ForMember(dest => dest.BasicUserEmail, opts => opts.MapFrom(src => src.Member.Email))
                 .ForMember(dest => dest.SensorData, opts => opts.MapFrom(src => src.SensorValues));
         }
     }

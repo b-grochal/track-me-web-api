@@ -83,9 +83,9 @@ namespace TrackMeWebAPI.Data
             {
                 List<Trip> trips = new List<Trip>
                 {
-                    new Trip{ Name="Holiday Trip", BasicUserId = dbContext.BasicUsers.Single(x => x.Email.Equals("dwight@schrute.com")).Id },
-                    new Trip{ Name="Sunday Trip", BasicUserId = dbContext.BasicUsers.Single(x => x.Email.Equals("dwight@schrute.com")).Id },
-                    new Trip{ Name="Moscow Trip", BasicUserId = dbContext.BasicUsers.Single(x => x.Email.Equals("dwight@schrute.com")).Id }
+                    new Trip{ Name="Holiday Trip", MemberId = dbContext.BasicUsers.Single(x => x.Email.Equals("dwight@schrute.com")).Id },
+                    new Trip{ Name="Sunday Trip", MemberId = dbContext.BasicUsers.Single(x => x.Email.Equals("dwight@schrute.com")).Id },
+                    new Trip{ Name="Moscow Trip", MemberId = dbContext.BasicUsers.Single(x => x.Email.Equals("dwight@schrute.com")).Id }
                 };
 
                 foreach(Trip trip in trips)

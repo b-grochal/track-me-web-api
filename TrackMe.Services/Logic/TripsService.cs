@@ -59,7 +59,7 @@ namespace TrackMe.Services.Logic
         public async Task<IEnumerable<Trip>> GetTrips(string basicUserId)
         {
             return await databaseContext.Trips
-                .Where(t => t.BasicUserId == basicUserId)
+                .Where(t => t.MemberId == basicUserId)
                 .ToListAsync();
         }
     }

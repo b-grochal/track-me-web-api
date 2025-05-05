@@ -36,9 +36,9 @@ namespace TrackMe.Database.Context
             .HasValue<Admin>(ApplicationUserRoles.Admin.ToString())
             .HasValue<Member>(ApplicationUserRoles.BasicUser.ToString());
 
-            builder.Entity<Trip>().HasOne(o => o.BassicUser)
+            builder.Entity<Trip>().HasOne(o => o.Member)
                 .WithMany(a => a.Trips)
-                .HasForeignKey(o => o.BasicUserId)
+                .HasForeignKey(o => o.MemberId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

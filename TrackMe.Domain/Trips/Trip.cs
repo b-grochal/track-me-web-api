@@ -7,9 +7,13 @@ namespace Domain.Trips
     public class Trip
     {
         public int TripId { get; set; }
+
         public string Name { get; set; }
-        public string BasicUserId { get; set; }
-        public virtual Member BassicUser { get; set; }
+
+        public string MemberId { get; set; }
+
+        public virtual Member Member { get; set; }
+
         public virtual ICollection<Location> SensorValues { get; set; }
     }
 }
