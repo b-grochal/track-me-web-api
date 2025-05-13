@@ -5,7 +5,7 @@ namespace Domain.Locations
 {
     public class Location
     {
-        public int LocationId { get; set; }
+        public int Id { get; set; }
 
         public double Latitude { get; set; }
 

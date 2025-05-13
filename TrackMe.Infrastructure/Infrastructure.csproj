@@ -7,12 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <Folder Include="Admins\" />
     <Folder Include="Database\Configurations\" />
     <Folder Include="Members\" />
-    <Folder Include="Locations\" />
     <Folder Include="ApplicationUsers\" />
-    <Folder Include="Trips\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrackMe.Application\Application.csproj" />
   </ItemGroup>
 
 </Project>
