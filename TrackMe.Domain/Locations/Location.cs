@@ -1,20 +1,18 @@
-﻿using System;
-using Domain.Trips;
+﻿using Domain.Trips;
+using NetTopologySuite.Geometries;
+using System;
 
-namespace Domain.Locations
+namespace Domain.Locations;
+
+public class Location
 {
-    public class Location
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public double Latitude { get; set; }
+    public DateTimeOffset CapturedDate { get; set; }
 
-        public double Longitude { get; set; }
+    public Point Position { get; set; }
 
-        public DateTimeOffset UploadTime { get; set; }
+    public int TripId { get; set; }
 
-        public int TripId { get; set; }
-
-        public virtual Trip Trip { get; set; }
-    }
+    public virtual Trip Trip { get; set; }
 }
