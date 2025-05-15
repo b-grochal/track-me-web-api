@@ -12,6 +12,6 @@
 
         public string PasswordHash { get; set; }
 
-
+        public ApplicationUserRole Role { get; set; }
     }
 }

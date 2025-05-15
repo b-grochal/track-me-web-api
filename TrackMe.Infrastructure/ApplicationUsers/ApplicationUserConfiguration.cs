@@ -1,4 +1,6 @@
-﻿using Domain.ApplicationUsers;
+﻿using Domain.Admins;
+using Domain.ApplicationUsers;
+using Domain.Members;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -29,11 +31,16 @@ internal sealed class ApplicationUserConfiguration : IEntityTypeConfiguration<Ap
             .HasColumnName("last_name")
             .IsRequired();
 
+        builder.Property(u => u.Role)
+            .HasColumnName("role")
+            .IsRequired()
+            .HasConversion<string>();
+
         builder.HasIndex(u => u.Email)
             .IsUnique();
 
-        builder.HasDiscriminator<string>("role")
-            .HasValue<RegularUser>("regular_user")
-            .HasValue<AdminUser>("admin_user");
+        builder.HasDiscriminator(u => u.Role)
+            .HasValue<Admin>(ApplicationUserRole.Admin)
+            .HasValue<Member>(ApplicationUserRole.Member);
     }
 }
