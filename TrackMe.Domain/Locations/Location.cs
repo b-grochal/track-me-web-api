@@ -14,5 +14,5 @@ public class Location
 
     public int TripId { get; set; }
 
-    public virtual Trip Trip { get; set; }
+    public Trip Trip { get; set; } = null!;
 }

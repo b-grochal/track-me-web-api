@@ -2,18 +2,17 @@
 using Domain.Members;
 using System.Collections.Generic;
 
-namespace Domain.Trips
+namespace Domain.Trips;
+
+public class Trip
 {
-    public class Trip
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string Name { get; set; }
+    public string Name { get; set; }
 
-        public string MemberId { get; set; }
+    public int MemberId { get; set; }
 
-        public virtual Member Member { get; set; }
+    public Member Member { get; set; } = null!;
 
-        public virtual ICollection<Location> SensorValues { get; set; }
-    }
+    public ICollection<Location> Locations { get; set; } = new List<Location>();
 }

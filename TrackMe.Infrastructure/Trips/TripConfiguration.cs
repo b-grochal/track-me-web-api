@@ -10,7 +10,26 @@ internal sealed class TripConfiguration : IEntityTypeConfiguration<Trip>
     {
         builder.ToTable("trips");
 
+        builder.Property(l => l.Id)
+            .HasColumnName("id")
+            .IsRequired();
+
+        builder.Property(l => l.Name)
+            .HasColumnName("name")
+            .IsRequired();
+
+        builder.Property(l => l.MemberId)
+            .HasColumnName("member_id")
+            .IsRequired();
+
         builder.HasKey(t => t.Id)
-            .HasName("id");
+            .HasName("pk_trip");
+
+        builder.HasOne(t => t.Member)
+            .WithMany(t => t.Trips)
+            .HasForeignKey(t => t.MemberId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade)
+            .HasConstraintName("fk_trip_member");
     }
 }

@@ -23,16 +23,5 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
-        builder.Entity<ApplicationUser>()
-        .ToTable("ApplicationUsers")
-        .HasDiscriminator<string>("ApplicationUserType")
-        .HasValue<Admin>(ApplicationUserRoles.Admin.ToString())
-        .HasValue<Member>(ApplicationUserRoles.BasicUser.ToString());
-
-        builder.Entity<Trip>().HasOne(o => o.Member)
-            .WithMany(a => a.Trips)
-            .HasForeignKey(o => o.MemberId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

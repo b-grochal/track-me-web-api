@@ -6,5 +6,5 @@ namespace Domain.Members;
 
 public class Member : ApplicationUser
 {
-    public virtual ICollection<Trip> Trips { get; set; }
+    public ICollection<Trip> Trips { get; set; } = new List<Trip>();
 }

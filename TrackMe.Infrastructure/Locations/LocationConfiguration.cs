@@ -10,16 +10,32 @@ internal sealed class LocationConfiguration : IEntityTypeConfiguration<Location>
     {
         builder.ToTable("locations");
 
-        builder.HasKey(l => l.Id)
-            .HasName("id");
+        builder.Property(l => l.Id)
+            .HasColumnName("id")
+            .IsRequired();
 
         builder.Property(l => l.CapturedDate)
-            .HasColumnName("latitude")
+            .HasColumnName("captured_date")
             .IsRequired();
 
         builder.Property(l => l.Position)
             .HasColumnName("position")
             .HasColumnType("geography (point)")
             .IsRequired();
+
+        builder.Property(l => l.TripId)
+            .HasColumnName("trip_id")
+            .IsRequired();
+
+        builder.HasKey(l => l.Id)
+            .HasName("pk_location");
+
+        builder.HasOne(l => l.Trip)
+            .WithMany(t => t.Locations)
+            .HasForeignKey(l => l.TripId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade)
+            .HasConstraintName("fk_location_trip");
+
     }
 }
