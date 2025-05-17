@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Common\Authentication\" />
     <Folder Include="Common\Behaviors\" />
-    <Folder Include="Common\Data\" />
     <Folder Include="Members\" />
     <Folder Include="Admins\" />
     <Folder Include="MyAccount\" />
