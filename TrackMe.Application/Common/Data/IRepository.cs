@@ -1,6 +1,8 @@
-﻿namespace Application.Common.Data;
+﻿using Domain.Common;
 
-public interface IRepository<TEntity>
+namespace Application.Common.Data;
+
+public interface IRepository<TEntity> where TEntity : Entity
 {
     Task InsertAsync(TEntity entity);
 
