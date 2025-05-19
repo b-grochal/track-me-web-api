@@ -10,7 +10,7 @@ public interface IRepository<TEntity> where TEntity : Entity
 
     void Remove(TEntity entity);
 
-    Task<TEntity> GetByIdAsync(int id);
+    Task<TEntity?> GetByIdAsync(int id);
 
     Task<IEnumerable<TEntity>> GetAllAsync();
 }

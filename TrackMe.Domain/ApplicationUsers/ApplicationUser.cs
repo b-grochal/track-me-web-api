@@ -1,9 +1,9 @@
-﻿namespace Domain.ApplicationUsers;
+﻿using Domain.Common;
 
-public class ApplicationUser
+namespace Domain.ApplicationUsers;
+
+public class ApplicationUser : Entity
 {
-    public int Id { get; set; }
-
     public string FirstName { get; set; }
 
     public string LastName { get; set; }

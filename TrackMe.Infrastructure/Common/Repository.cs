@@ -7,7 +7,7 @@ namespace Infrastructure.Common;
 internal abstract class Repository<TEntity>
     where TEntity : Entity
 {
-    private readonly ApplicationDbContext _dbContext;
+    protected readonly ApplicationDbContext _dbContext;
 
     protected Repository(ApplicationDbContext dbContext)
     {
