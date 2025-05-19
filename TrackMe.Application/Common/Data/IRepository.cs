@@ -4,11 +4,11 @@ namespace Application.Common.Data;
 
 public interface IRepository<TEntity> where TEntity : Entity
 {
-    Task InsertAsync(TEntity entity);
+    Task AddAsync(TEntity entity);
 
-    Task UpdateAsync(TEntity entity);
+    void Update(TEntity entity);
 
-    Task DeleteAsync(TEntity entity);
+    void Remove(TEntity entity);
 
     Task<TEntity> GetByIdAsync(int id);
 

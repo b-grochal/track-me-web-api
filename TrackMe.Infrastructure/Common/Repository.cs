@@ -14,17 +14,17 @@ internal abstract class Repository<TEntity>
         _dbContext = dbContext;
     }
 
-    public async Task InsertAsync(TEntity entity)
+    public async Task AddAsync(TEntity entity)
     {
         await _dbContext.Set<TEntity>().AddAsync(entity);
     }
 
-    public async Task UpdateAsync(TEntity entity)
+    public void Update(TEntity entity)
     {
         _dbContext.Set<TEntity>().Update(entity);
     }
 
-    public async Task DeleteAsync(TEntity entity)
+    public void Remove(TEntity entity)
     {
         _dbContext.Set<TEntity>().Remove(entity);
     }
