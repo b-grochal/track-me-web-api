@@ -1,13 +1,12 @@
-﻿using Domain.Locations;
+﻿using Domain.Common;
+using Domain.Locations;
 using Domain.Members;
 using System.Collections.Generic;
 
 namespace Domain.Trips;
 
-public class Trip
+public class Trip : Entity
 {
-    public int Id { get; set; }
-
     public string Name { get; set; }
 
     public int MemberId { get; set; }

@@ -6,9 +6,9 @@ using TrackMe.Database.Context;
 
 namespace Infrastructure.ApplicationUsers
 {
-    internal class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
+    internal class ApplicationUsersRepository : Repository<ApplicationUser>, IApplicationUsersRepository
     {
-        public ApplicationUserRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public ApplicationUsersRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
 

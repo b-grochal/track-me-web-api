@@ -9,11 +9,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Admins\" />
-    <Folder Include="Members\" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TrackMe.Application\Application.csproj" />

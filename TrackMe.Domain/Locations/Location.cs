@@ -1,13 +1,12 @@
-﻿using Domain.Trips;
+﻿using Domain.Common;
+using Domain.Trips;
 using NetTopologySuite.Geometries;
 using System;
 
 namespace Domain.Locations;
 
-public class Location
+public class Location : Entity
 {
-    public int Id { get; set; }
-
     public DateTimeOffset CapturedDate { get; set; }
 
     public Point Position { get; set; }
