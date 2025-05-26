@@ -1,4 +1,6 @@
-﻿namespace Common.Errors;
+﻿using Common.Results;
+
+namespace Common.Errors;
 
 public sealed record ValidationError : Error
 {
