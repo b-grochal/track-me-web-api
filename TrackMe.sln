@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{2F1E50D6-83FB-4055-B80C-4F988772E63B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{BB475450-CCAF-4EAF-8FF9-79E3D2726975}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB475450-CCAF-4EAF-8FF9-79E3D2726975}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB475450-CCAF-4EAF-8FF9-79E3D2726975}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F1E50D6-83FB-4055-B80C-4F988772E63B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F1E50D6-83FB-4055-B80C-4F988772E63B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F1E50D6-83FB-4055-B80C-4F988772E63B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F1E50D6-83FB-4055-B80C-4F988772E63B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +55,7 @@ Global
 		{98AED86B-91B2-4832-BD18-048D5F61F0BE} = {D8423A62-1748-46C8-853A-30E158C82AB5}
 		{2714E07A-6FD7-4C03-B198-5A90C51F7E57} = {D8423A62-1748-46C8-853A-30E158C82AB5}
 		{BB475450-CCAF-4EAF-8FF9-79E3D2726975} = {D8423A62-1748-46C8-853A-30E158C82AB5}
+		{2F1E50D6-83FB-4055-B80C-4F988772E63B} = {D8423A62-1748-46C8-853A-30E158C82AB5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A44C35B-CBB7-444C-AD3A-290EC09CAC54}
