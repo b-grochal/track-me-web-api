@@ -13,4 +13,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TrackMe.Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
