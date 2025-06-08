@@ -1,4 +1,8 @@
+using Application.Common.Authentication.Login;
+using Common.Results;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using WebApi.Messaging;
 
 namespace WebApi.Controllers
 {
@@ -6,6 +10,8 @@ namespace WebApi.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        private readonly ICommandDispatcher _commandDispatcher;
+
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -13,9 +19,10 @@ namespace WebApi.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICommandDispatcher commandDispatcher)
         {
             _logger = logger;
+            _commandDispatcher = commandDispatcher ?? throw new ArgumentNullException(nameof(commandDispatcher));
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -28,6 +35,14 @@ namespace WebApi.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpGet("test")]
+        public async Task<ActionResult<Result>> Test()
+        {
+            var x = await _commandDispatcher.Send(new LoginCommand("a", "b"));
+
+            return Ok(x);
         }
     }
 }

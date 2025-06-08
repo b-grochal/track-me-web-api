@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Authentication\" />
     <Folder Include="Common\Behaviors\" />
     <Folder Include="Members\" />
     <Folder Include="Admins\" />
