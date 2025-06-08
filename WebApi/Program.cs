@@ -1,5 +1,6 @@
 using Application.Common.Authentication.Login;
 using Application.Common.Messaging;
+using Common.Results;
 using WebApi.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,8 +14,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICommandDispatcher, CommandDispatcher>();
 builder.Services.AddScoped<IQueryDispatcher, QueryDispatcher>();
+builder.Services.AddScoped<IDispatcher, Dispatcher>();
 
-builder.Services.AddScoped<ICommandHandler<LoginCommand>, LoginCommandHandler>();
+//builder.Services.AddScoped<ICommandHandler<LoginCommand>, LoginCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<LoginCommand, Result>, LoginCommandHandler>();
 
 var app = builder.Build();
 

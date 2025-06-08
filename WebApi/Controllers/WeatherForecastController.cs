@@ -11,6 +11,7 @@ namespace WebApi.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private readonly ICommandDispatcher _commandDispatcher;
+        private readonly IDispatcher _dispatcher;
 
         private static readonly string[] Summaries = new[]
         {
@@ -19,10 +20,11 @@ namespace WebApi.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICommandDispatcher commandDispatcher)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICommandDispatcher commandDispatcher, IDispatcher dispatcher)
         {
             _logger = logger;
             _commandDispatcher = commandDispatcher ?? throw new ArgumentNullException(nameof(commandDispatcher));
+            _dispatcher = dispatcher;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -40,9 +42,11 @@ namespace WebApi.Controllers
         [HttpGet("test")]
         public async Task<ActionResult<Result>> Test()
         {
-            var x = await _commandDispatcher.Send(new LoginCommand("a", "b"));
+            //var x = await _commandDispatcher.Send(new LoginCommand("a", "b"));
 
-            return Ok(x);
+            var y = await _dispatcher.Dispatch(new LoginCommand("a", "b"));
+
+            return Ok(y);
         }
     }
 }

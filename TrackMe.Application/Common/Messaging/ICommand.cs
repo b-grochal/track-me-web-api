@@ -1,7 +1,9 @@
-﻿namespace Application.Common.Messaging;
+﻿using Common.Results;
 
-public interface ICommand : IBaseCommand;
+namespace Application.Common.Messaging;
 
-public interface ICommand<TResponse> : IBaseCommand;
+public interface ICommand : IRequest<Result>, IBaseCommand;
+
+public interface ICommand<TResponse> : IRequest<Result<TResponse>>, IBaseCommand;
 
 public interface IBaseCommand;

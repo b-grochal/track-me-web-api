@@ -9,5 +9,10 @@ namespace Application.Common.Authentication.Login
         {
             return Task.FromResult(Result.Success());
         }
+
+        public Task<Result> Handle123(LoginCommand request, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(Result.Success());
+        }
     }
 }

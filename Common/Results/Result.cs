@@ -3,7 +3,12 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Common.Results;
 
-public class Result
+public interface IResult
+{
+    bool IsSuccess { get; }
+}
+
+public class Result : IResult
 {
     public Result(bool isSuccess, Error error)
     {
@@ -34,7 +39,7 @@ public class Result
         new(default, false, error);
 }
 
-public class Result<TValue> : Result
+public class Result<TValue> : Result, IResult
 {
     private readonly TValue? _value;
 
