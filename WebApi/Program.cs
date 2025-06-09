@@ -17,7 +17,7 @@ builder.Services.AddScoped<IQueryDispatcher, QueryDispatcher>();
 builder.Services.AddScoped<IDispatcher, Dispatcher>();
 
 //builder.Services.AddScoped<ICommandHandler<LoginCommand>, LoginCommandHandler>();
-builder.Services.AddScoped<IRequestHandler<LoginCommand, Result>, LoginCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<LoginCommand, Result<object>>, LoginCommandHandler>();
 
 var app = builder.Build();
 

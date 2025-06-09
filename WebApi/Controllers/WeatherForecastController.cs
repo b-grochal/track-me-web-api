@@ -44,7 +44,7 @@ namespace WebApi.Controllers
         {
             //var x = await _commandDispatcher.Send(new LoginCommand("a", "b"));
 
-            var y = await _dispatcher.Dispatch(new LoginCommand("a", "b"));
+            var y = await _dispatcher.Dispatch<LoginCommand, Result<object>>(new LoginCommand("a", "b"));
 
             return Ok(y);
         }

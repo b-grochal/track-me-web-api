@@ -3,16 +3,11 @@ using Common.Results;
 
 namespace Application.Common.Authentication.Login
 {
-    public sealed class LoginCommandHandler : ICommandHandler<LoginCommand>
+    public sealed class LoginCommandHandler : ICommandHandler<LoginCommand, object>
     {
-        public Task<Result> Handle(LoginCommand request, CancellationToken cancellationToken)
+        Task<Result<object>> IRequestHandler<LoginCommand, Result<object>>.Handle123(LoginCommand request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(Result.Success());
-        }
-
-        public Task<Result> Handle123(LoginCommand request, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(Result.Success());
+            throw new NotImplementedException();
         }
     }
 }
