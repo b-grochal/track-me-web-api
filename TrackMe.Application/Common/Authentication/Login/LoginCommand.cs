@@ -2,4 +2,4 @@
 
 namespace Application.Common.Authentication.Login;
 
-public sealed record LoginCommand(string email, string password) : ICommand<string>;
+public sealed record LoginCommand(string Email, string Password) : ICommand<string>;

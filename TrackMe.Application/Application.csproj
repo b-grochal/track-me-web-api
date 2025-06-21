@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <Folder Include="Common\Behaviors\" />
-    <Folder Include="Members\" />
     <Folder Include="Admins\" />
+    <Folder Include="Members\GetMemberById\" />
     <Folder Include="MyAccount\" />
     <Folder Include="MyTrips\GetMyTrips\" />
     <Folder Include="MyTrips\GetMyTripById\" />
