@@ -1,0 +1,9 @@
+services:
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: WebApi/Dockerfile
+    ports:
+        - "5000:5000"
+        - "5001:5001"  
