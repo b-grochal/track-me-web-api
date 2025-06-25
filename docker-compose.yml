@@ -1,9 +1,23 @@
 services:
   webapi:
     image: ${DOCKER_REGISTRY-}webapi
+    container_name: trackme.api
     build:
       context: .
       dockerfile: WebApi/Dockerfile
     ports:
         - "5000:5000"
         - "5001:5001"  
+  
+  database:
+    image: postgres:latest
+    container_name: trackme.database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: track_me
+    volumes:
+        - ./.containers/trackme-db:/var/lib/postgresql/data
+    ports:
+        - "5432:5432"
+    
