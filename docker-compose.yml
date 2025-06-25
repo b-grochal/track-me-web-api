@@ -1,6 +1,6 @@
 services:
-  webapi:
-    image: ${DOCKER_REGISTRY-}webapi
+  trackme.api:
+    image: ${DOCKER_REGISTRY-}trackme.api
     container_name: trackme.api
     build:
       context: .
@@ -9,7 +9,7 @@ services:
         - "5000:5000"
         - "5001:5001"  
   
-  database:
+  trackme.database:
     image: postgres:latest
     container_name: trackme.database
     environment:

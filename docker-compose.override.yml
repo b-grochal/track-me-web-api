@@ -1,5 +1,5 @@
 services:
-  webapi:
+  trackme.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=5000
