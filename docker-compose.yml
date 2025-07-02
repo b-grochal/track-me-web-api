@@ -20,4 +20,18 @@ services:
         - ./.containers/trackme-db:/var/lib/postgresql/data
     ports:
         - "5432:5432"
+  
+  trackme.pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: trackme.pgadmin
+    environment:
+        PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+        PGADMIN_DEFAULT_PASSWORD: passw0rd123
+        PGADMIN_LISTEN_PORT: 80
+    ports:
+        - "5050:80"
+    volumes:
+        - ./.containers/pgadmin:/var/lib/pgadmin
+    depends_on:
+        - trackme.database
     
