@@ -10,7 +10,7 @@ services:
         - "5001:5001"  
   
   trackme.database:
-    image: postgres:latest
+    image: postgis/postgis:latest
     container_name: trackme.database
     environment:
       POSTGRES_USER: postgres

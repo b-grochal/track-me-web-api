@@ -2,7 +2,7 @@
 
 namespace Domain.ApplicationUsers;
 
-public class ApplicationUser : Entity
+public abstract class ApplicationUser : Entity
 {
     public string FirstName { get; set; }
 

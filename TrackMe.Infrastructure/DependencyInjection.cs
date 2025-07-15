@@ -21,7 +21,8 @@ public static class DependencyInjection
 
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseNpgsql(connectionString);
+            options.UseNpgsql(connectionString, npgsqlOptions =>
+                npgsqlOptions.UseNetTopologySuite());
         });
 
         return services;
