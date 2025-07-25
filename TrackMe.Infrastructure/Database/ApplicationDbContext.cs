@@ -1,4 +1,5 @@
-﻿using Domain.Admins;
+﻿using Application.Common.Data;
+using Domain.Admins;
 using Domain.ApplicationUsers;
 using Domain.Locations;
 using Domain.Members;
@@ -7,7 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TrackMe.Database.Context;
 
-public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
+public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+    : DbContext(options), IApplicationDbContext
 {
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 

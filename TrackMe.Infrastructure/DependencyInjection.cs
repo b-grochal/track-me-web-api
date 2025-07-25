@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Application.Common.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TrackMe.Database.Context;
@@ -24,6 +25,8 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString, npgsqlOptions =>
                 npgsqlOptions.UseNetTopologySuite());
         });
+
+        services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
         return services;
     }

@@ -1,4 +1,4 @@
-﻿using Application.Common.Authentication.Login;
+﻿using Application.Authentication.Login;
 using Application.Common.Messaging;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Common;

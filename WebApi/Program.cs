@@ -1,4 +1,4 @@
-using Application.Common.Authentication.Login;
+using Application.Authentication.Login;
 using Application.Common.Messaging;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +37,7 @@ app.MapControllers();
 
 app.Run();
 
-
+// TODO: Move somhere else
 public static class MigrationExtensions
 {
     public static void ApplyMigrations(this IApplicationBuilder app)

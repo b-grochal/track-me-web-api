@@ -1,7 +1,7 @@
 ﻿using Application.Common.Messaging;
 using Common.Results;
 
-namespace Application.Common.Authentication.Login
+namespace Application.Authentication.Login
 {
     public sealed class LoginCommandHandler : ICommandHandler<LoginCommand, string>
     {
