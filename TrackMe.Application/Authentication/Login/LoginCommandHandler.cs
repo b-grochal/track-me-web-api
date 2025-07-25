@@ -3,7 +3,7 @@ using Common.Results;
 
 namespace Application.Authentication.Login
 {
-    public sealed class LoginCommandHandler : ICommandHandler<LoginCommand, string>
+    internal sealed class LoginCommandHandler : ICommandHandler<LoginCommand, string>
     {
         public async Task<Result<string>> Handle(LoginCommand command, CancellationToken cancellationToken)
         {

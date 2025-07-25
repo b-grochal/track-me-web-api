@@ -1,8 +1,10 @@
+using Application;
 using Application.Authentication.Login;
 using Application.Common.Messaging;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using TrackMe.Database.Context;
+using WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,11 +15,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ICommandHandler<LoginCommand, string>, LoginCommandHandler>();
-
-builder.Services.AddInfrastructure(builder.Configuration);
-
-//builder.Services.AddScoped<ICommandHandler<LoginCommand>, LoginCommandHandler>();
+builder.Services
+    .AddApplication()
+    .AddWebApi()
+    .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
