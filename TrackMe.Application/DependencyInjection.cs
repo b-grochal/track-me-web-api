@@ -15,7 +15,7 @@ public static class DependencyInjection
     public static IServiceCollection AddCommands(
         this IServiceCollection services) 
     {
-        services.AddScoped<ICommandHandler<LoginCommand, string>, LoginCommandHandler>();
+        services.AddScoped<ICommandHandler<LoginCommand, LoginResponse>, LoginCommandHandler>();
 
         return services;
     }

@@ -1,4 +1,6 @@
-﻿using Application.Common.Data;
+﻿using Application.Common.Authentication;
+using Application.Common.Data;
+using Infrastructure.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +14,8 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration) =>
         services
-            .AddDatabase(configuration);
+            .AddDatabase(configuration)
+            .AddAuthentication(configuration);
 
     private static IServiceCollection AddDatabase(
         this IServiceCollection services,
@@ -27,6 +30,16 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+
+        return services;
+    }
+
+    private static IServiceCollection AddAuthentication(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddSingleton<IPasswordHasher, PasswordHasher>();
+        services.AddSingleton<IJwtProvider, JwtProvider>();
 
         return services;
     }

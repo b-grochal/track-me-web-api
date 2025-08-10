@@ -12,7 +12,7 @@ namespace WebApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(
             [FromBody] LoginCommand command, 
-            [FromServices] ICommandHandler<LoginCommand, string> handler, 
+            [FromServices] ICommandHandler<LoginCommand, LoginResponse> handler, 
             CancellationToken cancellationToken)
         {
             var result = await handler.Handle(command, cancellationToken);
