@@ -1,5 +1,7 @@
 ﻿using Application.Common.Authentication;
 using Application.Common.Data;
+using Domain.Admins;
+using Domain.ApplicationUsers;
 using Infrastructure.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,10 +25,42 @@ public static class DependencyInjection
     {
         string? connectionString = configuration.GetConnectionString("Database");
 
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddDbContext<ApplicationDbContext>((serviceProvide, options) =>
         {
-            options.UseNpgsql(connectionString, npgsqlOptions =>
-                npgsqlOptions.UseNetTopologySuite());
+            var passwordHasher = serviceProvide.GetRequiredService<IPasswordHasher>();
+
+            var admin = new Admin
+            {
+                FirstName = "Super",
+                LastName = "Admin",
+                Email = "super@admin.com",
+                PasswordHash = passwordHasher.Hash("P@ssw0rd123#"),
+                Role = ApplicationUserRole.Admin
+            };
+
+            options
+                .UseNpgsql(connectionString, npgsqlOptions =>
+                    npgsqlOptions.UseNetTopologySuite())
+                .UseSeeding((context, _) => 
+                {
+                    var seededAdmin = context.Set<Admin>().FirstOrDefault(a => a.Email == admin.Email);
+
+                    if (seededAdmin is null)
+                    {
+                        context.Set<Admin>().Add(admin);
+                        context.SaveChanges();
+                    }
+                })
+                .UseAsyncSeeding(async (context, _, CancellationToken) =>
+                {
+                    var seededAdmin = await context.Set<Admin>().FirstOrDefaultAsync(a => a.Email == admin.Email);
+
+                    if (seededAdmin is null)
+                    {
+                        await context.Set<Admin>().AddAsync(admin, CancellationToken);
+                        await context.SaveChangesAsync(CancellationToken);
+                    }
+                });
         });
 
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
