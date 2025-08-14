@@ -23,7 +23,7 @@ namespace Application.Authentication.Login
                 return Result.Failure<LoginResponse>(AuthenticationErrors.ApplicationUserNotFoundByEmail(command.Email));
             }
 
-            bool isPasswordVerified = passwordHasher.Verify(user.PasswordHash, command.Password);
+            bool isPasswordVerified = passwordHasher.Verify(command.Password, user.PasswordHash);
 
             if (!isPasswordVerified)
             {
