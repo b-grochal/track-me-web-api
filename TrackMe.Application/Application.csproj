@@ -24,9 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AssemblyAttibute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>TrackMe.Application.UnitTests</_Parameter1>
-    </AssemblyAttibute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>Application.UnitTests</_Parameter1>
+    </AssemblyAttribute>
    </ItemGroup>
   
 </Project>
