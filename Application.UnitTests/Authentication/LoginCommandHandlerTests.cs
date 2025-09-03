@@ -4,6 +4,7 @@ using Application.Common.Authentication;
 using Application.Common.Data;
 using Application.UnitTests.Mocks;
 using Common.Results;
+using Domain.ApplicationUsers;
 using Moq;
 using Shouldly;
 
@@ -42,5 +43,41 @@ public class LoginCommandHandlerTests
         // Assert
         result.IsSuccess.ShouldBeFalse();
         result.Error.ShouldBe(AuthenticationErrors.ApplicationUserNotFoundByEmail("test2@member.com"));
+    }
+
+    [Fact]
+    public async void Handle_Should_ReturnError_WhenPasswordIsInvalid()
+    {
+        // Arrange
+        _passwordHasherMock
+            .Setup(ph => ph.Verify(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(false);
+
+        // Act
+        Result result = await _handler.Handle(Command, CancellationToken.None);
+        
+        // Assert
+        result.IsSuccess.ShouldBeFalse();
+        result.Error.ShouldBe(AuthenticationErrors.ApplicationUserNotFoundByEmail(Command.Email));
+    }
+
+    [Fact]
+    public async void Handle_Should_ReturnJwtResponse_WhenCredentialsAreValid()
+    {
+        // Arrange
+        _passwordHasherMock
+            .Setup(ph => ph.Verify(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(true);
+
+        _jwtProviderMock
+            .Setup(jp => jp.Create(It.IsAny<ApplicationUser>()))
+            .Returns("jwt-token");
+
+        // Act
+        Result<LoginResponse> result = await _handler.Handle(Command, CancellationToken.None);
+
+        // Assert
+        result.IsSuccess.ShouldBeTrue();
+        result.Value.Jwt.ShouldBe("jwt-token");
     }
 }
